@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  payment_date: 2018-06-25 12:22:47
+  address_ship: MyString
+  total_price: 1.5
+  status: MyString
+  total_quantity: 
+
+two:
+  code: MyString
+  payment_date: 2018-06-25 12:22:47
+  address_ship: MyString
+  total_price: 1.5
+  status: MyString
+  total_quantity: 

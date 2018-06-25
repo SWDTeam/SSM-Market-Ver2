@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  product_key: MyString
+  name: MyString
+  quantity: 
+  manufacturer: MyString
+  manu_date: 2018-06-25
+  expired_date: 2018-06-25
+  description: MyString
+  price: 1.5
+  status: MyString
+
+two:
+  product_key: MyString
+  name: MyString
+  quantity: 
+  manufacturer: MyString
+  manu_date: 2018-06-25
+  expired_date: 2018-06-25
+  description: MyString
+  price: 1.5
+  status: MyString
