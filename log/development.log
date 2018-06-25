@@ -994,3 +994,13 @@ Processing by Devise::SessionsController#new as HTML
 Completed 200 OK in 52ms (Views: 50.8ms | ActiveRecord: 0.0ms)
 
 
+Started GET "/" for 127.0.0.1 at 2018-06-25 14:23:52 +0700
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/accounts/sign_in" for 127.0.0.1 at 2018-06-25 14:23:52 +0700
+Processing by Devise::SessionsController#new as HTML
+  Rendering /home/minhhyhy/.rvm/gems/ruby-2.4.4/gems/devise-4.4.3/app/views/devise/sessions/new.html.erb within layouts/application
+  Rendered /home/minhhyhy/.rvm/gems/ruby-2.4.4/gems/devise-4.4.3/app/views/devise/shared/_links.html.erb (1.0ms)
+  Rendered /home/minhhyhy/.rvm/gems/ruby-2.4.4/gems/devise-4.4.3/app/views/devise/sessions/new.html.erb within layouts/application (29.8ms)
+Completed 200 OK in 1330ms (Views: 1287.6ms | ActiveRecord: 1.7ms)
+
+
