@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :accounts, only: [:edit, :update, :show]
       devise_scope :account do
         post "sign_up", :to => 'registrations#create'
         post "sign_in", :to => 'sessions#create'
