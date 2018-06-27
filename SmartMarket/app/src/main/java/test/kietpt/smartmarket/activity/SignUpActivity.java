@@ -160,10 +160,6 @@ public class SignUpActivity extends AppCompatActivity {
         if (checkValidate()) {
             Toast.makeText(SignUpActivity.this, "Something wrong!!! please sign up again ", Toast.LENGTH_SHORT).show();
         } else {
-//            signUpCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/RegisterCusController?txtEmail=" + email.getText().toString()
-//                    + "&txtPassword=" + pass.getText().toString() + "&txtUsername=" + username.getText().toString() +
-//                    "&txtAddress=" + address.getText().toString() + "&txtPhone=" + phone.getText().toString() + "&txtGender=" + selectedGender.toString()
-//                    + "&txtStatus=" + "active");
             signUpCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_up");
         }
 
@@ -186,16 +182,14 @@ public class SignUpActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("TEST JSON ", js + "");
+        Log.e("test json sign up ", js + "");
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("Reponse sign up ",response.toString());
-//                        if (response.toString().equals("{}")) {
-//                            Toast.makeText(SignUpActivity.this, "Account has already exsited", Toast.LENGTH_SHORT).show();
-//                        } else {
+
                             try {
                                 int userId = response.getInt("id");
                                 String email = response.getString("email");
@@ -205,7 +199,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 String address = response.getString("address");
                                 String status = response.getString("status");
 
-                                MainActivity.account = new Account(1, email, username, gender, phone, pass.getText().toString(), address, status);
+                                MainActivity.account = new Account(userId, email, username, gender, phone, pass.getText().toString(), address, status);
                                 if (!database.checkEmail(MainActivity.account.getEmail())) {
                                     database.insertCustomer(MainActivity.account);
                                 }
@@ -215,7 +209,7 @@ public class SignUpActivity extends AppCompatActivity {
                             } catch (Exception e) {
                                 Log.e("ERROR SIGNUP ", e.getMessage());
                             }
-                        //}
+
                     }
                 },
                 new Response.ErrorListener() {
