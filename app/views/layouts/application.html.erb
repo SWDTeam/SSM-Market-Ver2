@@ -1,16 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html class="M--bootstrap--templates">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SsmMarketWeb</title>
     <%= csrf_meta_tags %>
-
+    <!-- <link rel="stylesheet" href="../../assets/stylesheets/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="../../assets/stylesheets/dataTables.bootstrap.min.css"> -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
-
+    <%#= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
+    <div class="sidebar" data-background-color="white" data-active-color="danger">
+      <div class="sidebar-wrapper">
+        <div class="logo">
+        <%= link_to 'SSM Admin Page', home_path, class:'simple-text' %>
+        <!-- <a href="index.jsp" class="simple-text">SSM Admin Page</a></div> -->
+        <ul class="nav" id="M--nav--menu">
+          <li class="M--menu active"><a href="index.jsp"><i class="fa fa-columns"></i>
+              <p>Dashboard</p></a></li>
+              <li class="M--menu"><a href="ShowUserController"><i class="fa fa-user"></i>
+              <p>Users</p></a></li>
+          <li class="M--menu"><a href="ShowProductController"><i class="fa fa-shopping-cart"></i>
+              <p>Products</p></a></li>
+          <li class="M--menu"><a href="index_orders.jsp"><i class="fa fa-money"></i>
+              <p>order</p></a></li>
+          <li class="M--menu"><a href="GetAllCategoriesController"><i class="fa fa-tag"></i>
+              <p>category</p></a></li>
+        </ul>
+      </div>
+    </div>
     <%= yield %>
   </body>
 </html>
