@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="test.kietpt.smartmarket">
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.SignUpActivity" />
+        <activity android:name=".activity.AccountActivity" />
+        <activity android:name=".activity.BarcodeReaderActivity" />
+        <activity android:name=".activity.ScanBarcode" />
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.ProfileActi" />
+        <activity android:name=".activity.ConfirmCartActi" />
+        <activity android:name=".activity.MyCartActi" />
+        <activity android:name=".activity.MyCanceledOrdersActi" />
+        <activity android:name=".activity.ChangePassActi" />
+        <activity android:name=".activity.SearchViewActi" />
+        <activity android:name=".activity.ProductListActi" />
+        <activity android:name=".activity.ProductDetailActi" />
+        <activity android:name=".activity.CategoryListActi" />
+        <activity android:name=".activity.OrderedNotiActi" />
+        <activity android:name=".activity.MyOrderedActi" />
+        <activity android:name=".activity.CanceledOrderActi" />
+        <activity android:name=".activity.OrderedDetailActi"></activity>
+    </application>
+
+</manifest>

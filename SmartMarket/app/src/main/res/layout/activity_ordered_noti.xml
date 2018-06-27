@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.OrderedNotiActi"
+    android:orientation="vertical"
+    android:weightSum="7"
+    >
+
+    <TextView
+        android:layout_weight="1"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Thank you for purchasing"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="#FF8000"
+        />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your order code: "
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="123456789 "
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:id="@+id/orderCodeOrderNoti"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:text="You can manage and check your order at:"
+        android:gravity="center"
+        />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <TextView
+            android:gravity="right"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Account -->"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_margin="2dp"
+            android:id="@+id/accountOrderNoti"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Order"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_margin="2dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:id="@+id/myOrderOrderNoti"
+            />
+    </LinearLayout>
+    
+    <TextView
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="Please prepare enough money to pay at cashier"
+        />
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total Price "
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:textColor="#fd0000"
+            android:textStyle="bold"
+            android:layout_margin="2dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="123"
+            android:id="@+id/priceOrderNoti"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_margin="2dp"
+            android:textColor="#fd0000"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
+    <Button
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Continue to shop"
+        android:background="#fa840d"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:id="@+id/btnContinueOrderNoti"
+        />
+
+</LinearLayout>

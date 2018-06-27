@@ -1,0 +1,175 @@
+package test.kietpt.smartmarket.adapter;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import java.text.DecimalFormat;
+import java.util.List;
+
+import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.activity.ConfirmCartActi;
+import test.kietpt.smartmarket.activity.MainActivity;
+import test.kietpt.smartmarket.model.Cart;
+
+public class CartConfirmAdapter extends BaseAdapter {
+    Context context;
+    List<Cart> cartListConfirm;
+
+    public CartConfirmAdapter(Context context, List<Cart> cartListConfirm) {
+        this.context = context;
+        this.cartListConfirm = cartListConfirm;
+    }
+
+    @Override
+    public int getCount() {
+        return cartListConfirm.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return cartListConfirm.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    private class ViewHolder {
+        ImageView imgCart;
+        TextView nameCartItem, priceCartItem, quantityCartitem;
+        Button btnAdd, btnSub, btnRemove;
+    }
+
+    boolean checked = false;
+
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final CartConfirmAdapter.ViewHolder viewHolder;
+        if (convertView == null) {
+            viewHolder = new CartConfirmAdapter.ViewHolder();
+            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.product_in_cart_item, null);
+            viewHolder.imgCart = (ImageView) convertView.findViewById(R.id.imgCartItem);
+            viewHolder.nameCartItem = (TextView) convertView.findViewById(R.id.txtNameCartItem);
+            viewHolder.priceCartItem = (TextView) convertView.findViewById(R.id.txtPriceCartItem);
+            viewHolder.quantityCartitem = (TextView) convertView.findViewById(R.id.txtQuantityCartItem);
+            viewHolder.btnAdd = (Button) convertView.findViewById(R.id.btnAddCartItem);
+            viewHolder.btnSub = (Button) convertView.findViewById(R.id.btnSubCartItem);
+            viewHolder.btnRemove = (Button) convertView.findViewById(R.id.btnRemoveCartItem);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (CartConfirmAdapter.ViewHolder) convertView.getTag();
+        }
+        Cart cart = cartListConfirm.get(position);
+        viewHolder.nameCartItem.setText(cart.getProductName());
+        final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        viewHolder.priceCartItem.setText(decimalFormat.format(cart.getProductPrice()) + " $ ");
+        Picasso.get().load(cart.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(viewHolder.imgCart);
+        viewHolder.quantityCartitem.setText(String.valueOf(cart.getProductQuantity()));
+
+        int newSl = Integer.parseInt(viewHolder.quantityCartitem.getText().toString());
+        if (newSl <= 1) {
+            viewHolder.btnSub.setVisibility(View.INVISIBLE);
+            viewHolder.btnAdd.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.btnSub.setVisibility(View.VISIBLE);
+            viewHolder.btnAdd.setVisibility(View.VISIBLE);
+        }
+
+        viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newSl = Integer.parseInt(viewHolder.quantityCartitem.getText().toString()) + 1;
+                int presentSl = MainActivity.listCart.get(position).getProductQuantity();
+                float presentPrice = MainActivity.listCart.get(position).getProductPrice();
+                MainActivity.listCart.get(position).setProductQuantity(newSl);
+                float newPrice = (presentPrice * newSl) / presentSl;
+                MainActivity.listCart.get(position).setProductPrice(newPrice);
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+                viewHolder.priceCartItem.setText(decimalFormat.format(newPrice) + " $ ");
+                ConfirmCartActi.getDataInCart();
+                if (newSl > 1) {
+                    viewHolder.btnSub.setVisibility(View.VISIBLE);
+                }
+                viewHolder.quantityCartitem.setText(String.valueOf(newSl));
+
+            }
+        });
+
+        viewHolder.btnSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int newSl = Integer.parseInt(viewHolder.quantityCartitem.getText().toString()) - 1;
+                int presentSl = MainActivity.listCart.get(position).getProductQuantity();
+                float presentPrice = MainActivity.listCart.get(position).getProductPrice();
+                MainActivity.listCart.get(position).setProductQuantity(newSl);
+                float newPrice = (presentPrice * newSl) / presentSl;
+                MainActivity.listCart.get(position).setProductPrice(newPrice);
+                DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+                viewHolder.priceCartItem.setText(decimalFormat.format(newPrice) + " $ ");
+                ConfirmCartActi.getDataInCart();
+                if (newSl <= 1) {
+                    viewHolder.btnSub.setVisibility(View.INVISIBLE);
+                } else {
+                    viewHolder.btnSub.setVisibility(View.VISIBLE);
+                }
+                viewHolder.quantityCartitem.setText(String.valueOf(newSl));
+
+            }
+        });
+
+        if (MainActivity.listCart.size() <= 0) {
+            Toast.makeText(context, "Cart is empty!!!!!!!", Toast.LENGTH_SHORT).show();
+        } else {
+            viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Remove item out cart!!!");
+                    builder.setMessage("Do you want to remove product?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (MainActivity.listCart.size() <= 0) {
+                                Toast.makeText(context, "Cart is empty!!!!!!!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Cart cart = MainActivity.listCart.get(position);
+                                MainActivity.listCart.remove(cart);
+                                ConfirmCartActi.getDataInCart();
+                                notifyDataSetChanged();
+                            }
+
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                @Override
+                                public void onDismiss(DialogInterface dialog) {
+                                    dialog.dismiss();
+                                }
+                            });
+                        }
+                    });
+                    builder.show();
+                }
+            });
+        }
+        return convertView;
+    }
+}
+
