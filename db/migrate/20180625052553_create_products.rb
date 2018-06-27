@@ -9,7 +9,7 @@ class CreateProducts < ActiveRecord::Migration[5.1]
       t.date :expired_date
       t.string :description
       t.float :price
-      t.string :status
+      t.string :status, default: 'active'
       t.integer :updater_id
 
       t.belongs_to :category

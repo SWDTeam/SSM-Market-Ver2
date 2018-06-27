@@ -42,7 +42,7 @@ class DeviseCreateAccounts < ActiveRecord::Migration[5.1]
     add_column :accounts, :gender, :string
     add_column :accounts, :phone, :string
     add_column :accounts, :address, :string
-    add_column :accounts, :status, :string
+    add_column :accounts, :status, :string, default: "active"
     add_column :accounts, :provider, :string
     add_column :accounts, :uid, :string
     #----------------

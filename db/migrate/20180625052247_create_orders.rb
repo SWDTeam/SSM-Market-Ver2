@@ -5,7 +5,7 @@ class CreateOrders < ActiveRecord::Migration[5.1]
       t.datetime :payment_date
       t.string :address_ship
       t.float :total_price
-      t.string :status
+      t.string :status, default: 'pending'
       t.integer :total_quantity
 
       t.belongs_to :account

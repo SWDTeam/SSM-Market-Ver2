@@ -7,7 +7,19 @@ end
 
 #----------My import
 gem 'devise'
+gem "simple_token_authentication"
 
+gem 'jquery-rails'
+gem 'bootstrap', '~> 4.1.0'
+gem 'autoprefixer-rails'
+gem "font-awesome-rails"
+gem 'jquery-validation-rails'
+gem 'jquery-ui-rails'
+# support window
+# gem 'wdm'
+group :production do
+  gem 'pg'
+end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'

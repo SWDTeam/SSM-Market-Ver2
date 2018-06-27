@@ -1,26 +1,67 @@
-<h2>Log in</h2>
+<!DOCTYPE html>
+<html class="M--login--page">
+  <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SSM Market - Sign In</title>
+    <%= csrf_meta_tags %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+  </head>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+  <body>
+  <p id="notice"><%= alert %></p>
+  <%= devise_error_messages! %>
+  <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class:"login100-form validate-form", id:"M--form--login"} do |f| %>
+    <div class="limiter">
+      <div class="container-login100">
+        <div class="wrap-login100">
+          <span class="login100-form-title p-b-26">SSM Market</span>
+          <span class="login100-form-title p-b-48">Login</span>
+          <div class="wrap-input100 validate-input">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "input100" %>
+                        <!-- <input class="input100" type="text" id="loginEmail" name="txtEmail"> -->
+            <span class="focus-input100" data-placeholder="Email"></span>
+          </div>
+          <span id="error--email"></span>
+          <div class="wrap-input100 validate-input">
+            <span class="btn-show-pass">
+                <i class="fas fa-eye"></i>
+            </span>
+             <%= f.password_field :password, autocomplete: "off", class:"input100" %>
+            <!-- <input class="input100" type="password" id="loginPassword" name="txtPassword"> -->
+            <span class="focus-input100" data-placeholder="Password"></span>
+          </div>
+          <span id="error--pass"></span>
+            <% if devise_mapping.rememberable? -%>
+              <div class="field">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me, class:'remember-label'  %>
+              </div>
+            <% end %>
+          <br/>
+          <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+              <div class="login100-form-bgbtn"></div>
+                <%= f.submit "Login", class:"login100-form-btn" %>
+            </div>
+          </div>
+          <div class="text-center p-t-60">
+            <%= render "accounts/shared/links"%>
+            <!-- <a class="txt2" href="forgot_password.jsp">Forgot your password </a> -->
+          </div>
+        </div>
+      </div>
     </div>
-  <% end -%>
+  <% end %>
+  
+  </body>
+</html>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "accounts/shared/links" %>

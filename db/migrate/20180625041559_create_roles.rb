@@ -3,7 +3,7 @@ class CreateRoles < ActiveRecord::Migration[5.1]
     create_table :roles do |t|
       t.string :name
       t.string :description
-      t.string :status
+      t.string :status, default: 'active'
 
       t.timestamps
     end

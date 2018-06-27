@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20180625054223) do
     t.string "gender"
     t.string "phone"
     t.string "address"
-    t.string "status"
+    t.string "status", default: "active"
     t.string "provider"
     t.string "uid"
     t.index ["email"], name: "index_accounts_on_email", unique: true
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20180625054223) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.string "status"
+    t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20180625054223) do
     t.datetime "payment_date"
     t.string "address_ship"
     t.float "total_price"
-    t.string "status"
+    t.string "status", default: "pending"
     t.integer "total_quantity"
     t.integer "account_id"
     t.integer "cashier_id"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 20180625054223) do
     t.date "expired_date"
     t.string "description"
     t.float "price"
-    t.string "status"
+    t.string "status", default: "active"
     t.integer "updater_id"
     t.integer "category_id"
     t.integer "account_id"
@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20180625054223) do
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.string "status"
+    t.string "status", default: "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
