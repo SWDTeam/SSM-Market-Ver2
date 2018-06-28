@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :roles
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  get '/home/:id', to: 'products#home', as: "home"  
+  get '/home', to: 'products#home', as: "home"  
 
   namespace :api do
     namespace :v1 do
