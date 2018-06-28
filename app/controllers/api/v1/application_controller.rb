@@ -42,11 +42,11 @@ class Api::V1::ApplicationController < ActionController::API
     render :json => '{"success" : "false"}'
     end
   end
+end
 
     # render json: {message: "You are not authenticated"},
     #   status: 401 if current_account.nil?
     # end
-  end
 
   # def ensure_params_exist
   #  return unless params[:account].blank?
@@ -62,4 +62,3 @@ class Api::V1::ApplicationController < ActionController::API
   #   render json:
   #     {message: "Invalid login"}, status: 200
   # end
-end
