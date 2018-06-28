@@ -15,11 +15,11 @@ class Api::V1::ApplicationController < ActionController::API
   
   private
   def current_account
-    account_email = request.query_parameters[:account_email].presence
-    user = account_email && User.find_by_email(account_email)
+    account_email = request.query_parameters[:email].presence
+    user = account_email && Account.find_by_email(account_email)
     
     if user && Devise.secure_compare(user.authentication_token, request.query_parameters[:user_token])
-        user = User.find_by_email(account_email)
+        user = Account.find_by_email(account_email)
       return user
     else
     render :json => '{"success" : "false"}'
@@ -29,14 +29,14 @@ class Api::V1::ApplicationController < ActionController::API
   end
 
   def authenticate_account_from_token
-    account_email = params[:account_email].presence
-    user       = account_email && User.find_by_email(account_email)
+    account_email = params[:email].presence
+    user       = account_email && Account.find_by_email(account_email)
  
     # Notice how we use Devise.secure_compare to compare the token
     # in the database with the token given in the params, mitigating
     # timing attacks.
     if user && Devise.secure_compare(user.authentication_token, params[:user_token])
-        user = User.find_by_email(account_email)
+        user = Account.find_by_email(account_email)
       return true
     else
     render :json => '{"success" : "false"}'
