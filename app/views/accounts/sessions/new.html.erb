@@ -10,23 +10,30 @@
     
   </head>
 
-  <body>
+  <body class="P-full-login">
   <p id="notice"><%= notice %></p>
   <p id="notice"><%= alert %></p>
   <%= devise_error_messages! %>
-  <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class:""} do |f| %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email"%>
-    <%= f.password_field :password, autocomplete: "off"%>
-            <!-- <input class="input100" type="password" id="loginPassword" name="txtPassword"> -->
-    <% if devise_mapping.rememberable? -%>
-      <div class="field">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me, class:'remember-label'  %>
-      </div>
-    <% end %>
-    <%= f.submit "Login" %>
-    <!-- <a href="#">Forgot your password </a> -->
-  <% end %>
+  <center>
+    <div class="P-wrap-login-board">
+      <h1 class="pb-2 P-title-login">SSM Market</h1>
+      <h1 class= "pb-5 P-title-login">Login</h1>
+      <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class:""} do |f| %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "off", class: "P-input-login", placeholder: "Email"%><br/>
+        <%= f.password_field :password, autocomplete: "off", class: "P-input-login", placeholder: "Password"%>
+                <!-- <input class="input100" type="password" id="loginPassword" name="txtPassword"> -->
+        <% if devise_mapping.rememberable? -%>
+          <div class="field mt-1 float-left ml-3">
+            <%= f.check_box :remember_me, class:"P-login-remember" %>
+            <%= f.label :remember_me, class:'remember-label'  %>
+          </div>
+        <% end %>
+        <%= f.submit "LOGIN", class:"P-login-bnt my-5" %>
+        <!-- <a href="#">Forgot your password </a> -->
+        <%= link_to 'Forget your password', root_path, class:"P-forget-login mt-5"%>
+      <% end %>
+    </div>
+  </center>
   
   </body>
 </html>
