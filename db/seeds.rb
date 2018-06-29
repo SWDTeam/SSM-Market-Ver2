@@ -28,3 +28,30 @@ user = Account.new(
 
 user.skip_confirmation!
 user.save!
+
+Category.create!(
+  {name: "Milk"},
+  {name: "Drink"},
+  {name: "Cakes"},
+  {name: "Clothes"},
+  {name: "Shoes"}
+)
+
+# Order.create!(
+#   {
+#     code: "",
+#     address_ship: "",
+#     total_price: ,
+#     total_quantity: ,
+#     account_id: 2,
+#     cashier_id: 1
+#   },
+#   {
+#     code: "",
+#     address_ship: "",
+#     total_price: ,
+#     total_quantity: ,
+#     account_id: 2,
+#     cashier_id: 1
+#   }
+# )
