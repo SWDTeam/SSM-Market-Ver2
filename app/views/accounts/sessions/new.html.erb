@@ -19,7 +19,10 @@
       <h1 class="pb-2 P-title-login">SSM Market</h1>
       <h1 class= "pb-5 P-title-login">Login</h1>
       <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class:""} do |f| %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "off", class: "P-input-login", placeholder: "Email"%><br/>
+        <div class="wrap-login-email">
+          <%= f.email_field :email, autofocus: true, autocomplete: "off", class: "P-input-login", placeholder: "Email"%>
+          <!-- <span class="holder-login-email"></span> -->
+        </div>
         <%= f.password_field :password, autocomplete: "off", class: "P-input-login", placeholder: "Password"%>
                 <!-- <input class="input100" type="password" id="loginPassword" name="txtPassword"> -->
         <% if devise_mapping.rememberable? -%>
