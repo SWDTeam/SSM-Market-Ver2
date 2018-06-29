@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   protect_from_forgery prepend: true
   before_action :configure_permitted_parameters, if: :devise_controller?
-
   protected
 
   def configure_permitted_parameters
@@ -15,10 +14,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    respond_to do |format|
-      format.html {home_path(current_account)}
-      format.json {render json: current_account}
+    if resource.role_id == 1
+      home_path 
+    else
+      reset_session
+      '/422'
     end
+  end
 
     # sign_in_url = new_user_session_url
     # if request.referer == sign_in_url
@@ -26,5 +28,4 @@ class ApplicationController < ActionController::Base
     # else
     #   stored_location_for(resource) || request.referer || unauthenticated_path
     # end
-  end
 end

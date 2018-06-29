@@ -12,11 +12,12 @@
   </head>
 
   <body>
-    <%#= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
     <div class="sidebar" data-background-color="white" data-active-color="danger">
       <div class="sidebar-wrapper">
         <div class="logo">
         <%= link_to 'SSM Admin Page', home_path, class:'simple-text' %>
+        <%= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
+        
         <!-- <a href="index.jsp" class="simple-text">SSM Admin Page</a></div> -->
         <ul class="nav" id="M--nav--menu">
           <li class="M--menu active"><a href="index.jsp"><i class="fa fa-columns"></i>
