@@ -10,6 +10,20 @@
   color: #94918D;
 }
 
+.account-admin-page {
+  cursor: pointer;
+  text-align: center;
+}
+
+.dropdown-content-adpage {
+  display: none;
+  z-index: 100;
+}
+
+.show-adpage {
+  display: block;
+}
+
 .slidebar-admin-page {
   max-height: none;
   min-height: 100%;
@@ -54,6 +68,8 @@
 .content-admin-page {
   background-color: #F4F3EF;
   width: calc(100% - 260px);
+  height: 100vh;
+  padding: 80px 100px;
 }
 
 .active > a::before {
@@ -74,4 +90,8 @@
   display: inline-block;
   position: absolute;
   left: 244px;
+}
+
+.nav > .active > a {
+  color: rgb(235, 94, 40);
 }
