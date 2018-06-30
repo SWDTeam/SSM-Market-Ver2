@@ -7,12 +7,38 @@
   text-align: center;
   font-size: 20px;
   font-weight: 450;
-  color: #94918D;
+  color: #670000;
+  border-bottom: 1px solid rgba(102, 97, 91, 0.3);
+}
+
+.dropdown-content-adpage > li {
+  font-size: 16px;
+  text-align: left;
+  margin-left: 15px;
+  list-style-type: none;
+  color: #670000;
 }
 
 .account-admin-page {
   cursor: pointer;
-  text-align: center;
+  font-size: 16px;
+  color: #670000;
+  font-weight: 600;
+  line-height: 30px;
+  transition: 0.5s;
+  margin: 10px 0px;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  transition: .4s;
+  border-bottom: 1px solid rgba(102, 97, 91, 0.3);
+}
+
+.account-admin-page:hover {
+  color: #3A001E;
+}
+
+.dropdown-content-adpage:hover > li {
+  color: #670000;
 }
 
 .dropdown-content-adpage {
@@ -56,7 +82,7 @@
   text-decoration: none;
 }
 
-.slidebar-field > i {
+.slidebar-field > i, .account-admin-page > i:first-child {
   font-size: 25px;
   margin-right: 10px;
 }
@@ -68,7 +94,7 @@
 .content-admin-page {
   background-color: #F4F3EF;
   width: calc(100% - 260px);
-  height: 100vh;
+  min-height: 100vh;
   padding: 80px 100px;
 }
 

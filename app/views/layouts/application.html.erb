@@ -12,13 +12,14 @@
     <%#= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
     <div class="wrap-admin-page">
       <div class="slidebar-admin-page">
-        <div class="adminpage-logo my-4">SSM Admin Page</div>
+        <div class="adminpage-logo py-4 mb-2">SSM Admin Page</div>
 
-        <div class="account-admin-page" onclick="dropDownAdPage()" style="display: none">
-          <span class="mr-2">Hello, SSM Market!</span>
-          <i class="fa fa-angle-down"></i>
+        <div class="account-admin-page" onclick="dropDownAdPage()">
+          <i class="fa fa-address-card"></i>
+          <span>Hello, SSM Market!</span>
+          <i class="fa fa-angle-down change-icon"></i>
 
-          <ul id="dropdown-admin-page" class="dropdown-content-adpage">
+          <ul id="dropdown-admin-page" class="dropdown-content-adpage mb-0">
             <li>Log out</li>
           </ul>
         </div>
