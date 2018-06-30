@@ -1,25 +1,51 @@
-<h2>Change your password</h2>
+<!--<h2>Change your password</h2>
+
+<%#= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <%#= devise_error_messages! %>
+  <%#= f.hidden_field :reset_password_token %>
+
+  <div class="field">
+    <%#= f.label :password, "New password" %><br />
+    <%# if @minimum_password_length %>
+      <em>(<%#= @minimum_password_length %> characters minimum)</em><br />
+    <%# end %>
+    <%#= f.password_field :password, autofocus: true, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%#= f.label :password_confirmation, "Confirm new password" %><br />
+    <%#= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%#= f.submit "Change my password" %>
+  </div>
+<%# end %>
+
+<%#= render "accounts/shared/links" %>-->
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
-  </div>
+  <div class="wrap-new-category">
+    <p class="label-new-category">New Category</p>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+    <div class="field-new-category">
+      <%= f.label :password, "New password", class: "label-form-new-category"%><br>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <% end %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "off", class:"input-field-adminpage" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
+    <div class="field-new-category">
+      <%= f.label :password_confirmation, "Confirm new password", class: "label-form-new-category mt-3" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off", class:"input-field-adminpage" %>
+    </div>
+
+    <div class="actions mt-5 submit-creat-category">
+      <%= f.submit "Change my password", class: "submit-bnt-new-category" %>
+    </div>
   </div>
 <% end %>
-
-<%= render "accounts/shared/links" %>

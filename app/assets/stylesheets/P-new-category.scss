@@ -12,7 +12,7 @@
   font-weight: 600;
 }
 
-#category_name, #category_status {
+#category_name, #category_status, .input-field-adminpage {
   width: 62%;
   border: #DBD6CE 1px solid;
   padding: 8px 10px;
@@ -21,7 +21,7 @@
   background: #FFFCF5;
 }
 
-#category_name:focus, #category_status:focus {
+#category_name:focus, #category_status:focus, .input-field-adminpage:focus {
   outline: none;
   background:#FFFFFF;
 }
