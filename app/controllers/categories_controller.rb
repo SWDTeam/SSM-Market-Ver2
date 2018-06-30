@@ -15,6 +15,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   def new
     @category = Category.new
+    @image = @category.images.build
   end
 
   # GET /categories/1/edit
@@ -24,16 +25,18 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
+    @user = current_account
     # @category = Category.new(category_params)
-    @category = current_account.categories.build(category_params)
-
+    @category = @user.categories.build(category_params)
     respond_to do |format|
       if @category.save
-        unless params[:image].nil?
-          @img = @category.images.create!(url: params[:image]['url'], category_id: @category.id)
+        unless params[:images].nil?
+          params[:images]['url'].each do |img|
+            @image = @category.images.create!(url: img, category_id: @category.id)
+          end
         end
         format.html { redirect_to categories_path, notice: 'Category was successfully created.' }
-          format.json { render :index, status: :created, location: @category }  
+        format.json { render :index, status: :created, location: @category }  
       else
         format.html { render :new }
         format.json { render json: @category.errors, status: :unprocessable_entity }

@@ -1,5 +1,26 @@
-<!--<h1>New Category</h1>-->
+<%= form_with(model: @category, local: true, url:{action: "create"}) do |form| %>
+  <div class="wrap-new-category">
+    <p class="label-new-category">New Category</p>
+    <div class="field-new-category">
+      <%= form.label :name, class: "label-form-new-category" %><br>
+      <%= form.text_field :name, id: :category_name %>
+    </div>
 
-<%= render 'form', category: @category %>
+  <div class="row mt-2 justify-content-center" id="product_img_field_container">
+      <%= form.fields_for :images do |i| %>
+        <div class="M-img-field">
+          <button class='btn btn-dark M-btn-image'><i class="fa fa-image fa-3x"></i></br>Add Image
+          </button>
+           <%= i.file_field :url, multiple: false, name: "images[url][]", class: "M-image-input", onchange:"previewImages(event)" %>
+          <div class="M-image-output">
+            <div class='btn btn-light M-image-remove' onclick='removeImages(event)'><i class="fa fa-trash"></i></div>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-<%#= link_to 'Back', categories_path %>
+    <div class="actions mt-5 submit-creat-category">
+      <%= form.submit class: "submit-bnt-new-category" %>
+    </div>
+  </div>
+<% end %>

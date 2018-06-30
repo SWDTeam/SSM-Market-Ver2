@@ -6,6 +6,7 @@ class Account < ApplicationRecord
          :confirmable, :lockable, :timeoutable
 
   has_many :products
+  has_many :categories
   has_many :orders
   has_one  :role
 end
