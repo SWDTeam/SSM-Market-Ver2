@@ -60,6 +60,18 @@
   color: #242936;
 }
 
+.holder-login-email::after {
+  content: "Email";
+  font-size: 15px;
+  color: #999999;
+  display: block;
+  position: relative;
+  transition: 0.4s;
+  float: left;
+  top: -50px;
+  left: 15px;
+}
+
 @media (max-width: 400px) {
   .P-wrap-login-board {
     width: 100%;

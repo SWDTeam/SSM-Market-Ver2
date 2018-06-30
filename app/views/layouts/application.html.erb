@@ -9,8 +9,51 @@
   </head>
 
   <body>
-    <%= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
+    <%#= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
+    <div class="wrap-admin-page">
+      <div class="slidebar-admin-page">
+        <div class="adminpage-logo my-4">SSM Admin Page</div>
 
-    <%= yield %>
+        <div class="account-admin-page">
+        </div>
+
+        <ul class="nav">
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-columns"></i>
+              <span>DASHBOARD</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-users"></i>
+              <span>USER</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-shopping-cart"></i>
+              <span>PRODUCTS</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-address-book"></i>
+              <span>ORDER</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page active">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-archive"></i>
+              <span>CATEGORIES</span>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+
+      <div class="content-admin-page">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>
