@@ -15,6 +15,8 @@ gem 'autoprefixer-rails'
 gem "font-awesome-rails"
 gem 'jquery-validation-rails'
 gem 'jquery-ui-rails'
+gem 'carrierwave' # upload image  
+
 # support window
 # gem 'wdm'
 group :production do

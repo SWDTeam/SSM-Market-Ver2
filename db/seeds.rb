@@ -29,13 +29,13 @@ user = Account.new(
 user.skip_confirmation!
 user.save!
 
-Category.create!(
-  {name: "Milk"},
-  {name: "Drink"},
-  {name: "Cakes"},
-  {name: "Clothes"},
-  {name: "Shoes"}
-)
+cate = Category.create!([
+  {name: "Milk", account_id: 1},
+  {name: "Drink", account_id: 1},
+  {name: "Cakes", account_id: 1},
+  {name: "Clothes", account_id: 1},
+  {name: "Shoes", account_id: 1}
+])
 
 # Order.create!(
 #   {

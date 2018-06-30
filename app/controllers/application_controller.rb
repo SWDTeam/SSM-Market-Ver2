@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     else
       reset_session
       '/422'
-    end
+    end 
   end
 
     # sign_in_url = new_user_session_url

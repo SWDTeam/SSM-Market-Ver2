@@ -1,4 +1,5 @@
 class Category < ApplicationRecord
-  belongs_to :product
+  belongs_to :account
+  # belongs_to :product
   has_one :image
 end
