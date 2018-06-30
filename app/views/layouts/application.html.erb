@@ -3,36 +3,62 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SsmMarketWeb</title>
+    <title>SsmMarket-Web</title>
     <%= csrf_meta_tags %>
-    <!-- <link rel="stylesheet" href="../../assets/stylesheets/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" href="../../assets/stylesheets/dataTables.bootstrap.min.css"> -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <div class="sidebar" data-background-color="white" data-active-color="danger">
-      <div class="sidebar-wrapper">
-        <div class="logo">
-        <%= link_to 'SSM Admin Page', home_path, class:'simple-text' %>
-        <%= link_to 'Logout', destroy_account_session_path, method: 'delete' %>
-        
-        <!-- <a href="index.jsp" class="simple-text">SSM Admin Page</a></div> -->
-        <ul class="nav" id="M--nav--menu">
-          <li class="M--menu active"><a href="index.jsp"><i class="fa fa-columns"></i>
-              <p>Dashboard</p></a></li>
-              <li class="M--menu"><a href="ShowUserController"><i class="fa fa-user"></i>
-              <p>Users</p></a></li>
-          <li class="M--menu"><a href="ShowProductController"><i class="fa fa-shopping-cart"></i>
-              <p>Products</p></a></li>
-          <li class="M--menu"><a href="index_orders.jsp"><i class="fa fa-money"></i>
-              <p>order</p></a></li>
-          <li class="M--menu"><a href="GetAllCategoriesController"><i class="fa fa-tag"></i>
-              <p>category</p></a></li>
+    <div class="wrap-admin-page">
+      <div class="slidebar-admin-page">
+        <div class="adminpage-logo py-4 mb-2">SSM Admin Page</div>
+        <div class="account-admin-page" onclick="dropDownAdPage()">
+          <i class="fa fa-address-card"></i>
+          <span>Hello, SSM Market!</span>
+          <i class="fa fa-angle-down change-icon"></i>
+          <ul id="dropdown-admin-page" class="dropdown-content-adpage mb-0">
+            <li><%= link_to 'Logout', destroy_account_session_path, method: 'delete' %></li>
+          </ul>
+        </div>
+
+        <ul class="nav">
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-columns"></i>
+              <span>DASHBOARD</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-users"></i>
+              <span>USER</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-shopping-cart"></i>
+              <span>PRODUCTS</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-address-book"></i>
+              <span>ORDER</span>
+            <% end %>
+          </li>
+          <li class="nav-li-admin-page active">
+            <%= link_to root_path, class:"slidebar-field" do %>
+              <i class="fa fa-archive"></i>
+              <span>CATEGORIES</span>
+            <% end %>
+          </li>
         </ul>
       </div>
+
+      <div class="content-admin-page">
+        <%= yield %>
+      </div>
     </div>
-    <%= yield %>
   </body>
 </html>

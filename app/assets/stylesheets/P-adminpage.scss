@@ -1,0 +1,123 @@
+.wrap-admin-page {
+  display: inline-flex;
+  width: 100%;
+}
+
+.adminpage-logo {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 450;
+  color: #670000;
+  border-bottom: 1px solid rgba(102, 97, 91, 0.3);
+}
+
+.dropdown-content-adpage > li {
+  font-size: 16px;
+  text-align: left;
+  margin-left: 15px;
+  list-style-type: none;
+  color: #670000;
+}
+
+.account-admin-page {
+  cursor: pointer;
+  font-size: 16px;
+  color: #670000;
+  font-weight: 600;
+  line-height: 30px;
+  transition: 0.5s;
+  margin: 10px 0px;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  transition: .4s;
+  border-bottom: 1px solid rgba(102, 97, 91, 0.3);
+}
+
+.account-admin-page:hover {
+  color: #3A001E;
+}
+
+.dropdown-content-adpage:hover > li {
+  color: #670000;
+}
+
+.dropdown-content-adpage {
+  display: none;
+  z-index: 100;
+}
+
+.show-adpage {
+  display: block;
+}
+
+.slidebar-admin-page {
+  max-height: none;
+  min-height: 100%;
+  overflow: hidden;
+  width: 260px;
+  z-index: 4;
+  box-shadow: inset -1px 0px 0px 0px #DDDDDD;
+}
+
+.nav {
+  display: block;
+}
+
+.nav-li-admin-page {
+  margin: 30px 0;
+}
+
+.slidebar-field {
+  color: #94918D;
+  font-weight: 600;
+  line-height: 30px;
+  transition: 0.5s;
+  margin: 10px 0px;
+  padding: 10px 25px;
+  box-sizing: border-box;
+}
+
+.slidebar-field:hover {
+  color: rgb(102, 97, 91);
+  text-decoration: none;
+}
+
+.slidebar-field > i, .account-admin-page > i:first-child {
+  font-size: 25px;
+  margin-right: 10px;
+}
+
+.slidebar-field > span {
+  font-size: 15px;
+}
+
+.content-admin-page {
+  background-color: #F4F3EF;
+  width: calc(100% - 260px);
+  min-height: 100vh;
+  padding: 80px 100px;
+}
+
+.active > a::before {
+  border-right: 17px solid #DDDDDD;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 244px;
+}
+
+.active > a::after {
+  border-right: 17px solid #f4f3ef;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 244px;
+}
+
+.nav > .active > a {
+  color: rgb(235, 94, 40);
+}

@@ -1,6 +1,19 @@
 class AccountsController < ApplicationController
   before_action :authenticate_account!, only: [:edit, :update]
 
+  def index
+    
+  end
+
+  def show
+    
+  end
+  
+  def edit
+    
+  end
+  
+  
   def update
     # if @current_account.update(user_params)
     #   redirect_to edit_user_path(@current_user), flash: {notice: 'Profile updated sucessfully!'}

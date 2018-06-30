@@ -1,16 +1,28 @@
-<h2>Forgot your password?</h2>
+<!DOCTYPE html>
+<html class="M--login--page">
+  <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SSM Market - Forgot password</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  
+  <body class="P-full-login mt-3">
+    <center>
+      <div class="P-wrap-login-board">
+        <h1 class= "pb-5 P-title-login">Forget your password?</h1>
+        <%= form_for resource, as: resource_name, url: password_path(resource_name) do |f| %>
+          <div class="wrap-login-email">
+            <%= f.email_field :email, autofocus: true, autocomplete: "off", class: "P-input-login", placeholder: "Email"%>
+            <!-- <span class="holder-login-email"></span> -->
+          </div>
+          <%= f.submit "Send", class:"P-login-bnt my-5" %>
+        <% end %>
+      </div>
+    </center>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "accounts/shared/links" %>
+    <%#= render "accounts/shared/links" %>
+  </body>
+</html>

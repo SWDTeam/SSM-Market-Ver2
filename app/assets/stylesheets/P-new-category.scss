@@ -1,0 +1,60 @@
+.wrap-new-category {
+  background-color: white;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+  padding: 30px 50px;
+}
+
+.label-new-category {
+  font-size: 25px;
+  color: rgb(37, 36, 34);
+  font-weight: 600;
+}
+
+#category_name, #category_status, .input-field-adminpage {
+  width: 62%;
+  border: #DBD6CE 1px solid;
+  padding: 8px 10px;
+  border-radius: 6px;
+  outline: none;
+  background: #FFFCF5;
+}
+
+#category_name:focus, #category_status:focus, .input-field-adminpage:focus {
+  outline: none;
+  background:#FFFFFF;
+}
+
+.field-new-category {
+  margin-left: 20%;
+  margin-right: 20%;
+  width: 100%;
+}
+
+.label-form-new-category {
+  color: black;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.submit-creat-category {
+  margin-left: 37%;
+}
+
+.submit-bnt-new-category {
+  width: 40%;
+  background: #EB5E28;
+  border: #EB5E28;
+  outline: none;
+  color: white;
+  padding: 8px 0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.submit-bnt-new-category:hover {
+  background: #F03E58;
+  border: #F03E58;
+}

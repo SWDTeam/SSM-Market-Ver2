@@ -1,27 +1,48 @@
-<%= form_with(model: category, local: true) do |form| %>
-  <% if category.errors.any? %>
-    <div id="error_explanation">
+<%#= form_with(model: category, local: true) do |form| %>
+  <%# if category.errors.any? %>
+    <!--<div id="error_explanation">
       <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
 
       <ul>
-      <% category.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+      <%# category.errors.full_messages.each do |message| %>
+        <li><%#= message %></li>
+      <%# end %>
       </ul>
     </div>
-  <% end %>
+  <%# end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :category_name %>
+  /*<div class="field">
+    <%#= form.label :name %>
+    <%#= form.text_field :name, id: :category_name %>
   </div>
 
   <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status, id: :category_status %>
+    <%#= form.label :status %>
+    <%#= form.text_field :status, id: :category_status %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%#= form.submit %>
+  </div>-->
+<%# end %>
+
+<%= form_with(model: category, local: true) do |form| %>
+  <div class="wrap-new-category">
+    <p class="label-new-category">New Category</p>
+    <div class="field-new-category">
+      <%= form.label :name, class: "label-form-new-category" %><br>
+      <%= form.text_field :name, id: :category_name %>
+    </div>
+
+    <div class="field-new-category">
+      <%= form.label :status, class: "label-form-new-category mt-3" %><br>
+      <%= form.text_field :status, id: :category_status %>
+    </div>
+
+    <div class="actions mt-5 submit-creat-category">
+      <%= form.submit class: "submit-bnt-new-category" %>
+    </div>
   </div>
 <% end %>
+
+

@@ -14,12 +14,9 @@
 
  @import "bootstrap";
  @import "font-awesome";
- @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700');
- @import url('https://fonts.googleapis.com/css?family=Muli:300,400');
 
+ @import url('https://fonts.googleapis.com/css?family=Francois+One');
 
- @import "M_login_main";
- @import "M_login_util";
-
- @import "M-style";
- @import "paper-dashboard";
+ @import "P-login";
+ @import "P-adminpage";
+ @import "P-new-category"
