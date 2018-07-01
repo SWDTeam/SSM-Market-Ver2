@@ -12,7 +12,6 @@
   </thead>
 
   <tbody>
-  <%= Image.find_by_category_id(Category.find(12).id).url%>
     <% @categories.each do |category| %>
       <tr>
         <td><img src="<%= category.images.first.url %>" alt=""></td>      
