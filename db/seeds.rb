@@ -10,21 +10,24 @@ role_admin = Role.create!(name: "admin",description: "admin")
 role_user = Role.create!(name: "user",description: "user")
 
 random_password = Devise.friendly_token.first(8)
-admin = Account.new([
-  {
+admin = Account.new({
     email: "minhtestcode@gmail.com", 
     password: random_password, 
     name: "Minh Bác Ái",
     role_id: role_admin.id
-  }, {
+  })
+
+admin.skip_confirmation!
+admin.save!
+
+admin_1 = Account.new({
     email: "tuankiet1797@gmail.com",
     password: random_password, 
     name: "Kiệt Đập Chai",
     role_id: role_admin.id
-  }])
-
-admin.skip_confirmation!
-admin.save!
+  })
+admin_1.skip_confirmation!
+admin_1.save!
 
 user = Account.new(
   email: "minh.thu2831997@gmail.com",
