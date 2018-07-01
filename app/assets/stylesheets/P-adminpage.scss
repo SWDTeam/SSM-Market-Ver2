@@ -63,18 +63,19 @@
   display: block;
 }
 
-.nav-li-admin-page {
+/*.nav-li-admin-page {
   margin: 30px 0;
-}
+}*/
 
 .slidebar-field {
   color: #94918D;
   font-weight: 600;
   line-height: 30px;
   transition: 0.5s;
-  margin: 10px 0px;
-  padding: 10px 25px;
+  margin: 20px 0px;
+  padding: 0px 25px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .slidebar-field:hover {
@@ -82,7 +83,7 @@
   text-decoration: none;
 }
 
-.slidebar-field > i, .account-admin-page > i:first-child {
+.slidebar-field > i:first-child, .account-admin-page > i:first-child {
   font-size: 25px;
   margin-right: 10px;
 }
@@ -98,17 +99,7 @@
   padding: 80px 100px;
 }
 
-.active > a::before {
-  border-right: 17px solid #DDDDDD;
-  border-top: 17px solid transparent;
-  border-bottom: 17px solid transparent;
-  content: "";
-  display: inline-block;
-  position: absolute;
-  left: 244px;
-}
-
-.active > a::after {
+.active::before {
   border-right: 17px solid #f4f3ef;
   border-top: 17px solid transparent;
   border-bottom: 17px solid transparent;
@@ -118,6 +109,16 @@
   left: 244px;
 }
 
-.nav > .active > a {
+/*.active::after {
+  border-right: 17px solid #f4f3ef;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 244px;
+}*/
+
+.nav > .active {
   color: rgb(235, 94, 40);
 }

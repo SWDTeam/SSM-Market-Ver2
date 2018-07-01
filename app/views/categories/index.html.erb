@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Categories</h1>
-
 <table>
+
   <thead>
     <tr>
       <th>Name</th>
@@ -11,9 +11,8 @@
     </tr>
   </thead>
 
-  <tbody>
-  <%= Image.find_by_category_id(Category.find(12).id).url%>
     <% @categories.each do |category| %>
+  <tbody>
       <tr>
         <td><img src="<%= category.images.first.url %>" alt=""></td>      
         <td><%= category.name %></td>
