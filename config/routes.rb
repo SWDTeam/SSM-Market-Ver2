@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   resources :orders
   resources :roles
 
-  get '/home', to: 'products#home', as: "home"  
+  get '/change_password/new', to: 'accounts#change_password', as: 'change_password'
+  post '/change_password/:account_id/edit', to: 'accounts#edit_password', as: 'edit_change_password'
+
+  get '/home', to: 'products#home', as: "home" 
+  # post '/change_pass' 
   devise_scope :account do
     root "accounts/sessions#new"
   end
@@ -25,6 +29,7 @@ Rails.application.routes.draw do
 #---------------Mobile api
   namespace :api do
     namespace :v1 do
+      # accounts
       resources :accounts, only: [:edit, :update, :show]
       post "change_password", to: "accounts#change_password"
       devise_scope :account do
@@ -32,6 +37,8 @@ Rails.application.routes.draw do
         post "sign_in", :to => 'sessions#create'
         delete "sign_out", :to => 'sessions#destroy'
       end
+      # categories
+      resources :categories, only: [:index]
     end
   end
 

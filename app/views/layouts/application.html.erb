@@ -20,7 +20,7 @@
           <ul id="dropdown-admin-page" class="dropdown-content-adpage mb-0">
             <!-- not done -->
             <li><%= link_to 'Profile', root_path %></li> 
-            <li><%= link_to 'Change Password', root_path %></li>
+            <li><%= link_to 'Change Password', change_password_path(current_account) %></li>
             <!-- not done -->
             <li><%= link_to 'Logout', destroy_account_session_path, method: 'delete' %></li>
           </ul>

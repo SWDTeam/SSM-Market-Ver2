@@ -21,25 +21,28 @@ class AccountsController < ApplicationController
   end
 
   # def check_old_password
-  #   @account = Account.find_by_id(@current_account.id)
+  #   @account = Account.find_by_id(current_account.id)
   #   old_password = params[:old_password]
   #   respond_to do |format|
-  #     if BCrypt::Password.new(@user.encrypted_password) == old_password
-  #       format.json { render json: { checkPassword => true } }
+  #     if BCrypt::Password.new(@account.encrypted_password) == old_password
+  #       format.json { render json: {checkPassword: true } }
   #     else
-  #       format.json { render json: { checkPassword => false } }
+  #       format.json { render json: { checkPassword: false } }
   #     end
   #   end
   # end
-
-  # def change_password
-  #   @user = User.find_by_id(@current_user.id)
-  #   if @user.update_attributes(:password => params[:user][:change_password])
-  #     redirect_to new_user_session_path, flash: { notice: 'Change password sucessfully!' }
-  #   else
-  #     flash[:notice] = 'Change password failed'
-  #   end
-  # end
+  def change_password
+  
+  end
+  
+  def edit_password
+    @account = Account.find_by_id(current_account.id)
+    if @account.update_attributes(password: params[:account][:new_password])
+      redirect_to edit_account_path(current_account), flash: { notice: 'Change password sucessfully!' }
+    else
+      flash[:notice] = 'Change password failed'
+    end
+  end
 
   # check existed mail
   # def check_email
@@ -52,8 +55,7 @@ class AccountsController < ApplicationController
   # end
 
   private
-    def user_params
-      # params.require(:user).permit(:)
+    def account_params
+      params.require(:account).permit(:name, :email, :phone, :address, :gender)
     end
-
 end

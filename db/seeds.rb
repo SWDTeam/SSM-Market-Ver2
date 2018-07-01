@@ -10,12 +10,19 @@ role_admin = Role.create!(name: "admin",description: "admin")
 role_user = Role.create!(name: "user",description: "user")
 
 random_password = Devise.friendly_token.first(8)
-admin = Account.new(
-  email: "minhtestcode@gmail.com", 
-  password: random_password, 
-  name: "Minh Bác Ái",
-  role_id: role_admin.id
-)
+admin = Account.new([
+  {
+    email: "minhtestcode@gmail.com", 
+    password: random_password, 
+    name: "Minh Bác Ái",
+    role_id: role_admin.id
+  }, {
+    email: "tuankiet1797@gmail.com",
+    password: random_password, 
+    name: "Kiệt Đập Chai",
+    role_id: role_admin.id
+  }])
+
 admin.skip_confirmation!
 admin.save!
 
@@ -28,30 +35,3 @@ user = Account.new(
 
 user.skip_confirmation!
 user.save!
-
-cate = Category.create!([
-  {name: "Milk", account_id: 1},
-  {name: "Drink", account_id: 1},
-  {name: "Cakes", account_id: 1},
-  {name: "Clothes", account_id: 1},
-  {name: "Shoes", account_id: 1}
-])
-
-# Order.create!(
-#   {
-#     code: "",
-#     address_ship: "",
-#     total_price: ,
-#     total_quantity: ,
-#     account_id: 2,
-#     cashier_id: 1
-#   },
-#   {
-#     code: "",
-#     address_ship: "",
-#     total_price: ,
-#     total_quantity: ,
-#     account_id: 2,
-#     cashier_id: 1
-#   }
-# )
