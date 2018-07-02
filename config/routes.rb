@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resources :images, only: [:create, :edit, :update, :show, :destroy]
     end
   end
+  resources :products, only: :index
   resources :categories, only: [:index]
   resources :order_products
   resources :orders

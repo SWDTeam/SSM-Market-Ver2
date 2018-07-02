@@ -19,6 +19,8 @@ end
   # GET /products/new
   def new
     @product = Product.new
+    @categories = Category.all
+    @image = @product.images.build
   end
 
   # GET /products/1/edit
