@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_account!
 def home
   
 end
@@ -18,8 +18,8 @@ end
 
   # GET /products/new
   def new
-    @product = Product.new
     @categories = Category.all
+    @product = Product.new
     @image = @product.images.build
   end
 
@@ -30,11 +30,18 @@ end
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
-
+    @user = current_account
+    # @product = Product.new(product_params)
+    @product = @user.products.build(product_params)
+    
     respond_to do |format|
       if @product.save
-        format.html { redirect_to @product, notice: 'Product was successfully created.' }
+        unless params[:images].nil?
+          params[:images]['url'].each do |img|
+            @image = @product.images.create!(url: img, product_id: @product.id)
+          end
+        end
+        format.html { redirect_to product_path(@product), notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new }
@@ -75,6 +82,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:product_key, :name, :quantity, :manufacturer, :manu_date, :expired_date, :description, :price, :status)
+      params.require(:product).permit(:product_key, :name, :quantity, :manufacturer, 
+        :manu_date, :expired_date, :description, :price, :status, :category_id)
     end
 end

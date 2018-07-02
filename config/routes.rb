@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       resources :images, only: [:create, :edit, :update, :show, :destroy]
     end
   end
-  resources :products, only: :index
+  resources :products, only: [:index, :show]
   resources :categories, only: [:index]
   resources :order_products
   resources :orders
@@ -40,6 +40,8 @@ Rails.application.routes.draw do
       end
       # categories
       resources :categories, only: [:index]
+      #products
+      resources :products, only: [:show, :index]
     end
   end
 
