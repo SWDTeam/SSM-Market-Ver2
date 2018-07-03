@@ -1,6 +1,23 @@
-<h1>Editing Category</h1>
+<%= form_with(model: @category, local: true, url:{action: "update"}) do |form| %>
+  <div class="wrap-new-category">
+    <p class="label-new-category">Edit Category</p>
+    <div class="field-new-category">
+      <%= form.label :name, class: "label-form-new-category" %><br>
+      <%= form.text_field :name, id: :category_name %>
+    </div>
 
-<%= render 'form', category: @category %>
-
-<%= link_to 'Show', @category %> |
-<%= link_to 'Back', categories_path %>
+    <div class="row mt-2 justify-content-center" id="category_img_field_container"> 
+       <div class="M-img-field">
+          <button class='btn btn-dark M-btn-image'><i class="fa fa-image fa-3x"></i></br>Add Image
+          </button>
+           <%= form.file_field :images, multiple: false, name: "images[url][]", class: "M-image-input", onchange:"previewImages(event)" %>
+          <div class="M-image-output" style="background-image: url('<%= asset_url @category.images.first.url%>'); display:block;">
+            <div class='btn btn-light M-image-remove' onclick='removeImages(event, <%= @category.images.first.id%>)'><i class="fa fa-trash"></i></div>
+          </div>
+        </div>
+    </div>
+    <div class="actions mt-5 submit-creat-category">
+      <%= form.submit class: "submit-bnt-new-category" %>
+    </div>
+  </div>
+<% end %>
