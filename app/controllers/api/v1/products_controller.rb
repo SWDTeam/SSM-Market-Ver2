@@ -1,4 +1,23 @@
 class Api::V1::ProductsController < ActionController::API
+  def index_products_by_category_id
+    h = Hash.new
+    results = Array.new
+    @lists = Product.includes(:images).where(category_id: params[:category_id])
+    if @lists.size < 1
+      render json: {errors: 'Not found'}, status: 404
+    else
+      @lists.each do |p|
+        results.push({id: p.id, name: p.name, url: p.images.first.url.url, 
+          product_key: p.product_key, quantity: p.quantity, manufacturer: p.manufacturer,
+          manu_date: p.manu_date, expired_date: p.expired_date, description: p.description,
+          price: p.price, status: p.status, category_id: p.category_id
+        })
+      end
+      h[:products] = results
+      render json: h.as_json
+    end
+  end
+
   def index
     h = Hash.new
     results = Array.new
@@ -15,6 +34,8 @@ class Api::V1::ProductsController < ActionController::API
     render json: h.as_json
   end
   
+
+
   def show
     product = Product.find_by_id(params[:id])
     name = Category.find(product.category_id).name
@@ -24,4 +45,8 @@ class Api::V1::ProductsController < ActionController::API
     end
     render json: {errors: 'Not found'}, status: 404
   end
+
+ 
+  
+
 end

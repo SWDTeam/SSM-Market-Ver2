@@ -42,6 +42,7 @@ Rails.application.routes.draw do
       resources :categories, only: [:index]
       #products
       resources :products, only: [:show, :index]
+      get 'list_products/:category_id', to: "products#index_products_by_category_id"  #find list product by category id
     end
   end
 
