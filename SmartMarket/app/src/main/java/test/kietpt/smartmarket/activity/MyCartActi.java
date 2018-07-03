@@ -189,13 +189,13 @@ public class MyCartActi extends AppCompatActivity {
                                 });
                                 synchronized (this) {
                                     wait(3000);
-
                                 }
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                             Intent intent = new Intent(getApplicationContext(), ConfirmCartActi.class);
                             startActivity(intent);
+                            finish();
                         }
                     };
                     thread.start();

@@ -66,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
                     //loginCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_in");
-                    //loginCustomer("https://ssm-market.herokuapp.com/api/v1/sign_in");
-                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString() +
-                            "&txtPassword=" + pass.getText().toString());
+                    loginCustomer("https://ssm-market.herokuapp.com/api/v1/sign_in");
+//                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString() +
+//                            "&txtPassword=" + pass.getText().toString());
                 }
             }
         });
@@ -90,19 +90,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginCustomer(String url) {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        JSONObject jsonObject = new JSONObject();
-//        JSONObject js = new JSONObject();
-//        try {
-//            jsonObject.put("email", email.getText().toString());
-//            jsonObject.put("password", pass.getText().toString());
-//            js.put("session", jsonObject);
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        Log.e("Json request login ", js + "");
+        JSONObject jsonObject = new JSONObject();
+        JSONObject js = new JSONObject();
+        try {
+            jsonObject.put("email", email.getText().toString());
+            jsonObject.put("password", pass.getText().toString());
+            js.put("session", jsonObject);
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, null
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("Json request login ", js + "");
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, js
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -110,26 +110,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.toString() != null || !response.toString().equals("")) {
                     Log.e("LOGIN ", "da vao Login ");
                     try {
-//                        boolean checked = response.getBoolean("success");
-//                        Log.e("Checked ", checked + "");
-//                        if (checked) {
-//                            int userReponse = response.getInt("id");
-//                            String emailReponse = response.getString("email");
-//                            Log.e("EMAILREPONSE + ", emailReponse);
-//                            String usernameReponse = response.getString("name");
-//                            String genderReponse = response.getString("gender");
-//                            String phoneReponse = response.getString("phone");
-//                            String addressReponse = response.getString("address");
-//                            String statusReponse = response.getString("status");
+                        boolean checked = response.getBoolean("success");
+                        Log.e("Checked ", checked + "");
+                        if (checked) {
+                            int userReponse = response.getInt("id");
+                            String emailReponse = response.getString("email");
+                            Log.e("EMAILREPONSE + ", emailReponse);
+                            String usernameReponse = response.getString("name");
+                            String genderReponse = response.getString("gender");
+                            String phoneReponse = response.getString("phone");
+                            String addressReponse = response.getString("address");
+                            String statusReponse = response.getString("status");
 
-                        int userReponse = response.getInt("userId");
-                        String emailReponse = response.getString("email");
-                        Log.e("EMAILREPONSE + ", emailReponse);
-                        String usernameReponse = response.getString("username");
-                        String genderReponse = response.getString("gender");
-                        String phoneReponse = response.getString("phone");
-                        String addressReponse = response.getString("address");
-                        String statusReponse = response.getString("status");
+//                        int userReponse = response.getInt("userId");
+//                        String emailReponse = response.getString("email");
+//                        Log.e("EMAILREPONSE + ", emailReponse);
+//                        String usernameReponse = response.getString("username");
+//                        String genderReponse = response.getString("gender");
+//                        String phoneReponse = response.getString("phone");
+//                        String addressReponse = response.getString("address");
+//                        String statusReponse = response.getString("status");
 
                             MainActivity.account = new Account(userReponse, emailReponse, usernameReponse, genderReponse, phoneReponse, pass.getText().toString(),
                                     addressReponse, statusReponse);
@@ -146,9 +146,9 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
 
-//                        } else {
-//                            Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
-//                        }
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
