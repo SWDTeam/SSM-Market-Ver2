@@ -1,161 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ProductDetailActi"
-    android:orientation="vertical"
     >
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/productDetailToolbar"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayoutDetail"
         android:layout_width="match_parent"
-        app:title="Product Detail"
-        app:titleTextColor="#ffffff"
-        android:background="#FF737357"
-        android:layout_height="?attr/actionBarSize">
-    </android.support.v7.widget.Toolbar>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <ImageView
-            android:id="@+id/imgViewProductDetail"
-            android:layout_width="130dp"
-            android:layout_margin="10dp"
-            android:layout_height="130dp" />
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_margin="5dp"
-                android:textStyle="bold"
-                android:id="@+id/txtNameProductDetail"
-                android:text="ten san pham"
-                android:textColor="#000000"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_margin="5dp"
-                android:textStyle="bold"
-                android:id="@+id/txtPriceProductDetail"
-                android:text="gia san pham"
-                android:textColor="#ff0101"
-                />
-            <Spinner
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:background="@drawable/spinner"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:id="@+id/spinnerQuantity"
-                >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            </Spinner>
-            <Button
-                android:layout_marginTop="5dp"
-                android:id="@+id/btnAddToCartProductDetail"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/productDetailToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f28016"
-                android:text="Add To Cart"
-                android:textColor="#ffffff"
-                android:onClick="addToCart"
-                />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <TextView
-            android:layout_marginTop="5dp"
-            android:text="Description"
-            android:textColor="#31ff11"
-            android:textSize="25sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:text="Ngay san xuat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12-03-2015"
-                android:id="@+id/txtManuTimeProductDetail"
-                android:layout_margin="5dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:text="Ngay het han"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12-03-2015"
-                android:id="@+id/txtExpiredProductDetail"
-                android:layout_margin="5dp"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:text="Nha san xuat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="12-03-2015"
-                android:id="@+id/txtManuProductDetail"
-                android:layout_margin="5dp"
-                />
-        </LinearLayout>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:textSize="20sp"
-                android:paddingBottom="10dp"
-                android:id="@+id/txtDesProductDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </ScrollView>
-    </LinearLayout>
+                android:background="#81835b"
+                android:minHeight="?attr/actionBarSize"
+                app:titleTextColor="#ffffff">
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content">
 
+                    <TextView
+                        android:id="@+id/txtToolbarProductName"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Home"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageViewProductDetail"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/cart"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.931"
+                        app:layout_constraintStart_toEndOf="@+id/txtToolbarProductName"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"/>
+
+                    <TextView
+                        android:id="@+id/txtCountProductDetail"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:gravity="center"
+                        android:text="12"
+                        android:textColor="#ff4102"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.Toolbar>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imgViewProductDetail"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_margin="10dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtNameProductDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="ten san pham"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtPriceProductDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="gia san pham"
+                        android:textColor="#ff0101"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinnerQuantity"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/spinner"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:textAlignment="center">
+
+                    </Spinner>
+
+                    <Button
+                        android:id="@+id/btnAddToCartProductDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="#f28016"
+                        android:onClick="addToCart"
+                        android:text="Add To Cart"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Description"
+                    android:textColor="#31ff11"
+                    android:textSize="25sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Ngay san xuat" />
+
+                    <TextView
+                        android:id="@+id/txtManuTimeProductDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="12-03-2015" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Ngay het han" />
+
+                    <TextView
+                        android:id="@+id/txtExpiredProductDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="12-03-2015" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Nha san xuat" />
+
+                    <TextView
+                        android:id="@+id/txtManuProductDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="12-03-2015" />
+                </LinearLayout>
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtDesProductDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:textSize="20sp" />
+                </ScrollView>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.DrawerLayout>
 </LinearLayout>

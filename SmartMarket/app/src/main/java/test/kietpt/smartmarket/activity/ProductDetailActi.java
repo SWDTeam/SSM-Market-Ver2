@@ -34,61 +34,66 @@ import test.kietpt.smartmarket.ulti.Database;
 public class ProductDetailActi extends AppCompatActivity {
 
     Toolbar toolbarDetail;
-    ImageView imgDetail;
-    TextView txtNameDetail,txtPriceDetail,txtManuDetail,txtManuTimeDetail,txtExpiredDetail,txtDesDetail;
+    ImageView imgDetail,imgCartDetail;
+    TextView txtNameDetail, txtPriceDetail, txtManuDetail, txtManuTimeDetail, txtExpiredDetail, txtDesDetail,txtToolbarName,txtCount;
+
     Spinner spinner;
     Button btnAddToCart;
-    String selected="";
+    String selected = "";
 
     int productId = 0;
     String productName = "";
     String productKey = "";
     String urlPic = "";
     float price;
-    String manu="";
-    String manuTime="";
-    String expiredTime="";
+    String manu = "";
+    String manuTime = "";
+    String expiredTime = "";
     String des = "";
     int quantityTemp;
+
+    Database database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         reflect();
-        if(CheckConnection.haveNetworkConnection(getApplicationContext())){
+        if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             showProductDetail();
             actionToolbar();
             catchSpinner();
-
-
-        }else{
-            CheckConnection.showConnection(getApplicationContext(),"Plesae check you wifi");
+            getProductCount();
+            getToolbarProductName();
+        } else {
+            CheckConnection.showConnection(getApplicationContext(), "Plesae check you wifi");
             finish();
         }
     }
+
+    private void getToolbarProductName() {
+        txtToolbarName.setText(productName);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuCart:
-                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-                startActivity(intentCart);
-                break;
+        switch (item.getItemId()) {
             case R.id.menuSearch:
-                Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
+                Intent intentSearch = new Intent(getApplicationContext(), SearchViewActi.class);
                 startActivity(intentSearch);
                 break;
             case R.id.menuAccount:
-                if(MainActivity.account != null){
-                    Intent intentAccount = new Intent(getApplicationContext(),AccountActivity.class);
+                if (MainActivity.account != null) {
+                    Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
                     startActivity(intentAccount);
-                }else{
-                    Intent intentAccount = new Intent(getApplicationContext(),LoginActivity.class);
+                } else {
+                    Intent intentAccount = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intentAccount);
                 }
                 break;
@@ -101,7 +106,7 @@ public class ProductDetailActi extends AppCompatActivity {
             case R.id.menuMessage:
                 Intent intentasd = new Intent();
                 intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body","");
+                intentasd.putExtra("sms_body", "");
                 intentasd.setData(Uri.parse("sms:01676243500"));
                 startActivity(intentasd);
                 break;
@@ -110,27 +115,48 @@ public class ProductDetailActi extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void reflect(){
-        toolbarDetail = (Toolbar)findViewById(R.id.productDetailToolbar);
-        imgDetail =(ImageView)findViewById(R.id.imgViewProductDetail);
-        txtNameDetail = (TextView)findViewById(R.id.txtNameProductDetail);
-        txtPriceDetail = (TextView)findViewById(R.id.txtPriceProductDetail);
-        txtManuDetail = (TextView)findViewById(R.id.txtManuProductDetail);
-        txtManuTimeDetail = (TextView)findViewById(R.id.txtManuTimeProductDetail);
-        txtExpiredDetail = (TextView)findViewById(R.id.txtExpiredProductDetail);
-        txtDesDetail = (TextView)findViewById(R.id.txtDesProductDetail);
-        spinner = (Spinner)findViewById(R.id.spinnerQuantity);
-        btnAddToCart =(Button)findViewById(R.id.btnAddToCartProductDetail);
+    // lấy id của các button, textview..
+    public void reflect() {
+        toolbarDetail = (Toolbar) findViewById(R.id.productDetailToolbar);
+        imgDetail = (ImageView) findViewById(R.id.imgViewProductDetail);
+        txtNameDetail = (TextView) findViewById(R.id.txtNameProductDetail);
+        txtPriceDetail = (TextView) findViewById(R.id.txtPriceProductDetail);
+        txtManuDetail = (TextView) findViewById(R.id.txtManuProductDetail);
+        txtManuTimeDetail = (TextView) findViewById(R.id.txtManuTimeProductDetail);
+        txtExpiredDetail = (TextView) findViewById(R.id.txtExpiredProductDetail);
+        txtDesDetail = (TextView) findViewById(R.id.txtDesProductDetail);
+        spinner = (Spinner) findViewById(R.id.spinnerQuantity);
+        btnAddToCart = (Button) findViewById(R.id.btnAddToCartProductDetail);
+        imgCartDetail = (ImageView)findViewById(R.id.imageViewProductDetail);
+        imgCartDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MyCartActi.class);
+                startActivity(intent);
+            }
+        });
+        txtToolbarName = (TextView)findViewById(R.id.txtToolbarProductName);
 
-
+        txtCount = (TextView)findViewById(R.id.txtCountProductDetail);
+        database = new Database(this);
+    }
+    public void getProductCount() {
+        Log.e("count = ",database.getProductCount()+"");
+        if(database.getProductCount() <= 0){
+            txtCount.setVisibility(View.INVISIBLE);
+        } else {
+            txtCount.setVisibility(View.VISIBLE);
+            txtCount.setText(String.valueOf(database.getProductCount()));
+        }
     }
 
-    public void showProductDetail(){
+    // hiển thị product detail lấy product detail bằng intent
+    public void showProductDetail() {
         Intent intent = getIntent();
         ProductDTO dto = (ProductDTO) intent.getSerializableExtra("ProductInfo");
         productId = dto.getProductId();
         productName = dto.getProductName();
-        Log.e("TEST1234",dto.getProductId()+" - "+dto.getProductName());
+        Log.e("TEST1234", dto.getProductId() + " - " + dto.getProductName());
         productKey = dto.getProductKey();
         urlPic = dto.getUrlPic();
         price = dto.getPrice();
@@ -140,28 +166,28 @@ public class ProductDetailActi extends AppCompatActivity {
         des = dto.getDescription();
         quantityTemp = dto.getQuantity();
 
-        toolbarDetail.setTitle(productName);
+
         txtNameDetail.setText(productName);
         DecimalFormat format = new DecimalFormat("###,###,###");
-        txtPriceDetail.setText("Price: "+format.format(price)+" $ ");
+        txtPriceDetail.setText("Price: " + format.format(price) + " $ ");
         Picasso.get().load(urlPic).placeholder(R.drawable.error).error(R.drawable.errors).into(imgDetail);
         txtManuDetail.setText(manu);
         txtManuTimeDetail.setText(manuTime);
         txtExpiredDetail.setText(expiredTime);
-        txtDesDetail.setText(Html.fromHtml(des,Html.FROM_HTML_MODE_COMPACT));
+        txtDesDetail.setText(Html.fromHtml(des, Html.FROM_HTML_MODE_COMPACT));
 
     }
 
     private void catchSpinner() {
-        Integer[] quantity = new Integer[]{1,2,3,4,5};
-        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,quantity);
+        Integer[] quantity = new Integer[]{1, 2, 3, 4, 5};
+        ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_spinner_item, quantity);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 selected = parent.getItemAtPosition(position).toString();
-                Log.e("SELECTED ",selected);
+                Log.e("SELECTED ", selected);
             }
 
             @Override
@@ -182,29 +208,37 @@ public class ProductDetailActi extends AppCompatActivity {
         });
     }
 
-
     public void addToCart(View view) {
-        if(MainActivity.listCart.size() > 0){
-            int quan = Integer.parseInt(selected);
-            boolean exist = false;
-            for(int i = 0; i<MainActivity.listCart.size(); i++){
-                if(MainActivity.listCart.get(i).getProductId() == productId){
-                    MainActivity.listCart.get(i).setProductQuantity(MainActivity.listCart.get(i).getProductQuantity()+quan);
-                    MainActivity.listCart.get(i).setProductPrice(price*MainActivity.listCart.get(i).getProductQuantity());
-                    exist = true;
-                }
+        Cart dto = new Cart();
+        dto.setProductId(productId);
+        dto.setProductKey(productKey);
+        dto.setProductName(productName);
+        dto.setProductPrice(price * Integer.parseInt(selected));
+        dto.setProductQuantity(Integer.parseInt(selected));
+        dto.setUrlPic(urlPic);
+        if (!database.checkProductIdInCart(productKey)) {
+            int userId = 0;
+            if (MainActivity.account != null) {
+                userId = MainActivity.account.getUserId();
             }
-            if(exist == false){
-                int quantity = Integer.parseInt(selected);
-                float priceNew = quantity * price;
-                MainActivity.listCart.add(new Cart(productId,productName,productKey,urlPic,priceNew,quantity));
-            }
-        }else{
-            int quantity = Integer.parseInt(selected);
-            float priceNew = quantity * price;
-            MainActivity.listCart.add(new Cart(productId,productName,productKey,urlPic,priceNew,quantity));
+            database.insertToCart(dto,userId);
+            Log.e("Product ko ton tai ", "Product ko ton tai");
+        } else {
+            Log.e("Product ton tai ", "Product ton tai");
+            String checked = database.getProductQuanAndPrice(productId);
+            String[] checkedQuanPrice = checked.split("-");
+            int preQuantity = Integer.parseInt(checkedQuanPrice[0]);
+            float prePrice = Float.parseFloat(checkedQuanPrice[1]);
+            float newPrice = (Integer.parseInt(selected) * prePrice) / preQuantity;
+            database.updateQuantityInCart(productId, Integer.parseInt(selected) + preQuantity, prePrice + newPrice);
         }
-        Intent intent = new Intent(ProductDetailActi.this,MyCartActi.class);
+        Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ProductDetailActi.this, MyCartActi.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please click Contunue to shop to return", Toast.LENGTH_SHORT).show();
     }
 }

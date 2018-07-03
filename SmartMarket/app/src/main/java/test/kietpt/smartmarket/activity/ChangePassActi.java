@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import test.kietpt.smartmarket.R;
@@ -69,36 +70,53 @@ public class ChangePassActi extends AppCompatActivity {
     }
 
     public void changePassword(String url) {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject js = new JSONObject();
+        try {
+            jsonObject.put("id", MainActivity.account.getUserId());
+            jsonObject.put("old_password",oldPass.getText().toString());
+            jsonObject.put("new_password", newPass.getText().toString());
+            js.put("account", jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("test json change pass ", js + "");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("CHANGE PASS +", response.toString());
-                        if (response.toString().equals("{}")) {
-                            Toast.makeText(ChangePassActi.this, "Please correct old password", Toast.LENGTH_SHORT).show();
-                        } else {
+
+                        if (response.toString() != null) {
                             try {
-                                String email = response.getString("email");
-                                String newPassword = response.getString("password");
-                                MainActivity.account.setEmail(email);
-                                MainActivity.account.setPassword(newPassword);
-                                if (MainActivity.account != null) {
-                                    database.updatePassword(MainActivity.account);
-                                    Toast.makeText(ChangePassActi.this, "Update Password Successfully", Toast.LENGTH_SHORT).show();
+                                boolean checked = response.getBoolean("success");
+                                if(checked){
+                                    int id = response.getInt("id");
+                                    MainActivity.account.setUserId(id);
+                                    MainActivity.account.setPassword(newPass.getText().toString());
+                                    if (MainActivity.account != null) {
+                                        database.updatePassword(MainActivity.account);
+                                        Toast.makeText(ChangePassActi.this, "Update Password Successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                                    startActivity(intent);
+                                }else if(!checked){
+                                    Toast.makeText(ChangePassActi.this, "Please correct old password", Toast.LENGTH_SHORT).show();
                                 }
-                                Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                                startActivity(intent);
-                            } catch (Exception e) {
-                                Log.e("ERROR PASSWORD + ", e.getMessage());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
+                        }else{
+                            Log.e("Wrong Change Pass ","Some thing wrong!!! ");
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("ERROR PASSWORD + ", error.getMessage());
+                        Log.e("error change pass + ", error.getMessage());
                     }
                 }
         );
@@ -122,8 +140,10 @@ public class ChangePassActi extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                changePassword("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ChangePassCustomer?txtEmail=" + MainActivity.account.getEmail() + "&txtOldPassword="
-                        + oldPass.getText().toString() + "&txtNewPassword=" + newPass.getText().toString());
+//                changePassword("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ChangePassCustomer?txtEmail=" + MainActivity.account.getEmail() + "&txtOldPassword="
+//                        + oldPass.getText().toString() + "&txtNewPassword=" + newPass.getText().toString());
+                //changePassword("https://ssm-market.herokuapp.com/api/v1/change_password");
+                changePassword("http://"+IpConfig.ipConfig+":3000/api/v1/change_password");
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

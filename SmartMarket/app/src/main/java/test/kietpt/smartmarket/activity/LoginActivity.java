@@ -65,10 +65,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-//                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString()
-//                            + "&txtPassword=" + pass.getText().toString());
-                    loginCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_in");
-
+                    //loginCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_in");
+                    //loginCustomer("https://ssm-market.herokuapp.com/api/v1/sign_in");
+                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString() +
+                            "&txtPassword=" + pass.getText().toString());
                 }
             }
         });
@@ -90,45 +90,51 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginCustomer(String url) {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JSONObject jsonObject = new JSONObject();
-        JSONObject js = new JSONObject();
-        try {
+//        JSONObject jsonObject = new JSONObject();
+//        JSONObject js = new JSONObject();
+//        try {
+//            jsonObject.put("email", email.getText().toString());
+//            jsonObject.put("password", pass.getText().toString());
+//            js.put("session", jsonObject);
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        Log.e("Json request login ", js + "");
 
-            jsonObject.put("email", email.getText().toString());
-            jsonObject.put("password", pass.getText().toString());
-            js.put("session", jsonObject);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.e("TEST JSON ", js + "");
-
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, js
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, null
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.e("REPONSE LOGIN : ", response.toString());
-                if (email.getText().toString().equals("") || pass.getText().toString().equals("")) {
-                    Toast.makeText(LoginActivity.this, "Please input Email or Password", Toast.LENGTH_LONG).show();
-                }
                 if (response.toString() != null || !response.toString().equals("")) {
                     Log.e("LOGIN ", "da vao Login ");
                     try {
-                        boolean checked = response.getBoolean("success");
-                        Log.e("Checked ", checked + "");
-                        if (checked) {
-                            int userReponse = response.getInt("id");
-                            String emailReponse = response.getString("email");
-                            //String passReponse = response.getString("password");
-                            Log.e("EMAILREPONSE + ", emailReponse);
-                            String usernameReponse = response.getString("name");
-                            String genderReponse = response.getString("gender");
-                            String phoneReponse = response.getString("phone");
-                            String addressReponse = response.getString("address");
-                            String statusReponse = response.getString("status");
+//                        boolean checked = response.getBoolean("success");
+//                        Log.e("Checked ", checked + "");
+//                        if (checked) {
+//                            int userReponse = response.getInt("id");
+//                            String emailReponse = response.getString("email");
+//                            Log.e("EMAILREPONSE + ", emailReponse);
+//                            String usernameReponse = response.getString("name");
+//                            String genderReponse = response.getString("gender");
+//                            String phoneReponse = response.getString("phone");
+//                            String addressReponse = response.getString("address");
+//                            String statusReponse = response.getString("status");
 
-                            MainActivity.account = new Account(userReponse, emailReponse, usernameReponse, genderReponse, phoneReponse, pass.getText().toString().toString(),
+                        int userReponse = response.getInt("userId");
+                        String emailReponse = response.getString("email");
+                        Log.e("EMAILREPONSE + ", emailReponse);
+                        String usernameReponse = response.getString("username");
+                        String genderReponse = response.getString("gender");
+                        String phoneReponse = response.getString("phone");
+                        String addressReponse = response.getString("address");
+                        String statusReponse = response.getString("status");
+
+                            MainActivity.account = new Account(userReponse, emailReponse, usernameReponse, genderReponse, phoneReponse, pass.getText().toString(),
                                     addressReponse, statusReponse);
+
+                            // dùng để kiểm tra xem account có trùng mail hay không
                             if (!database.checkEmail(emailReponse)) {
                                 Log.e("ACCOUNT KO TON TAI  ", " khong  ton tai");
                                 database.insertCustomer(MainActivity.account);
@@ -136,30 +142,26 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.e("ACCOUNT TON TAI ", " da ton tai");
                             }
 
-                            if (MainActivity.listCart == null) {
-                                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(LoginActivity.this, ConfirmCartActi.class);
-                                startActivity(intent);
-                            }
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
-                        }
+                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+//                        } else {
+//                            Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+//                        }
 
                     } catch (Exception e) {
-                        Log.e("ERROR LOGIN + ", e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
-                    Log.e("LOGIN Failed ", "chuoi json tra ve login bi null ");
+                    Log.e("Json reponse ", "chuỗi json trả về login bị null");
                 }
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.e("error login ", error.getMessage());
                     }
                 }
         );

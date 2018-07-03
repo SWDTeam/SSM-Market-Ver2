@@ -24,10 +24,12 @@ import test.kietpt.smartmarket.activity.MainActivity;
 import test.kietpt.smartmarket.activity.MyCartActi;
 import test.kietpt.smartmarket.model.Cart;
 import test.kietpt.smartmarket.model.ProductDTO;
+import test.kietpt.smartmarket.ulti.Database;
 
 public class CartAdapter extends BaseAdapter {
     Context context;
     List<Cart> cartList;
+    Database database;
 
     public CartAdapter(Context context, List<Cart> cartList) {
         this.context = context;
@@ -94,6 +96,7 @@ public class CartAdapter extends BaseAdapter {
         viewHolder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                database = new Database(context);
                 int newSl = Integer.parseInt(viewHolder.quantityCartitem.getText().toString()) + 1;
                 int presentSl = MainActivity.listCart.get(position).getProductQuantity();
                 float presentPrice = MainActivity.listCart.get(position).getProductPrice();
@@ -107,6 +110,7 @@ public class CartAdapter extends BaseAdapter {
                     viewHolder.btnSub.setVisibility(View.VISIBLE);
                 }
                 viewHolder.quantityCartitem.setText(String.valueOf(newSl));
+                database.updateQuantityInCart(MainActivity.listCart.get(position).getProductId(), newSl, newPrice);
 
             }
         });
@@ -114,7 +118,7 @@ public class CartAdapter extends BaseAdapter {
         viewHolder.btnSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                database = new Database(context);
                 int newSl = Integer.parseInt(viewHolder.quantityCartitem.getText().toString()) - 1;
                 int presentSl = MainActivity.listCart.get(position).getProductQuantity();
                 float presentPrice = MainActivity.listCart.get(position).getProductPrice();
@@ -130,44 +134,45 @@ public class CartAdapter extends BaseAdapter {
                     viewHolder.btnSub.setVisibility(View.VISIBLE);
                 }
                 viewHolder.quantityCartitem.setText(String.valueOf(newSl));
-
+                database.updateQuantityInCart(MainActivity.listCart.get(position).getProductId(), newSl, newPrice);
             }
         });
 
-        if (MainActivity.listCart.size() <= 0) {
-            Toast.makeText(context, "Cart is empty!!!!!!!", Toast.LENGTH_SHORT).show();
-        } else {
-            viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle("Remove item out cart!!!");
-                    builder.setMessage("Do you want to remove product?");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Cart cart = MainActivity.listCart.get(position);
-                            MainActivity.listCart.remove(cart);
-                            MyCartActi.getDataInCart();
-                            notifyDataSetChanged();
 
-                        }
-                    });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                                @Override
-                                public void onDismiss(DialogInterface dialog) {
-                                    dialog.dismiss();
-                                }
-                            });
-                        }
-                    });
-                    builder.show();
-                }
-            });
-        }
+        viewHolder.btnRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Remove item out cart!!!");
+                builder.setMessage("Do you want to remove product?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        database = new Database(context);
+                        Cart cart = MainActivity.listCart.get(position);
+                        database.deleteProductInCart(MainActivity.listCart.get(position).getProductId());
+                        MainActivity.listCart.remove(cart);
+                        MyCartActi.getDataInCart();
+                        notifyDataSetChanged();
+
+
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                });
+                builder.show();
+            }
+        });
+
         return convertView;
     }
 }

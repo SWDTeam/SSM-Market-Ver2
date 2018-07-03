@@ -83,6 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void reflect() {
+        //các edit text
         email = (TextInputEditText) findViewById(R.id.txtEmailSignUp);
         pass = (TextInputEditText) findViewById(R.id.txtPasswordSignUp);
         confirmPass = (TextInputEditText) findViewById(R.id.txtConfirmPasswordSignUp);
@@ -91,6 +92,8 @@ public class SignUpActivity extends AppCompatActivity {
         phone = (TextInputEditText) findViewById(R.id.txtPhoneSignUp);
         spGender = (Spinner) findViewById(R.id.spGenderSignUp);
 
+
+        //các textview dùng để checkvalidation
         checkEmail = (TextView) findViewById(R.id.checkEmail);
         checkPass = (TextView) findViewById(R.id.checkPassword);
         checkConfirmPass = (TextView) findViewById(R.id.checkConfirmPass);
@@ -121,20 +124,19 @@ public class SignUpActivity extends AppCompatActivity {
             checkEmail.setText("Format abc123@gmail.com");
             checked = true;
         }
-        if (txtPass.length() == 0 || txtConfirmPass.length() == 0 || !txtPass.equalsIgnoreCase(txtConfirmPass)) {
-            if (txtPass.length() == 0) {
+        if (txtPass.length() < 6 || txtConfirmPass.length() < 6 || !txtPass.equalsIgnoreCase(txtConfirmPass)) {
+            if (txtPass.length() < 6 ) {
                 checkPass.setVisibility(View.VISIBLE);
-                checkPass.setText("Please not empty");
+                checkPass.setText("Password have 6 characters");
             }
-            if (txtConfirmPass.length() == 0) {
+            if (txtConfirmPass.length() < 6 ) {
                 checkConfirmPass.setVisibility(View.VISIBLE);
-                checkConfirmPass.setText("Please not empty");
+                checkConfirmPass.setText("Password have 6 characters");
             }
             checkConfirmPass.setVisibility(View.VISIBLE);
             checkConfirmPass.setText("Please input same password");
             checked = true;
         }
-        //if (!txtUsername.matches("[a-zA-Z]{1,50}")) {
         if (!txtUsername.matches("^[\\p{L}\\s'.-]+$")) {
             checkUsername.setVisibility(View.VISIBLE);
             checkUsername.setText("Please input name");
@@ -160,13 +162,14 @@ public class SignUpActivity extends AppCompatActivity {
         if (checkValidate()) {
             Toast.makeText(SignUpActivity.this, "Something wrong!!! please sign up again ", Toast.LENGTH_SHORT).show();
         } else {
-            signUpCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_up");
+            signUpCustomer("https://ssm-market.herokuapp.com/api/v1/sign_up");
+            //signUpCustomer("http://192.168.43.203:3000/api/v1/sign_up");
         }
 
     }
 
     public void signUpCustomer(String url) {
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+
         JSONObject jsonObject = new JSONObject();
         JSONObject js = new JSONObject();
         try {
@@ -183,32 +186,32 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         Log.e("test json sign up ", js + "");
-
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("Reponse sign up ",response.toString());
+                        Log.e("Reponse sign up ", response.toString());
 
-                            try {
-                                int userId = response.getInt("id");
-                                String email = response.getString("email");
-                                String username = response.getString("name");
-                                String gender = response.getString("gender");
-                                String phone = response.getString("phone");
-                                String address = response.getString("address");
-                                String status = response.getString("status");
+                        try {
+                            int userId = response.getInt("id");
+                            String email = response.getString("email");
+                            String username = response.getString("name");
+                            String gender = response.getString("gender");
+                            String phone = response.getString("phone");
+                            String address = response.getString("address");
+                            String status = response.getString("status");
 
-                                MainActivity.account = new Account(userId, email, username, gender, phone, pass.getText().toString(), address, status);
-                                if (!database.checkEmail(MainActivity.account.getEmail())) {
-                                    database.insertCustomer(MainActivity.account);
-                                }
-                                Toast.makeText(SignUpActivity.this, "Create Successfully", Toast.LENGTH_SHORT).show();
-                                //database.getAllCustomer();
-                                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-                            } catch (Exception e) {
-                                Log.e("ERROR SIGNUP ", e.getMessage());
+                            MainActivity.account = new Account(userId, email, username, gender, phone, pass.getText().toString(), address, status);
+                            if (!database.checkEmail(MainActivity.account.getEmail())) {
+                                database.insertCustomer(MainActivity.account);
                             }
+                            Toast.makeText(SignUpActivity.this, "Create Successfully", Toast.LENGTH_SHORT).show();
+                            //database.getAllCustomer();
+                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                        } catch (Exception e) {
+                            Log.e("ERROR SIGNUP ", e.getMessage());
+                        }
 
                     }
                 },

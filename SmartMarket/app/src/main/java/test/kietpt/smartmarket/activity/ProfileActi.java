@@ -21,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class ProfileActi extends AppCompatActivity {
     TextInputEditText email, username, address, phone;
     Spinner gender;
     String selectdSpinner;
-    Database database = new Database(this);
+    Database database;
     TextView checkUsername, checkAddress,checkPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,7 @@ public class ProfileActi extends AppCompatActivity {
         checkUsername = (TextView) findViewById(R.id.checkUsernamePrifle);
         checkAddress = (TextView) findViewById(R.id.checkAddressProfile);
         checkPhone = (TextView) findViewById(R.id.checkPhoneProfile);
+        database = new Database(this);
     }
 
 
@@ -136,21 +138,36 @@ public class ProfileActi extends AppCompatActivity {
     }
 
     public void updateProfileCustomer(String url) {
+        JSONObject jsonObject = new JSONObject();
+        JSONObject js = new JSONObject();
+        try {
+            jsonObject.put("email", email.getText().toString());
+            jsonObject.put("name", username.getText().toString());
+            jsonObject.put("phone", phone.getText().toString());
+            jsonObject.put("address", address.getText().toString());
+            jsonObject.put("gender", selectdSpinner);
+            js.put("account", jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("test json update profile ", js + "");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PATCH, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("UPDATE JSON + ", response.toString());
+                        Log.e("reponse update json + ", response.toString());
                         if (response.toString() != null) {
                             try {
+                                int id = response.getInt("id");
                                 String email = response.getString("email");
-                                String username = response.getString("username");
+                                String username = response.getString("name");
                                 String gender = response.getString("gender");
                                 String phone = response.getString("phone");
                                 String address = response.getString("address");
 
-                                MainActivity.account = new Account();
+                                MainActivity.account.setUserId(id);
                                 MainActivity.account.setEmail(email);
                                 MainActivity.account.setUsername(username);
                                 MainActivity.account.setGender(gender);
@@ -190,10 +207,13 @@ public class ProfileActi extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                updateProfileCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/UpdateCustomerController?txtEmail=" + email.getText().toString() +
-                        "&txtUsername=" + username.getText().toString() +
-                        "&txtAddress=" + address.getText().toString() + "&txtPhone=" + phone.getText().toString() +
-                        "&txtGender=" + selectdSpinner.toString());
+                int cusId = database.getCustomerId(email.getText().toString());
+                Log.e("USERID = ",cusId+"");
+                updateProfileCustomer("https://ssm-market.herokuapp.com/api/v1/accounts/"+cusId);
+                if(cusId == 0){
+                    Toast.makeText(ProfileActi.this, "Some thing wrong when update!!!!", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

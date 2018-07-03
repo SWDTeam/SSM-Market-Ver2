@@ -28,8 +28,8 @@ public class AccountActivity extends AppCompatActivity {
 
     ListView listView;
     ArrayList<String> arrayList;
-    TextView textViewUsername;
-    ImageView imgPicAccount;
+    TextView textViewUsername,txtCount;
+    ImageView imgPicAccount,imgCart;
 
     Database database;
     Toolbar toolbar;
@@ -42,6 +42,7 @@ public class AccountActivity extends AppCompatActivity {
         reflect();
         if(CheckConnection.haveNetworkConnection(this)){
             getDataInfo();
+            getProductCount();
         }else{
             CheckConnection.showConnection(this,"Please check your wifi!!");
         }
@@ -119,7 +120,27 @@ public class AccountActivity extends AppCompatActivity {
         textViewUsername = (TextView) findViewById(R.id.txtUsernameAccount);
         imgPicAccount = (ImageView) findViewById(R.id.imgPicAccount);
         toolbar = (Toolbar)findViewById(R.id.toolbarAccount);
+        setSupportActionBar(toolbar);
+        imgCart = (ImageView)findViewById(R.id.imageViewCartAccount);
+        imgCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MyCartActi.class);
+                startActivity(intent);
+            }
+        });
+        txtCount = (TextView)findViewById(R.id.txtCountAccount);
         database = new Database(this);
+    }
+
+    public void getProductCount() {
+        Log.e("count = ",database.getProductCount()+"");
+        if(database.getProductCount() <= 0){
+            txtCount.setVisibility(View.INVISIBLE);
+        } else {
+            txtCount.setVisibility(View.VISIBLE);
+            txtCount.setText(String.valueOf(database.getProductCount()));
+        }
     }
 
     @Override
@@ -134,10 +155,6 @@ public class AccountActivity extends AppCompatActivity {
             case R.id.menuHome:
                 Intent intentHome = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intentHome);
-                break;
-            case R.id.menuCart:
-                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-                startActivity(intentCart);
                 break;
             case R.id.menuSearch:
                 Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);

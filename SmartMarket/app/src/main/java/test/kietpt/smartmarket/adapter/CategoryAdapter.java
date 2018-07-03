@@ -1,6 +1,7 @@
 package test.kietpt.smartmarket.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,9 +62,17 @@ public class CategoryAdapter extends BaseAdapter {
         }
         CategoryDTO categoryDTO = categoryDTOList.get(position);
         viewHolder.categoryName.setText(categoryDTO.getCateName().toString());
-        Picasso.get().load(categoryDTO.getImgPic()).placeholder(R.drawable.address).
-                error(R.drawable.backincon).into(viewHolder.urlPic);
-
+//        Log.e("kiet dap chai",categoryDTO.getCateId() + " - "+categoryDTO.getImgPic());
+//        if(categoryDTO.getImgPic().equals("https://ssm-market.herokuapp.com/uploads/image/url/1/coca.jpg")){
+//            categoryDTO.setImgPic("http://southeasternbeers.co.uk/291-thickbox_default/330ml-coke-icon.jpg");
+//            Log.e("test123123456 = ",categoryDTO.getImgPic());
+//
+//        }else if(categoryDTO.getImgPic().equals("https://ssm-market.herokuapp.com/uploads/image/url/2/7up.jpg")){
+//            categoryDTO.setImgPic("http://muaban247.top/image/cache/catalog/7up-500x539.jpg");
+//            Log.e("test123123456 = ",categoryDTO.getImgPic());
+//        }
+        Picasso.get().load(categoryDTO.getImgPic()).placeholder(R.drawable.error).
+                error(R.drawable.errors).into(viewHolder.urlPic);
         return convertView;
     }
 }

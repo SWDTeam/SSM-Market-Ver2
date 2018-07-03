@@ -7,13 +7,61 @@
     tools:context=".activity.AccountActivity"
     android:orientation="vertical">
     <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolbarAccount"
-        app:title="Account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#81835b"
+        android:minHeight="?attr/actionBarSize"
         app:titleTextColor="#ffffff"
-        android:background="#737357"
         >
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="230dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtAccountToolbar"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="5dp"
+                android:text="Account"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageViewCartAccount"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/cart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.931"
+                app:layout_constraintStart_toEndOf="@+id/txtAccountToolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txtCountAccount"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:text="12"
+                android:textColor="#ff4102"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"

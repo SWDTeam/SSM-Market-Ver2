@@ -138,6 +138,16 @@
                     android:id="@+id/listViewCartItemConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"></ListView>
+                <ProgressBar
+                    android:id="@+id/progressBarMyCartConfirm"
+                    android:visibility="invisible"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    style="?android:attr/progressBarStyle"
+                    android:progressDrawable="@drawable/circular_progress_view"
+                    android:layout_marginTop="100dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </FrameLayout>
         </LinearLayout>
 
@@ -185,7 +195,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#ff5811"
-            android:onClick="confirmCart"
             android:padding="5dp"
             android:text="CONFIRM"
             android:textSize="20dp"

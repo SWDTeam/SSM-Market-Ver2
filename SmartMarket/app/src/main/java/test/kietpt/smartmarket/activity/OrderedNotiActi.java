@@ -67,10 +67,10 @@ public class OrderedNotiActi extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.menuCart:
-                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-                startActivity(intentCart);
-                break;
+//            case R.id.menuCart:
+//                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
+//                startActivity(intentCart);
+//                break;
             case R.id.menuSearch:
                 Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
                 startActivity(intentSearch);

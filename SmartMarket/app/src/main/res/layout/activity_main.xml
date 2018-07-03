@@ -14,60 +14,111 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
     >
+
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <android.support.v7.widget.Toolbar
-                app:title="Home"
-                app:titleTextColor="#ffffff"
-                android:background="#81835b"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
                 android:id="@+id/toolbarMain"
-                >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#81835b"
+                android:minHeight="?attr/actionBarSize"
+                app:titleTextColor="#ffffff">
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Home"
+                        android:textColor="#ffffff"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/imageViewCartMainActi"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/cart"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.931"
+                        app:layout_constraintStart_toEndOf="@+id/textView12"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+                    <TextView
+                        android:id="@+id/txtCountMainActi"
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:gravity="center"
+                        android:text="12"
+                        android:textColor="#ff4102"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                </android.support.constraint.ConstraintLayout>
+
             </android.support.v7.widget.Toolbar>
+
             <ViewFlipper
                 android:id="@+id/viewFlipperMain"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"></ViewFlipper>
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#6590ef"
-                >
+                android:orientation="vertical">
+
                 <TextView
-                    android:layout_margin="5dp"
-                    android:textColor="#ff1121"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:text="Hot products"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Hot products"
+                    android:textColor="#ff1121"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerMain"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
+
         <android.support.design.widget.NavigationView
-            android:layout_gravity="start"
+            android:id="@+id/navigaView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/navigaView"
-            >
+            android:layout_gravity="start">
+
             <ListView
                 android:id="@+id/listViewNavigation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </ListView>
+                android:layout_height="wrap_content"></ListView>
 
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>

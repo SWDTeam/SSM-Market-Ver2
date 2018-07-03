@@ -1,49 +1,184 @@
 package test.kietpt.smartmarket.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.util.Log;
 import android.widget.Toast;
 
-import test.kietpt.smartmarket.R;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.zxing.Result;
 
-public class ScanBarcode extends AppCompatActivity {
+import org.json.JSONObject;
 
-    ImageView imgView;
-    int REQUEST_CODE_CAMERA = 123;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import test.kietpt.smartmarket.model.ProductDTO;
+import test.kietpt.smartmarket.ulti.IpConfig;
+
+import static android.Manifest.permission.CAMERA;
+
+public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+
+    private static final int REQUEST_CAMERA = 1;
+    private ZXingScannerView scannerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_barcode);
-        imgView = (ImageView)findViewById(R.id.imgCamera);
 
-        ActivityCompat.requestPermissions(ScanBarcode.this,new String[]{Manifest.permission.CAMERA},REQUEST_CODE_CAMERA);
+        scannerView = new ZXingScannerView(this);
+        setContentView(scannerView);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkPermission()) {
+                Toast.makeText(this, "Permission is granted! ", Toast.LENGTH_SHORT).show();
+
+            } else {
+                requestPermission();
+            }
+        }
+
+    }
+
+    private boolean checkPermission() {
+        return (ContextCompat.checkSelfPermission(ScanBarcode.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
+    }
+
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int grantResults[]) {
+        switch (requestCode) {
+            case REQUEST_CAMERA:
+                if (grantResults.length > 0) {
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (cameraAccepted) {
+                        Toast.makeText(this, "Permission Granted ", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Permission Denied ", Toast.LENGTH_SHORT).show();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (shouldShowRequestPermissionRationale(CAMERA)) {
+                                displayAlertMessage("you need to allow access for both permissions ",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                    requestPermissions(new String[]{CAMERA}, REQUEST_CAMERA);
+                                                }
+                                            }
+                                        });
+                                return;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_CODE_CAMERA && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, REQUEST_CODE_CAMERA);
-        }else{
-            Toast.makeText(this,"ban ko cho phep mo camera",Toast.LENGTH_SHORT).show();
+    protected void onResume() {
+        super.onResume();
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            if(checkPermission()){
+                if(scannerView == null){
+                    scannerView = new ZXingScannerView(this);
+                    setContentView(scannerView);
+                }
+                scannerView.setResultHandler(this);
+                scannerView.startCamera();
+            }else{
+                requestPermission();
+            }
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK && data!= null){
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            imgView.setImageBitmap(bitmap);
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onDestroy() {
+        super.onDestroy();
+        scannerView.stopCamera();
+    }
+
+    public void displayAlertMessage(String message, DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(ScanBarcode.this)
+                .setMessage(message)
+                .setPositiveButton("OK", listener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+
+    @Override
+    public void handleResult(Result result) {
+        String scanResult = result.getText();
+        Toast.makeText(this, scanResult, Toast.LENGTH_LONG).show();
+        getBarcode("http://"+IpConfig.ipConfig+":8084/SSM_Project/GetBarcode?barcode="+scanResult);
+    }
+    public void getBarcode(String url){
+        Log.e("da vao day", " da vao day r ne");
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("da vao day", " da vao day r ne ahihi do ngoc");
+                        Log.e("Json Product Barcode ", response.toString());
+                        if(response.toString() != null) {
+                            try {
+
+                                int id = response.getInt("productId");
+                                String name = response.getString("productName");
+                                String des = response.getString("description");
+                                String urlPic = response.getString("urlPic");
+                                String key = response.getString("productKey");
+
+                                float price = (float) response.getDouble("price");
+                                String manufacture = response.getString("manufacturer");
+                                String manuDate = response.getString("manuDate");
+                                String expiredDate = response.getString("expiredDate");
+
+                                String urlTest = "http://" + IpConfig.ipConfig + ":8084/SSM_Project/img/" + urlPic;
+
+                                ProductDTO dto = new ProductDTO();
+                                dto.setProductId(id);
+                                dto.setProductName(name);
+                                dto.setDescription(des);
+                                dto.setProductKey(key);
+                                dto.setPrice(price);
+                                dto.setManufacturer(manufacture);
+                                dto.setManuDate(manuDate);
+                                dto.setExpiredDate(expiredDate);
+                                dto.setUrlPic(urlTest);
+                                Intent intent = new Intent(getApplicationContext(),ProductDetailActi.class);
+                                intent.putExtra("ProductInfo",dto);
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
     }
 }

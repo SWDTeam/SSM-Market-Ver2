@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -29,6 +30,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +40,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.adapter.CategoryAdapter;
@@ -47,6 +50,7 @@ import test.kietpt.smartmarket.model.Cart;
 import test.kietpt.smartmarket.model.CategoryDTO;
 import test.kietpt.smartmarket.model.ProductDTO;
 import test.kietpt.smartmarket.ulti.CheckConnection;
+import test.kietpt.smartmarket.ulti.Database;
 import test.kietpt.smartmarket.ulti.IpConfig;
 
 
@@ -58,16 +62,19 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     ListView listViewMenu;
     DrawerLayout drawerLayout;
-    ArrayList<CategoryDTO> listCategory;
+    List<CategoryDTO> listCategory;
     CategoryAdapter categoryAdapter;
     ArrayList<ProductDTO> listHotProduct;
     HotProductAdapter hotProductAdapter;
-
+    ImageView imgCartMainActi;
+    TextView txtCountMainActi;
     int id = 0;
     String cateName = "";
     String urlPic = "";
-    public static ArrayList<Cart> listCart;
+    public static List<Cart> listCart;
     public static Account account;
+    Database database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +83,12 @@ public class MainActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             actionBar();
             actionViewFlipper();
-            getListCategory("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory?btnAction="+"view");
-            getListHotProduct("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListHotProduct");
-            catchOnMenuItem();
-
+            //getListCategory("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory?btnAction="+"view");
+            getListCategory("https://ssm-market.herokuapp.com/api/v1/categories");
+            //getListHotProduct("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListHotProduct");
+            getListHotProduct("https://ssm-market.herokuapp.com/api/v1/products");
+            //catchOnMenuItem();
+            getProductCount();
         } else {
             CheckConnection.showConnection(getApplicationContext(), "Check your connection with wifi");
             finish();
@@ -88,31 +97,27 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menuHome:
-                Intent intentHome = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intentHome);
                 break;
-            case R.id.menuCart:
-                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-                startActivity(intentCart);
-                break;
             case R.id.menuSearch:
-                Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
+                Intent intentSearch = new Intent(getApplicationContext(), SearchViewActi.class);
                 startActivity(intentSearch);
                 break;
             case R.id.menuAccount:
-                if(account != null){
-                    Intent intentAccount = new Intent(getApplicationContext(),AccountActivity.class);
+                if (account != null) {
+                    Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
                     startActivity(intentAccount);
-                }else{
-                    Intent intentAccount = new Intent(getApplicationContext(),LoginActivity.class);
+                } else {
+                    Intent intentAccount = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intentAccount);
                 }
                 break;
@@ -125,10 +130,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuMessage:
                 Intent intentasd = new Intent();
                 intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body","");
+                intentasd.putExtra("sms_body", "");
                 intentasd.setData(Uri.parse("sms:01676243500"));
                 startActivity(intentasd);
                 break;
+            case R.id.menuScan:
+                Intent intentScan = new Intent(getApplicationContext(), ScanBarcode.class);
+                startActivity(intentScan);
 
         }
         return super.onOptionsItemSelected(item);
@@ -150,72 +158,84 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getListHotProduct(String s) {
+    private void getListHotProduct(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(s, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null
+                , new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
-                Log.e("REPOSNSE JSON PRODUCT", response.toString());
-                if (response.toString() != null) {
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            int id = jsonObject.getInt("productId");
-                            String name = jsonObject.getString("productName");
-                            String des = jsonObject.getString("description");
-                            String urlPic = jsonObject.getString("urlPic");
-                            String productKey = jsonObject.getString("productKey");
-                            int quantity = jsonObject.getInt("quantity");
-                            int cateId = jsonObject.getInt("categoryId");
-                            String manufacture = jsonObject.getString("manufacturer");
-                            String manuDate = jsonObject.getString("manuDate");
-                            String expiredDate = jsonObject.getString("expiredDate");
-                            float price = (float) jsonObject.getDouble("price");
-                            String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
+            public void onResponse(JSONObject response) {
+                Log.e("reponse json product", response + "");
+                try {
+                    JSONObject jsonObject = new JSONObject(response.toString());
+                    JSONArray jsonArray = jsonObject.getJSONArray("products");
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                            listHotProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate,quantity));
+                            JSONObject jsonProduct = jsonArray.getJSONObject(i);
+                            int id = jsonProduct.getInt("id");
+                            String name = jsonProduct.getString("name");
+                            String des = jsonProduct.getString("description");
+                            String urlPic = jsonProduct.getString("url");
+                            String productKey = jsonProduct.getString("product_key");
+                            int quantity = jsonProduct.getInt("quantity");
+                            int cateId = jsonProduct.getInt("category_id");
+                            String manufacture = jsonProduct.getString("manufacturer");
+                            String manuDate = jsonProduct.getString("manu_date");
+                            String expiredDate = jsonProduct.getString("expired_date");
+                            float price = (float) jsonProduct.getDouble("price");
+                            String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
+
+                            listHotProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate, quantity));
                             hotProductAdapter.notifyDataSetChanged();
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                    Log.e("reponse json product error", error.getMessage());
                     }
                 }
         );
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(jsonObjectRequest);
     }
 
     private void getListCategory(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.e("RESPONSE JSON CATE ", response.toString());
-                if (response.toString() != null) {
-                    for (int i = 0; i < response.length(); i++) {
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("reponse json category ", response + "");
                         try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            id = jsonObject.getInt("cateId");
-                            cateName = jsonObject.getString("cateName");
-                            urlPic = jsonObject.getString("imgPic");
-                            String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
-                            listCategory.add(new CategoryDTO(id, cateName, urlTest));
-                            categoryAdapter.notifyDataSetChanged();
+                            JSONObject jsonObject = new JSONObject(response.toString());
+                            JSONArray jsonArray = jsonObject.getJSONArray("categories");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                try {
+                                    JSONObject jsonCategory = jsonArray.getJSONObject(i);
+                                    id = jsonCategory.getInt("id");
+                                    cateName = jsonCategory.getString("name");
+                                    urlPic = jsonCategory.getString("url");
+                                    Log.e("TEST123456",id+" - "+cateName+" - "+urlPic);
+                                    String urlTest = "https://ssm-market.herokuapp.com"+urlPic;
+                                    listCategory.add(new CategoryDTO(id, cateName, urlTest));
+                                    categoryAdapter.notifyDataSetChanged();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                     }
-                }
-            }
-        },
+                },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -228,10 +248,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void actionViewFlipper() {
         ArrayList<String> listQuangcao = new ArrayList<>();
-        listQuangcao.add("https://vn-live-02.slatic.net/original/b6d9d092090c60d1291e390a47a568d4.jpg");
-        listQuangcao.add("https://vn-live-02.slatic.net/original/2df899a695fd0069dabead783c717fbd.jpg");
-        listQuangcao.add("https://vn-live-02.slatic.net/original/fc2730140372e1342fe2b65fcce2b89e.jpg");
-        listQuangcao.add("https://vn-test-11.slatic.net/p/7/dam-cat-han-kieu-moi-thoi-trang-tt037-9872-93033304-c2b553c3b6a84f204a34b1b2de0af080-catalog_233.jpg");
+        listQuangcao.add("http://khanpakan.com/image/catalog/slider/banner-1.jpg");
+        listQuangcao.add("http://www.discountmantra.in/wp-content/uploads/Come-Shop-At-The-Grocery-Sale-At-Amazon-From-15-18-March.jpg");
+        listQuangcao.add("http://www.andersonsglenarbor.com/wp-content/uploads/2018/03/March-Madness-Canned-Food-Sale.jpg");
+        listQuangcao.add("http://wildforwags.com/wp-content/uploads/2015/04/chobani-deal.jpg");
         for (int i = 0; i < listQuangcao.size(); i++) {
             ImageView imageView = new ImageView(getApplicationContext());
             Picasso.get().load(listQuangcao.get(i)).into(imageView);
@@ -258,10 +278,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void moveToScanBarcode(View view) {
-//        Intent intent = new Intent(this, ScanBarcode.class);
-//        startActivity(intent);
-//    }
+    public void getProductCount() {
+        Log.e("count = ", database.getProductCount() + "");
+        if (database.getProductCount() <= 0) {
+            txtCountMainActi.setVisibility(View.INVISIBLE);
+        } else {
+            txtCountMainActi.setVisibility(View.VISIBLE);
+            txtCountMainActi.setText(String.valueOf(database.getProductCount()));
+        }
+    }
 
     public void reflect() {
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
@@ -269,11 +294,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerMain);
         navigationView = (NavigationView) findViewById(R.id.navigaView);
         listViewMenu = (ListView) findViewById(R.id.listViewNavigation);
+        imgCartMainActi = (ImageView) findViewById(R.id.imageViewCartMainActi);
+        txtCountMainActi = (TextView) findViewById(R.id.txtCountMainActi);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         listCategory = new ArrayList<>();
         listCategory.add(0, new CategoryDTO(0, "Home", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vmBj6G_kAJeoOsKTEF-woPgV7XLWn-6ydO5hqeqDiiH4wlq4"));
+        //listCategory.add(1, new CategoryDTO(1, "cocaTest", "http://southeasternbeers.co.uk/291-thickbox_default/330ml-coke-icon.jpg"));
+        //listCategory.add(2, new CategoryDTO(2, "7upTest", "http://muaban247.top/image/cache/catalog/7up-500x539.jpg"));
+        //listCategory.add(3, new CategoryDTO(3, "milkTest", "https://image.freepik.com/free-icon/milk-box-package_318-50886.jpg"));
         categoryAdapter = new CategoryAdapter(MainActivity.this, listCategory);
         listViewMenu.setAdapter(categoryAdapter);
 
@@ -284,11 +314,20 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(hotProductAdapter);
 
+        database = new Database(this);
         if (listCart != null) {
-
+            listCart = database.getAllProductInCart();
         } else {
             listCart = new ArrayList<>();
         }
-//
+
+        imgCartMainActi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyCartActi.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

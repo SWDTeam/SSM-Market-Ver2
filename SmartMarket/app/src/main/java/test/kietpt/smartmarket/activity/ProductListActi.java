@@ -65,10 +65,10 @@ public class ProductListActi extends AppCompatActivity {
                 Intent intentHome = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intentHome);
                 break;
-            case R.id.menuCart:
-                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-                startActivity(intentCart);
-                break;
+//            case R.id.menuCart:
+//                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
+//                startActivity(intentCart);
+//                break;
             case R.id.menuSearch:
                 Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
                 startActivity(intentSearch);
