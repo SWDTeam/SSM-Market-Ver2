@@ -13,7 +13,7 @@
   border-bottom: 1px solid #628073;
 }
 
-.wrap-content-index-category {
+.wrap-content-index-category, .wrap-content-index-product {
   border-bottom: 1px solid #628073;
   font-size: 20px;
   align-items: center; /* align vertical */
@@ -65,6 +65,7 @@
   border-radius: 7px;
   cursor: pointer;
   transition: 0.3s;
+  padding: 5px 0px;
 }
 
 .del-bnt-index-category:hover {
@@ -81,6 +82,7 @@
   border-radius: 7px;
   cursor: pointer;
   transition: 0.3s;
+  padding: 5px 0px;
 }
 
 .edit-bnt-index-category:hover {
