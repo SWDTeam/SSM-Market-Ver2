@@ -12,7 +12,14 @@ class AccountsController < ApplicationController
   def edit
     
   end
+
+  def new
+    
+  end
   
+  def create
+    
+  end
   
   def update
     # if @current_account.update(user_params)
