@@ -49,7 +49,18 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
+        unless params[:images].nil?
+          params[:images]['url'].each do |i|
+            @image = @category.images.create!(url: i, category_id: @category.id)
+          end
+        end
+        unless params[:images_delete].nil?
+          params[:images_delete].each do |i|
+            image = Image.find(i['id'])
+            @category.images.destroy(image)
+          end
+        end
+        format.html { redirect_to categories_path, notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
         format.html { render :edit }

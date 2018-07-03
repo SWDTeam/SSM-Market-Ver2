@@ -20,78 +20,70 @@
 
   <!--label for table-->
   <div class="row pb-2 wrap-label-index-category">
-    <!--STATUS-->
-    <div class="col-2 text-center label-index-category">
-      Status
-    </div>
-
+    <!--STT-->
+    <div class="col-2 text-center label-index-category">No</div>
     <!--IMG-->
-    <div class="col-2 text-center label-index-category">
-      Image
-    </div>
-
+    <div class="col-2 text-center label-index-category">Image</div>
     <!--NAME-->
-    <div class="col-3 label-index-category">
-      Name
-    </div>
-
+    <div class="col-4 label-index-category">Name</div>
     <!--Total Of Products-->
-    <div class="col-2 text-center label-index-category">
-      Total
-    </div>
-
+    <div class="col-2 text-center label-index-category">Total</div>
     <!--Edit-->
-    <div class="col-1 text-center label-index-category">
-      Edit
-    </div>
-
+    <div class="col-1 text-center label-index-category">Edit</div>
     <!--Delete-->
-    <div class="col-1 text-center label-index-category">
-      Delete
-    </div>
+    <!-- <div class="col-1 text-center label-index-category">Delete</div> -->
   </div>
 
   <!--content of table-->
-  <% @categories.each do |category| %>
-    <div class="row py-3 wrap-content-index-category">
-      <!--STATUS-->
-      <div class="col-2 text-center">
-        <%= category.status %>
-      </div>
-
-      <!--IMG-->
-      <div class="col-2">
-        <img src="<%= category.images.first.url %>" alt="" class="img-index-categories">
-      </div>
-
-      <!--NAME-->
-      <div class="col-3">
-        <%= category.name %>
-      </div>
-
-      <!--Total Of Products-->
-      <div class="col-2 text-center">
-        50
-      </div>
-
-      <!--Edit-->
-      <div class="col-1">
-        <center>
-          <button class="edit-bnt-index-category">
-            <i class="fa fa-edit"></i></center>
-          </button>
-        </center>
-      </div>
-
+  <% @categories.each.with_index do |category, index| index += 1 %>
+    <% if category.status == 'active' %>
+      <div class="row py-3 wrap-content-index-category">
+        <!--STATUS-->
+        <div class="col-2 text-center"><%= index %></div>
+        <!--IMG-->
+        <div class="col-2"><img src="<%= category.images.first.url %>" alt="" class="img-index-categories"></div>
+        <!--NAME-->
+        <div class="col-4"><%= category.name %></div>
+        <!--Total Of Products-->
+        <div class="col-2 text-center">
+          <%= Product.where(category_id: category.id).count(:name) %>
+        </div>
+        <!--Edit-->
+        <div class="col-1">
+          <center>
+          <%= link_to edit_account_category_path(current_account, category) do %>
+            <button class="edit-bnt-index-category"><i class="fa fa-edit"></i></center></button>
+          <% end %>
+          </center>
+        </div>
+      </div> 
       <!--Delete-->
-      <div class="col-1">
+      <!-- <div class="col-1">
         <center>
-          <button class="del-bnt-index-category">
-            <i class="fa fa-trash"></i>
-          </button>
+          <button class="del-bnt-index-category"><i class="fa fa-trash"></i></button>
         </center>
-      </div>
-    </div>
+      </div>-->
+    <% else %>
+      <div class="row py-3 wrap-content-index-category">
+        <!--STATUS-->
+        <div class="col-2 text-center"><%= index %></div>
+        <!--IMG-->
+        <div class="col-2"><img src="<%= category.images.first.url %>" alt="" class="img-index-categories"></div>
+        <!--NAME-->
+        <div class="col-4"><%= category.name %></div>
+        <!--Total Of Products-->
+        <div class="col-2 text-center">
+          <%= Product.where(category_id: category.id).count(:name) %>
+        </div>
+        <!--Edit-->
+        <div class="col-1">
+          <center>
+          <%= link_to edit_account_category_path(current_account, category) do %>
+            <button class="edit-bnt-index-category"><i class="fa fa-lock"></i></center></button>
+          <% end %>
+          </center>
+        </div>
+      </div> 
+    <% end %>
   <% end %>
-
 </div>

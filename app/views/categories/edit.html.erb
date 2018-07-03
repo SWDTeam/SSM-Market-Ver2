@@ -5,7 +5,10 @@
       <%= form.label :name, class: "label-form-new-category" %><br>
       <%= form.text_field :name, id: :category_name %>
     </div>
-
+    <div class="field-new-category">
+      <%= form.label :status, class: "label-form-new-category" %><br>
+      <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], id: :category_status %>
+    </div>
     <div class="row mt-2 justify-content-center" id="category_img_field_container"> 
        <div class="M-img-field">
           <button class='btn btn-dark M-btn-image'><i class="fa fa-image fa-3x"></i></br>Add Image
