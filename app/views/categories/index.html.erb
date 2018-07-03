@@ -67,8 +67,8 @@
     </div>
 
     <!--Total Of Products-->
-    <div class="col-3 text-center label-index-category">
-      Total Of Products
+    <div class="col-2 text-center label-index-category">
+      Total
     </div>
 
     <!--Edit-->
@@ -101,18 +101,26 @@
       </div>
 
       <!--Total Of Products-->
-      <div class="col-3 text-center">
+      <div class="col-2 text-center">
         50
       </div>
 
       <!--Edit-->
       <div class="col-1">
-        <%#= link_to 'Edit', edit_category_path(category) %>
+        <center>
+          <button class="edit-bnt-index-category">
+            <i class="fa fa-edit"></i></center>
+          </button>
+        </center>
       </div>
 
       <!--Delete-->
       <div class="col-1">
-        <%#= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' } %>
+        <center>
+          <button class="del-bnt-index-category">
+            <i class="fa fa-trash"></i>
+          </button>
+        </center>
       </div>
     </div>
   <% end %>

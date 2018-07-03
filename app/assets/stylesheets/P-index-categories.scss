@@ -6,6 +6,7 @@
 .label-index-category {
   font-size: 18px;
   font-weight: 500;
+  color: #748B88;
 }
 
 .wrap-label-index-category {
@@ -54,3 +55,36 @@
   background: #F03E58;
   border: #F03E58;
 }
+
+.del-bnt-index-category {
+  width: 100%;
+  color: #EB5E28;
+  font-size: 17px;
+  background-color: white;
+  border: 2px solid #EB5E28;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.del-bnt-index-category:hover {
+  color: white;
+  background-color: #EB5E28;
+}
+
+.edit-bnt-index-category {
+  width: 100%;
+  color: #E23080;
+  font-size: 17px;
+  background-color: white;
+  border: 2px solid #E23080;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.edit-bnt-index-category:hover {
+  color: white;
+  background-color: #E23080;
+}
+
