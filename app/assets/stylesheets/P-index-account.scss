@@ -1,0 +1,64 @@
+.show-bnt-index-account {
+  width: 100%;
+  color: #7BBCCF;
+  background-color: white;
+  border: 2px solid #7BBCCF;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 5px 0px;
+}
+
+.show-bnt-index-account:hover {
+  color: white;
+  background-color: #7BBCCF;
+}
+
+.ban-bnt-index-account {
+  width: 100%;
+  color: #6E6A64;
+  background-color: white;
+  border: 2px solid #6E6A64;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 5px 0px;
+}
+
+.ban-bnt-index-account:hover {
+  color: white;
+  background-color: #6E6A64;
+}
+
+.active-bnt-index-account {
+  width: 100%;
+  color: #D26338;
+  background-color: white;
+  border: 2px solid #D26338;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 5px 0px;
+}
+
+.active-bnt-index-account:hover {
+  color: white;
+  background-color: #D26338;
+}
+
+.label-account {
+  color: #9F7C78;
+  margin-bottom: 3px;
+}
+
+.col-1-5 { width: 12,5%; } // = 8,3333 + 4,16667
+.col-2-5 { width: 20,83333%; } // = 16,6666 + 4,16667
+.col-3-5 { width: 29,16667%; } // = 25 + 4,16667
+.col-4-5 { width: 37,5%; } // = 33,3333 + 4,16667
+.col-5-5 { width: 45,83333%; } // = 41,6667 + 4,16667
+.col-6-5 { width: 54,16667%; } // = 50 + 4,16667
+.col-7-5 { width: 62,5%; } // = 58,3333 + 4,16667
+.col-8-5 { width: 70,83333%; } // = 66,6666 + 4,16667
+.col-9-5 { width: 79,16667%; } // = 75 + 4,16667
+.col-10-5 { width: 87,5%; } // = 83,3333 + 4,16667
+.col-11-5 { width: 95,8333%; } // = 91,6666 + 4,16667

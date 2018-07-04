@@ -96,7 +96,7 @@
 
       if (pgurl.includes("home")) {
         $(ele[0]).addClass("active");
-      } else if (pgurl.includes("accounts")) {
+      } else if (pgurl.includes("accounts") && !pgurl.includes("categories") && !pgurl.includes("products")) {
         $(ele[1]).addClass("active");
       } else if (pgurl.includes("products")) {
         $(ele[2]).addClass("active");
