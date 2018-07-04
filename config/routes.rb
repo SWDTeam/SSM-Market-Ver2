@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       end
       # categories
       resources :categories, only: [:index]
+      get 'search_category_name/:category_name', to: "categories#search_categories_by_name"      
       #products
       resources :products, only: [:show, :index]
       get 'list_products/:category_id', to: "products#index_products_by_category_id"  #find list product by category id
