@@ -67,7 +67,7 @@
             <% end %>
           </li>
 
-          <li class="nav-li-admin-page slidebar-field active" onclick="dropContentMenu('dropdown-category-adminpage', 3)">
+          <li class="nav-li-admin-page slidebar-field" onclick="dropContentMenu('dropdown-category-adminpage', 3)">
             <i class="fa fa-archive"></i>
             <span>CATEGORIES</span>
             <i class="fa fa-angle-down change-icon"></i>
@@ -85,4 +85,26 @@
       </div>
     </div>
   </body>
+  <script>
+    $(document).ready(function() {
+      var ele = document.getElementsByClassName("active")[0];
+      $(ele).removeClass("active");
+
+      ele = document.getElementsByClassName("nav-li-admin-page");
+
+      var pgurl = window.location.href;
+
+      if (pgurl.includes("home")) {
+        $(ele[0]).addClass("active");
+      } else if (pgurl.includes("accounts")) {
+        $(ele[1]).addClass("active");
+      } else if (pgurl.includes("products")) {
+        $(ele[2]).addClass("active");
+      } else if (pgurl.includes("orders")) {
+        $(ele[3]).addClass("active");
+      } else {
+        $(ele[4]).addClass("active");
+      }
+    })
+  </script>
 </html>

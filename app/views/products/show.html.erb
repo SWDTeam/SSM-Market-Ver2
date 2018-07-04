@@ -1,36 +1,36 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%= notice %></p>
 
 <p>
   <strong>Product key:</strong>
-  <%= @product.product_key %>
+  <%#= @product.product_key %>
 </p>
 <p>
   <strong>images</strong>
-  <img src="<%= @product.images.first.url %>" alt="">
+  <img src="<%#= @product.images.first.url %>" alt="">
 </p>
 <p>
   <strong>Name:</strong>
-  <%= @product.name %>
+  <%#= @product.name %>
 </p>
 
 <p>
   <strong>Quantity:</strong>
-  <%= @product.quantity %>
+  <%#= @product.quantity %>
 </p>
 
 <p>
   <strong>Manufacturer:</strong>
-  <%= @product.manufacturer %>
+  <%#= @product.manufacturer %>
 </p>
 
 <p>
   <strong>Manu date:</strong>
-  <%= @product.manu_date %>
+  <%#= @product.manu_date %>
 </p>
 
 <p>
   <strong>Expired date:</strong>
-  <%= @product.expired_date %>
+  <%#= @product.expired_date %>
 </p>
 
 <p>
@@ -40,13 +40,129 @@
 
 <p>
   <strong>Price:</strong>
-  <%= @product.price %>
+  <%#= @product.price %>
 </p>
 
 <p>
   <strong>Status:</strong>
-  <%= @product.status %>
+  <%#= @product.status %>
 </p>
 
-<%# <%= link_to 'Edit', edit_product_path(@product) %> |
-<%# <%= link_to 'Back', products_path %> %> %>
+<%#= link_to 'Edit', edit_product_path(@product) %> |
+<%#= link_to 'Back', products_path %>-->
+
+<div class="wrap-index-category mb-2">
+  <div class="title-index-category">
+    Show Detail Product
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-2 ml-2">
+      Edit
+    </div>
+  </div>
+
+  <div class="row mb-2 justify-content-center">
+    <center>
+      <img src="<%= @product.images.first.url %>" alt="" class="img-show-product">
+    </center>
+  </div>
+
+  <div class="row my-4">
+    <div class="col-12">
+      <!--NAME-->
+      <div class="row">
+        <div class="col-12 text-center name-show-product">
+          <%= @product.name %>
+        </div>
+      </div>
+
+      <!--KEY-->
+      <div class="row">
+        <div class="col-12 text-center key-show-product">
+          <%= @product.product_key %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-4">
+    <div class="col-12">
+      <!--
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          Description
+        </div>
+        <div class="col-2"></div>
+      </div>
+      -->
+      <!--content DESC-->
+      <div class="row">
+        <div class="col-12 text-center des-show-product">
+          <%= simple_format(@product.description) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--content-->
+  <div class="row">
+    <div class="col-1"></div>
+    <!--date of manufactor-->
+    <div class="col-2 text-center content-show-product">
+      <%= @product.manu_date %>
+    </div>
+
+    <!--expiration date-->
+    <div class="col-2 text-center content-show-product">
+      <%= @product.expired_date %>
+    </div>
+
+    <!--manufactor-->
+    <div class="col-2 text-center content-show-product">
+      <%= @product.manufacturer %>
+    </div>
+
+    <!--price-->
+    <div class="col-2 text-center content-show-product">
+      <%= @product.price %>
+    </div>
+
+    <!--quantity-->
+    <div class="col-2 text-center content-show-product">
+      <%= @product.quantity %>
+    </div>
+    <div class="col-1"></div>
+  </div>
+
+  <!--label-->
+  <div class="row">
+    <div class="col-1"></div>
+    <!--date of manufactor-->
+    <div class="col-2 text-center label-show-product">
+      Date Of Manufactor
+    </div>
+
+    <!--expiration date-->
+    <div class="col-2 text-center label-show-product">
+      Expiration Date
+    </div>
+
+    <!--manufactor-->
+    <div class="col-2 text-center label-show-product">
+      Manufacturer
+    </div>
+
+    <!--price-->
+    <div class="col-2 text-center label-show-product">
+      Price
+    </div>
+
+    <!--quantity-->
+    <div class="col-2 text-center label-show-product">
+      Quantity
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>

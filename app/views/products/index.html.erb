@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%= notice %></p>
 
 <h1>Products</h1>
 
@@ -19,26 +19,155 @@
   </thead>
 
   <tbody>
-    <% @products.each do |product| %>
+    <%# @products.each do |product| %>
       <tr>
-        <td><%= product.product_key %></td>
-        <td><%= product.name %></td>
-        <td><%= product.quantity %></td>
-        <td><%= product.manufacturer %></td>
-        <td><%= product.manu_date %></td>
-        <td><%= product.expired_date %></td>
-        <td><%= product.description %></td>
-        <td><%= product.price %></td>
-        <td><%= product.status %></td>
-        <%# <td><%= link_to 'Show', product %></td> %>
-        <%# <td><%= link_to 'Edit', edit_product_path(product) %></td> %>
-        <%# <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td> %>
+        <td><%#= product.product_key %></td>
+        <td><%#= product.name %></td>
+        <td><%#= product.quantity %></td>
+        <td><%#= product.manufacturer %></td>
+        <td><%#= product.manu_date %></td>
+        <td><%#= product.expired_date %></td>
+        <td><%#= product.description %></td>
+        <td><%#= product.price %></td>
+        <td><%#= product.status %></td>
+        <td><%#= link_to 'Show', product %></td>
+        <td><%#= link_to 'Edit', edit_product_path(product) %></td>
+        <td><%#= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%# end %>
   </tbody>
 </table>
 
-<br>
+<br>-->
 
-<%# <%= link_to 'New Product', new_product_path %> %>
+<%#= link_to 'New Product', new_product_path %>
+
+<!---------------------------->
+
+<!--use css of index categories-->
+<div class="wrap-index-category">
+  <div class="title-index-category mb-4">
+    View All Products
+  </div>
+
+  <!--FILTER form-->
+  <form class="filter-index-product mb-4">
+    <div class="row">
+      <!--SORT by PRICE-->
+      <div class="col-lg-2">
+        <select class="filter-select-index-product input-filter-index-category">
+          <option>Sort By Price</option>
+        </select>
+      </div>
+
+      <!--SORT by QUANTITY-->
+      <div class="col-lg-2">
+        <select class="filter-select-index-product input-filter-index-category">
+          <option>Sort By Quantity</option>
+        </select>
+      </div>
+
+      <!--SORT by CATE-->
+      <div class="col-lg-2">
+        <select class="filter-select-index-product input-filter-index-category">
+          <option>Sort By Category</option>
+        </select>
+      </div>
+
+      <!--input for SEARCH name-->
+      <div class="col-lg-3">
+        <input type="text" placeholder="Name..." class="input-filter-index-category">
+      </div>
+
+      <!--submit bnt-->
+      <div class="col-lg-2">
+        <input type="submit" class="bnt-index-category">
+      </div>
+    </div>
+  </form>
+
+  <!--label for tabel-->
+  <div class="row pb-2 wrap-label-index-category">
+    <!--KEY-->
+    <div class="col-1 text-center label-index-category">
+      No
+    </div>
+
+    <!--Name-->
+    <div class="col-3 label-index-category">
+      Name
+    </div>
+
+    <!--PRICE-->
+    <div class="col-2 label-index-category">
+      Price
+    </div>
+
+    <!--QUANTITY-->
+    <div class="col-1 text-center label-index-category">
+      Quantity
+    </div>
+
+    <!--STATUS-->
+    <div class="col-2 text-center label-index-category">
+      Status
+    </div>
+
+    <!--SHOW-->
+    <div class="col-1 text-center label-index-category">
+      Show
+    </div>
+    
+    <!--ACTION-->
+    <div class="col-1 text-center label-index-category">
+      Action
+    </div>
+  </div>
+
+  <!--content of table-->
+  <% @products.each do |product| %>
+    <div class="row py-3 wrap-content-index-product">
+      <!--KEY-->
+      <div class="col-1 text-center">
+        <%= product.product_key %>
+      </div>
+
+      <!--Name-->
+      <div class="col-3">
+        <%= product.name %>
+      </div>
+
+      <!--PRICE-->
+      <div class="col-2">
+        <%= product.price %>
+      </div>
+
+      <!--QUANTITY-->
+      <div class="col-1 text-center">
+        <%= product.quantity %>
+      </div>
+
+      <!--STATUS-->
+      <div class="col-2 text-center">
+        <%= product.status %>
+      </div>
+
+      <!--SHOW-->
+      <div class="col-1 text-center">
+        <center>
+        <%= link_to product_path(product) do %>
+          <i class="fa fa-search-plus edit-bnt-index-category"></i></center>
+        <% end %>
+        </center>
+      </div>
+      
+      <!--ACTION-->
+      <div class="col-1 text-center">
+        <center>
+          <i class="fa fa-ban del-bnt-index-category"></i>
+        </center>
+      </div>
+    </div>
+  <% end %>
+</div>
 
