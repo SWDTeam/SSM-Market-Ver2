@@ -4,19 +4,20 @@
   </div>
 
   <!--Filter form-->
-  <form class="filter-index-categories mb-4">
+  <%= form_with(model: @product, local: true, method: 'get', class:"filter-index-categories mb-4") do |form| %>
     <div class="row">
       <!--input for FILTER-->
       <div class="col-lg-5">
-        <input type="text" placeholder="Name..." class="input-filter-index-category">
+        <%= form.text_field :search_name, placeholder:"Name...", class:"input-filter-index-category", id: 'txt_search_cate'%>
       </div>
 
       <!--FILTER bnt-->
       <div class="col-lg-2">
-        <input type="submit" class="bnt-index-category">
+        <%= form.button 'Find', type: 'button', class: 'bnt-index-category', id: 'M-btn-search-cates' %>
       </div>
     </div>
-  </form>
+  <% end %>
+  
 
   <!--label for table-->
   <div class="row pb-2 wrap-label-index-category">
@@ -37,9 +38,9 @@
   <!--content of table-->
   <% @categories.each.with_index do |category, index| index += 1 %>
     <% if category.status == 'active' %>
-      <div class="row py-3 wrap-content-index-category">
+      <div class="row py-3 wrap-content-index-category M-test" id="<%= category.id %>">
         <!--STATUS-->
-        <div class="col-2 text-center"><%= index %></div>
+        <div class="col-2 text-center" id="<%= category.id %>-index"><%= index %></div>
         <!--IMG-->
         <div class="col-2"><img src="<%= category.images.first.url %>" alt="" class="img-index-categories"></div>
         <!--NAME-->

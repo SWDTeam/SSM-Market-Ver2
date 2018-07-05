@@ -93,6 +93,21 @@ class ProductsController < ApplicationController
       render json: @products
     end
   end
+
+  def search_products_by_category
+    if params[:category_id]
+      @products = Product.select(:id).where(category_id: params[:category_id])
+      render json: @products
+    end
+  end
+
+  def search_products_by_name
+    if params[:name]
+      @products = Product.select(:id).where("name LIKE ?", "%#{params[:name]}%")
+      render json: @products
+    end
+  end
+  
   
 
   private

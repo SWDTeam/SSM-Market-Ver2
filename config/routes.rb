@@ -28,7 +28,10 @@ Rails.application.routes.draw do
   end
 #---------------Ajax---------------
   get '/products_by_status', to: "products#search_products_by_status"
+  get '/products_by_category', to: "products#search_products_by_category"
+  get '/products_by_name', to: "products#search_products_by_name"
 
+  get '/categories_by_name', to: "categories#search_categories_by_name"
 #---------------Mobile api---------------
   namespace :api do
     namespace :v1 do

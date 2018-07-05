@@ -1,49 +1,3 @@
-<!--<p id="notice"><%= notice %></p>
-
-<h1>Products</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Product key</th>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Manufacturer</th>
-      <th>Manu date</th>
-      <th>Expired date</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Status</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <%# @products.each do |product| %>
-      <tr>
-        <td><%#= product.product_key %></td>
-        <td><%#= product.name %></td>
-        <td><%#= product.quantity %></td>
-        <td><%#= product.manufacturer %></td>
-        <td><%#= product.manu_date %></td>
-        <td><%#= product.expired_date %></td>
-        <td><%#= product.description %></td>
-        <td><%#= product.price %></td>
-        <td><%#= product.status %></td>
-        <td><%#= link_to 'Show', product %></td>
-        <td><%#= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%#= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <%# end %>
-  </tbody>
-</table>
-
-<br>-->
-
-<%#= link_to 'New Product', new_product_path %>
-
-<!---------------------------->
-
 <!--use css of index categories-->
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">
@@ -51,7 +5,7 @@
   </div>
 
   <!--FILTER form-->
-  <%= form_with(model: @product, local: true, url:{action: "index"}, class:"filter-index-product mb-4") do |form| %>
+  <%= form_with(model: @product, local: true, method: 'get', class:"filter-index-product mb-4") do |form| %>
   <!-- <form class="filter-index-product mb-4"> -->
     <div class="row">
       <!--SORT by status-->
@@ -59,27 +13,24 @@
       <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
       </div>
 
-      <!--SORT by QUANTITY-->
-      <!-- <div class="col-lg-2">
-        <select class="filter-select-index-product input-filter-index-category">
-          <option>Sort By Quantity</option>
-        </select>
-      </div> -->
-
       <!--SORT by CATE-->
       <div class="col-lg-3">
-        <%= form.collection_select(:category_id, @categories, :id, :name, {prompt: 'Find By Category'}, class:'filter-select-index-product input-filter-index-category custom-select') %>
+        <%= form.collection_select(:category_id, @categories, :id, :name, {prompt: 'Find By Category'}, id: 'select_category', class:'filter-select-index-product input-filter-index-category custom-select') %>
       </div>
+  
       <!--input for SEARCH name-->
       <div class="col-lg-3">
-        <%= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category"  %>
+        <!-- <input type="text" placeholder="Name..."  class="input-filter-index-category" id="txt_search_name"> -->
+        <%= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
       </div>
+      
       <!--submit bnt-->
       <div class="col-lg-2">
-        <%= form.submit 'Find', class: "bnt-index-category"%>
+      <!-- <button class="bnt-index-category" id="M-btn-search">Find</button>e -->
+        <%= form.button 'Find', type: 'button',class: "bnt-index-category", id: 'M-btn-search'%>
       </div>
     </div>
-  <% end %>
+    <% end %>
   <!-- </form> -->
 
   <!--label for tabel-->

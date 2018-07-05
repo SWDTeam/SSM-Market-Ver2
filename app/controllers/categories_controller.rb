@@ -79,6 +79,15 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def search_categories_by_name
+    if params[:name]
+      @categories = Category.select(:id).where("name LIKE ?", "%#{params[:name]}%")
+      render json: @categories
+    end
+    
+  end
+
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
