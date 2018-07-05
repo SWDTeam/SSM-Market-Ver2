@@ -51,123 +51,99 @@
   </div>
 
   <!--FILTER form-->
-  <form class="filter-index-product mb-4">
+  <%= form_with(model: @product, local: true, url:{action: "index"}, class:"filter-index-product mb-4") do |form| %>
+  <!-- <form class="filter-index-product mb-4"> -->
     <div class="row">
-      <!--SORT by PRICE-->
-      <div class="col-lg-2">
-        <select class="filter-select-index-product input-filter-index-category">
-          <option>Sort By Price</option>
-        </select>
+      <!--SORT by status-->
+      <div class="col-lg-3">
+      <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
       </div>
 
       <!--SORT by QUANTITY-->
-      <div class="col-lg-2">
+      <!-- <div class="col-lg-2">
         <select class="filter-select-index-product input-filter-index-category">
           <option>Sort By Quantity</option>
         </select>
-      </div>
+      </div> -->
 
       <!--SORT by CATE-->
-      <div class="col-lg-2">
-        <select class="filter-select-index-product input-filter-index-category">
-          <option>Sort By Category</option>
-        </select>
+      <div class="col-lg-3">
+        <%= form.collection_select(:category_id, @categories, :id, :name, {prompt: 'Find By Category'}, class:'filter-select-index-product input-filter-index-category custom-select') %>
       </div>
-
       <!--input for SEARCH name-->
       <div class="col-lg-3">
-        <input type="text" placeholder="Name..." class="input-filter-index-category">
+        <%= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category"  %>
       </div>
-
       <!--submit bnt-->
       <div class="col-lg-2">
-        <input type="submit" class="bnt-index-category">
+        <%= form.submit 'Find', class: "bnt-index-category"%>
       </div>
     </div>
-  </form>
+  <% end %>
+  <!-- </form> -->
 
   <!--label for tabel-->
   <div class="row pb-2 wrap-label-index-category">
     <!--KEY-->
-    <div class="col-1 text-center label-index-category">
-      No
-    </div>
-
+    <div class="col-1 text-center label-index-category">No</div>
     <!--Name-->
-    <div class="col-3 label-index-category">
-      Name
-    </div>
-
-    <!--PRICE-->
-    <div class="col-2 label-index-category">
-      Price
-    </div>
-
+    <div class="col-3 label-index-category">Name</div>
+    <!--Category-->
+    <div class="col-2 label-index-category">Category</div>
     <!--QUANTITY-->
-    <div class="col-1 text-center label-index-category">
-      Quantity
-    </div>
-
+    <div class="col-1 text-center label-index-category">Quantity</div>
     <!--STATUS-->
     <div class="col-2 text-center label-index-category">
       Status
     </div>
 
     <!--SHOW-->
-    <div class="col-1 text-center label-index-category">
-      Show
-    </div>
-    
+    <div class="col-1 text-center label-index-category">Show</div>
     <!--ACTION-->
-    <div class="col-1 text-center label-index-category">
-      Action
-    </div>
+    <div class="col-1 text-center label-index-category">Action</div>
   </div>
 
   <!--content of table-->
-  <% @products.each do |product| %>
-    <div class="row py-3 wrap-content-index-product">
-      <!--KEY-->
-      <div class="col-1 text-center">
-        <%= product.product_key %>
-      </div>
-
+  <% @products.each.with_index do |product, index| index += 1%>
+    <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
+      <!--No-->
+      <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
       <!--Name-->
-      <div class="col-3">
-        <%= product.name %>
-      </div>
-
-      <!--PRICE-->
-      <div class="col-2">
-        <%= product.price %>
-      </div>
-
+      <div class="col-3"><%= product.name %></div>
+      <!--Category-->
+      <div class="col-2"><%= Category.find(product.category_id).name %></div>
       <!--QUANTITY-->
-      <div class="col-1 text-center">
-        <%= product.quantity %>
-      </div>
-
-      <!--STATUS-->
-      <div class="col-2 text-center">
-        <%= product.status %>
-      </div>
-
+      <div class="col-1 text-center"><%= product.quantity %></div>
+      <!-- STATUS-->
+      <div class="col-2 text-center"><%= product.status %></div>
       <!--SHOW-->
       <div class="col-1 text-center">
         <center>
-        <%= link_to product_path(product) do %>
-          <i class="fa fa-search-plus edit-bnt-index-category"></i></center>
-        <% end %>
+          <%= link_to product_path(product) do %>
+            <i class="fa fa-search-plus edit-bnt-index-category"></i>
+          <% end %>
         </center>
       </div>
-      
+
       <!--ACTION-->
-      <div class="col-1 text-center">
-        <center>
-          <i class="fa fa-ban del-bnt-index-category"></i>
-        </center>
-      </div>
+      <% if product.status == "active" %>   
+        <div class="col-1 text-center">
+          <center>
+          <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
+            <i class="fa fa-unlock del-bnt-index-category"></i>
+          <% end %>  
+          </center>
+        </div>
+      <% else %>
+        <div class="col-1 text-center">
+          <center>
+          <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
+            <i class="fa fa-lock del-bnt-index-category"></i>
+          <% end %>  
+          </center>
+        </div>
+      <% end %>
     </div>
   <% end %>
+  <!--content of table-->
 </div>
-

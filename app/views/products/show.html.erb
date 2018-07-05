@@ -58,7 +58,7 @@
 
   <div class="row mb-4">
     <div class="col-2 ml-2">
-      Edit
+      <%= link_to 'Edit', edit_account_product_path(current_account, @product) %>
     </div>
   </div>
 
@@ -76,7 +76,11 @@
           <%= @product.name %>
         </div>
       </div>
-
+      <div class="row">
+        <div class="col-12 text-center key-show-product" style="color:red;">
+          Status: <%= @product.status.upcase %>
+        </div>
+      </div>
       <!--KEY-->
       <div class="row">
         <div class="col-12 text-center key-show-product">
@@ -88,15 +92,6 @@
 
   <div class="row my-4">
     <div class="col-12">
-      <!--
-      <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-          Description
-        </div>
-        <div class="col-2"></div>
-      </div>
-      -->
       <!--content DESC-->
       <div class="row">
         <div class="col-12 text-center des-show-product">

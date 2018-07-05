@@ -26,8 +26,10 @@ Rails.application.routes.draw do
   devise_scope :account do
     root "accounts/sessions#new"
   end
+#---------------Ajax---------------
+  get '/products_by_status', to: "products#search_products_by_status"
 
-#---------------Mobile api
+#---------------Mobile api---------------
   namespace :api do
     namespace :v1 do
       # accounts

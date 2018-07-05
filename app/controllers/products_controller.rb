@@ -1,14 +1,15 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_account!
-def home
-  
-end
+  def home
+
+  end
 
   # GET /products
   # GET /products.json
   def index
     @products = Product.all
+    @categories = Category.all.includes(:images)
   end
 
   # GET /products/1
@@ -25,6 +26,7 @@ end
 
   # GET /products/1/edit
   def edit
+    @categories = Category.all
   end
 
   # POST /products
@@ -55,12 +57,23 @@ end
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to @product, notice: 'Product was successfully updated.' }
+        unless params[:images].nil?
+          params[:images]['url'].each do |i|
+            @image = @product.images.create!(url: i, product_id: @product.id)
+          end
+        end
+        unless params[:images_delete].nil?
+          params[:images_delete].each do |i|
+            image = Image.find(i['id'])
+            @product.images.destroy(image)
+          end
+        end
+        format.html { redirect_to product_path(@product), notice: 'Product was successfully updated.' }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit }
         format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
+      end 
     end
   end
 
@@ -74,6 +87,14 @@ end
     end
   end
 
+  def search_products_by_status
+    if params[:status]
+      @products = Product.select(:id).where(status: params[:status])
+      render json: @products
+    end
+  end
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
@@ -83,6 +104,6 @@ end
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
       params.require(:product).permit(:product_key, :name, :quantity, :manufacturer, 
-        :manu_date, :expired_date, :description, :price, :status, :category_id)
+        :manu_date, :expired_date, :description, :price, :status, :category_id, :updater_id)
     end
 end

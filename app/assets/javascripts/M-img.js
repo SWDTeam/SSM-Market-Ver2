@@ -11,8 +11,8 @@ var new_pro_field =
 function showImageInput() {
   if ($('#product_img_field_container').children('.M-img-field').length < 1)
     $('#product_img_field_container').append(new_pro_field);
-  else
-    maxSizeImages = true;
+  // else
+  //   maxSizeImages = true;
 }
 
 function previewProductImages(event) {
@@ -29,10 +29,10 @@ function previewProductImages(event) {
 function removeProductImages(event) {
   var file_field = $(event.target).parents(".M-img-field");
   file_field.remove();
-  if (maxSizeImages) {
+  //if (maxSizeImages) {
     showImageInput();
-    maxSizeImages = false;
-  }
+    //maxSizeImages = false;
+  //}
 }
 
 //Show add img button again when remove img
@@ -40,10 +40,10 @@ function removeProductImages(event, id) {
   var file_field = $(event.target).parents(".M-img-field");
   $("#product_img_field_container").append('<input type="hidden" value=' + id + ' name="images_delete[][id]"">');
   file_field.remove();
-  if (maxSizeImages) {
+  //if (maxSizeImages) {
     showImageInput();
-    maxSizeImages = false;
-  }
+    //maxSizeImages = false;
+  //}
 }
 //========================================
 
