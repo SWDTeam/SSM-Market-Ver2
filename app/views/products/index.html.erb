@@ -126,7 +126,7 @@
 
   <!--content of table-->
   <% @products.each do |product| %>
-    <div class="row py-3 wrap-content-index-product">
+    <div class="row py-3 wrap-content-index-product content-index-product">
       <!--KEY-->
       <div class="col-1 text-center">
         <%= product.product_key %>
@@ -170,4 +170,17 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-index-product");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>
 

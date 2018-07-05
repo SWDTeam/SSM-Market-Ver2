@@ -59,7 +59,7 @@
 
   <!--content-->
   <%# @orders.each do |order| %>
-    <div class="row py-3 wrap-content-index-category">
+    <div class="row py-3 wrap-content-index-category content-index-order">
       <!--CODE-->
       <div class="col-1 text-center"><%#= order.code %>cdcdcdcd</div>
       <!--PAYMENT DATE-->
@@ -101,3 +101,16 @@
     </div>
   <%# end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-index-order");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>

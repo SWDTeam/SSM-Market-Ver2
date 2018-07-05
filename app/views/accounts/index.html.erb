@@ -94,7 +94,7 @@
   </div>
 
   <%# @accounts.each do |account| %>
-    <div class="row py-3 wrap-content-index-product">
+    <div class="row py-3 wrap-content-index-product content-index-account">
       <!--NO-->
       <div class="col-1 px-0 text-center">
         1
@@ -150,3 +150,16 @@
     </div>
   <%# end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-index-account");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>

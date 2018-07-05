@@ -37,7 +37,7 @@
   <!--content of table-->
   <% @categories.each.with_index do |category, index| index += 1 %>
     <% if category.status == 'active' %>
-      <div class="row py-3 wrap-content-index-category">
+      <div class="row py-3 wrap-content-index-category content-index-category">
         <!--STATUS-->
         <div class="col-2 text-center"><%= index %></div>
         <!--IMG-->
@@ -64,7 +64,7 @@
         </center>
       </div>-->
     <% else %>
-      <div class="row py-3 wrap-content-index-category">
+      <div class="row py-3 wrap-content-index-category content-index-category">
         <!--STATUS-->
         <div class="col-2 text-center"><%= index %></div>
         <!--IMG-->
@@ -87,3 +87,16 @@
     <% end %>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-index-category");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>
