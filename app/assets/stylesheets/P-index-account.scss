@@ -30,20 +30,20 @@
   background-color: #6E6A64;
 }
 
-.active-bnt-index-account {
+.edit-bnt-index-account {
   width: 100%;
-  color: #D26338;
+  color: rgb(12, 133, 82);
   background-color: white;
-  border: 2px solid #D26338;
+  border: 2px solid rgb(12, 133, 82);
   border-radius: 7px;
   cursor: pointer;
   transition: 0.3s;
   padding: 5px 0px;
 }
 
-.active-bnt-index-account:hover {
+.edit-bnt-index-account:hover {
   color: white;
-  background-color: #D26338;
+  background-color: rgb(12, 133, 82);
 }
 
 .label-account {
