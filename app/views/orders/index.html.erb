@@ -38,9 +38,31 @@
 
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">
-    Oders
+    Orders
   </div>
 
+  <div class="row mb-4">
+    <!--SORT by status-->
+    <div class="col-lg-3">
+      <select class="filter-select-index-product input-filter-index-category custom-select">Status</select>
+      <%#= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
+    </div>
+
+    <div class="col-lg-4"></div>
+
+    <!--input for SEARCH name-->
+    <div class="col-lg-3">
+      <input type="text" placeholder="ID Order..."  class="input-filter-index-category">
+      <%#= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
+    </div>
+      
+    <!--submit bnt-->
+    <div class="col-lg-2">
+      <button class="bnt-index-category" id="M-btn-search">Filter</button>
+      <%#= form.button 'Filter', type: 'button', class: "bnt-index-category"%>
+    </div>
+  </div>
+  
   <!--LABEL-->
   <div class="row pb-2 wrap-label-index-category">
     <!--CODE-->
@@ -77,7 +99,7 @@
       </div>
       <!--ACTION-->
       <div class="col-2">
-        <button class="bnt-creat-product" style="width: 80%; padding: 3px;">Submit</button>
+        <button class="bnt-submit-order">Submit</button>
       </div>
     </div>
   <%# end %>
