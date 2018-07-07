@@ -68,15 +68,15 @@
     <!--CODE-->
     <div class="col-1 text-center label-index-category">ID</div>
     <!--CUSTOMER NAME-->
-    <div class="col-3 label-index-category">Customer's Name</div>
+    <div class="col-3 px-1 label-index-category">Customer's Name</div>
     <!--TOTAL-->
-    <div class="col-2 label-index-category">Total</div>
+    <div class="col-2 px-1 label-index-category">Total</div>
     <!--CURRENT STATUS-->
-    <div class="col-2 text-center label-index-category">Current Status</div>
+    <div class="col-2 px-1 text-center label-index-category">Current Status</div>
     <!--CHANGE STATUS-->
     <div class="col-2 text-center label-index-category">Change Status</div>
     <!--ACTION-->
-    <div class="col-2 label-index-category">Action</div>
+    <div class="col-2 pl-0 pr-3 text-center label-index-category">Action</div>
   </div>
 
   <!--content-->
@@ -85,20 +85,23 @@
       <!--CODE-->
       <div class="col-1 text-center">1</div>
       <!--CUSTOMER NAME-->
-      <div class="col-3">Dakota Rice</div>
+      <div class="col-3 px-1">Dakota Rice</div>
       <!--TOTAL-->
-      <div class="col-2">1000000</div>
+      <div class="col-2 px-1">1000000</div>
       <!--CURRENT STATUS-->
       <!--accept: #31C55B ; cancel: #E53348-->
-      <div class="col-2 text-center"><span class="order-status" style="background-color: #F6AC43;">Pending</span></div>
+      <div class="col-2 px-1 text-center">
+        <span class="order-status" style="background-color: #F6AC43;">Pending</span>
+        <span class="order-status" style="background-color: #008AFF;">Payment</span>
+      </div>
       <!--CHANGE STATUS-->
-      <div class="col-2 text-center">
-        <select class="custom-select">
+      <div class="col-2 text-center" style="font-size: 12px;">
+        <select class="custom-select" style="width: 90%;">
           <option>Accepted</option>
         </select>
       </div>
       <!--ACTION-->
-      <div class="col-2">
+      <div class="col-2 pl-0 text-center pr-3">
         <button class="bnt-submit-order">Submit</button>
       </div>
     </div>
