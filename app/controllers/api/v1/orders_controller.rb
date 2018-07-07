@@ -52,7 +52,7 @@ class Api::V1::OrdersController < ActionController::API
     order_detail = params[:order_product]
     order_detail.each_with_index do |detail|
       product = Product.find_by_id(detail[:product_id])
-      return render json: {success: false, message: "wrong quantity"} if product.quantity - detail[:quantity] < 0 || detail[:quantity] < 1
+      return render json: product.as_json.merge({success: false}).to_json if product.quantity - detail[:quantity] < 0 || detail[:quantity] < 1
       return render json: {success: false, message: "price not match"} if product.price != detail[:price]
     end
   end

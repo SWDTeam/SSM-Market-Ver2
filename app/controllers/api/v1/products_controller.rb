@@ -2,7 +2,8 @@ class Api::V1::ProductsController < ActionController::API
   def index_products_by_category_id
     h = Hash.new
     results = Array.new
-    @lists = Product.includes(:images).where(category_id: params[:category_id])
+    @lists = Product.includes(:images).where(category_id: params[:category_id], status: 'active')
+
     if @lists.size < 1
       render json: {errors: 'Not found'}, status: 404
     else
@@ -21,7 +22,7 @@ class Api::V1::ProductsController < ActionController::API
   def index
     h = Hash.new
     t = Array.new
-    @products = Product.includes(:images).order(:created_at).last(4)
+    @products = Product.includes(:images).where(status: 'active').order(:created_at).last(2)
     @products.each do |p|
       cate_name = Category.find(p.category_id).name
       t.push({id: p.id, name: p.name, url: p.images.first.url.url, 
