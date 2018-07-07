@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
   before_action :authenticate_account!, only: [:edit, :update]
 
   def index
-    
+    @accounts = Account.all
   end
 
   def show
@@ -14,7 +14,7 @@ class AccountsController < ApplicationController
   end
 
   def new
-    
+    @account = Account.new
   end
   
   def create

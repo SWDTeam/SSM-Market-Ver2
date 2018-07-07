@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20180625054223) do
     t.float "price"
     t.integer "quantity"
     t.string "reason"
-    t.string "status"
+    t.string "status", default: "pending"
     t.integer "order_id"
     t.integer "product_id"
     t.datetime "created_at", null: false
