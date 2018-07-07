@@ -21,7 +21,7 @@
                 android:id="@+id/productDetailToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#81835b"
+                android:background="#3d96c1"
                 android:minHeight="?attr/actionBarSize"
                 app:titleTextColor="#ffffff">
                 <android.support.constraint.ConstraintLayout
@@ -30,7 +30,7 @@
 
                     <TextView
                         android:id="@+id/txtToolbarProductName"
-                        android:layout_width="100dp"
+                        android:layout_width="150dp"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="8dp"
                         android:layout_marginStart="8dp"
@@ -94,12 +94,12 @@
 
                     <TextView
                         android:id="@+id/txtNameProductDetail"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="ten san pham"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -126,6 +126,7 @@
                     </Spinner>
 
                     <Button
+                        android:layout_margin="5dp"
                         android:id="@+id/btnAddToCartProductDetail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -138,11 +139,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -151,6 +154,7 @@
                     android:textSize="25sp" />
 
                 <LinearLayout
+                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -158,18 +162,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Ngay san xuat" />
+
+                        android:text="Date of manufacture: " />
 
                     <TextView
                         android:id="@+id/txtManuTimeProductDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginLeft="15dp"
                         android:text="12-03-2015" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -177,18 +182,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Ngay het han" />
+
+                        android:text="Expiration Date" />
 
                     <TextView
                         android:id="@+id/txtExpiredProductDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginLeft="58dp"
                         android:text="12-03-2015" />
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_margin="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -196,14 +202,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:text="Nha san xuat" />
+
+                        android:text="Manufacture" />
 
                     <TextView
                         android:id="@+id/txtManuProductDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginLeft="73dp"
                         android:text="12-03-2015" />
                 </LinearLayout>
 

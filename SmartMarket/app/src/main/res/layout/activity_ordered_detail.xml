@@ -11,7 +11,7 @@
         android:id="@+id/toolbarOrderDetail"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FF737357"
+        android:background="#3d96c1"
         app:title="Ordered Detail"
         app:titleTextColor="#ffffff"></android.support.v7.widget.Toolbar>
 

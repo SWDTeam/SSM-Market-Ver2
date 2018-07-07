@@ -12,7 +12,7 @@
         android:id="@+id/toolbarCart"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#FF737357"
+        android:background="#3d96c1"
         app:title="My Cart"
         app:titleTextColor="#ffffff"></android.support.v7.widget.Toolbar>
 
@@ -67,6 +67,7 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total"
@@ -100,6 +101,7 @@
         android:text="BUY"
         android:id="@+id/btnBuy"
         android:textSize="20dp"
+        android:textColor="#ffffff"
         android:textStyle="bold" />
 
     <Button

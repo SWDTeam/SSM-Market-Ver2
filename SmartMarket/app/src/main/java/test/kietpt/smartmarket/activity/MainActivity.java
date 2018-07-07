@@ -83,11 +83,11 @@ public class MainActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             actionBar();
             actionViewFlipper();
-            //getListCategory("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory?btnAction="+"view");
+
             getListCategory("https://ssm-market.herokuapp.com/api/v1/categories");
-            //getListHotProduct("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListHotProduct");
+
             getListHotProduct("https://ssm-market.herokuapp.com/api/v1/products");
-            //catchOnMenuItem();
+            catchOnMenuItem();
             getProductCount();
         } else {
             CheckConnection.showConnection(getApplicationContext(), "Check your connection with wifi");
@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 Log.e("reponse json product", response + "");
                 try {
-                    JSONObject jsonObject = new JSONObject(response.toString());
-                    JSONArray jsonArray = jsonObject.getJSONArray("products");
+                    //JSONObject jsonObject = new JSONObject(response.toString());
+                    JSONArray jsonArray = response.getJSONArray("products");
                     for (int i = 0; i < jsonArray.length(); i++) {
 
                             JSONObject jsonProduct = jsonArray.getJSONObject(i);
@@ -182,9 +182,12 @@ public class MainActivity extends AppCompatActivity {
                             String manuDate = jsonProduct.getString("manu_date");
                             String expiredDate = jsonProduct.getString("expired_date");
                             float price = (float) jsonProduct.getDouble("price");
+                            float priceChecked = (float) jsonProduct.getDouble("price");
+                            Log.e("Price checked Main = ",priceChecked+"");
                             String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
 
-                            listHotProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate, quantity));
+                            listHotProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id,
+                                    price, manufacture, manuDate, expiredDate, quantity,priceChecked));
                             hotProductAdapter.notifyDataSetChanged();
 
 
@@ -198,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                    Log.e("reponse json product error", error.getMessage());
+                    Log.e("reponse json product error", error.toString());
                     }
                 }
         );

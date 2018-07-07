@@ -13,6 +13,8 @@ import java.util.List;
 
 import test.kietpt.smartmarket.model.Account;
 import test.kietpt.smartmarket.model.Cart;
+import test.kietpt.smartmarket.model.OrderDTO;
+import test.kietpt.smartmarket.model.OrderDetailDTO;
 import test.kietpt.smartmarket.model.ProductDTO;
 
 public class Database extends SQLiteOpenHelper {
@@ -20,6 +22,8 @@ public class Database extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "ssmarket";
     public static final String TABLE_NAME_ACCOUNT = "Account";
     public static final String TABLE_NAME_CART = "CartProduct";
+    public static final String TABLE_NAME_ORDER = "Orders";
+    public static final String TABLE_NAME_ORDER_DETAIL = "OrderDetail";
     public static final int DATABASE_VERSION = 2;
 
     // CursorFactory la con tro dung de duyet database
@@ -47,7 +51,26 @@ public class Database extends SQLiteOpenHelper {
                 "urlPic VARCHAR (3000), " +
                 "quantity INTEGER, " +
                 "price REAL ," +
+                "priceChecked REAL ," +
                 "userId INTEGER )"
+        );
+
+        db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ORDER + "(" +
+                "orderId INTEGER PRIMARY KEY ," +
+                "orderCode VARCHAR (50) UNIQUE, " +
+                "totalPrice REAL, " +
+                "totalQuantity INTEGER, " +
+                "statusOrder VARCHAR (50) ," +
+                "accountId INTEGER )"
+        );
+
+        db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ORDER_DETAIL + "(" +
+                "id INTEGER PRIMARY KEY ," +
+                "orderId INTEGER, " +
+                "productId INTEGER, " +
+                "price REAL, " +
+                "quantity INTEGER, " +
+                "status VARCHAR (50) )"
         );
         Log.e("CREATE TABLE ", "tao table thanh cong");
     }
@@ -55,6 +78,36 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+    public int insertToOrderDetail(List<OrderDetailDTO> list) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        for(int i = 0; i< list.size(); i++){
+            values.put("id", list.get(i).getId());
+            values.put("orderId", list.get(i).getOrderId());
+            values.put("productId", list.get(i).getProductId());
+            values.put("price", list.get(i).getPrice());
+            values.put("quantity", list.get(i).getQuantity());
+            values.put("status", list.get(i).getStatus());
+            db.insert(TABLE_NAME_ORDER_DETAIL, null, values);
+        }
+        Log.e("insert table order + ", "  insert order thanh cong ");
+        db.close();
+        return 2;
+    }
+    public int insertToOrder(OrderDTO dto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("orderId", dto.getOrderId());
+        values.put("orderCode", dto.getOrderCode());
+        values.put("totalPrice", dto.getTotalPrice());
+        values.put("totalQuantity", dto.getTotalQuantity());
+        values.put("statusOrder", dto.getStatus());
+        values.put("accountId", dto.getUserId());
+        db.insert(TABLE_NAME_ORDER, null, values);
+        Log.e("insert table order + ", "  insert order thanh cong ");
+        db.close();
+        return 1;
     }
 
     public void insertToCart(Cart dto, int userId) {
@@ -66,6 +119,7 @@ public class Database extends SQLiteOpenHelper {
         values.put("urlPic", dto.getUrlPic());
         values.put("quantity", dto.getProductQuantity());
         values.put("price", dto.getProductPrice());
+        values.put("priceChecked",dto.getPriceChekced());
         values.put("userId", userId);
         db.insert(TABLE_NAME_CART, null, values);
         Log.e("add to cart + ", "them thanh cong product vao cart trong Database ");
@@ -84,13 +138,10 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public int getProductCount(){
-        //int count = 0;
+
         SQLiteDatabase db = this.getReadableDatabase();
-        //Cursor cursor = db.rawQuery("select count(*) from CartProduct " , null);
-        //count = cursor.getCount();
-        //Log.e("Count in product = ",count+"");
         return (int) DatabaseUtils.longForQuery(db,"select count(*) from CartProduct ",null);
-        //return count;
+
     }
     public void deleteProductInCart(int productId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -133,6 +184,7 @@ public class Database extends SQLiteOpenHelper {
             String urlPic = dataProduct.getString(3);
             int quantity = dataProduct.getInt(4);
             float price = dataProduct.getFloat(5);
+            float priceChecked = dataProduct.getFloat(6);
             Cart dto = new Cart();
             dto.setProductId(productId);
             dto.setProductKey(productKey);
@@ -140,6 +192,7 @@ public class Database extends SQLiteOpenHelper {
             dto.setUrlPic(urlPic);
             dto.setProductQuantity(quantity);
             dto.setProductPrice(price);
+            dto.setPriceChekced(priceChecked);
             list.add(dto);
         }
         Log.e("RETURN LIST PRODUCT ", "Da return list product");
@@ -154,6 +207,7 @@ public class Database extends SQLiteOpenHelper {
         }
         return false;
     }
+
 
     public void insertCustomer(Account account) {
         SQLiteDatabase db = this.getWritableDatabase();

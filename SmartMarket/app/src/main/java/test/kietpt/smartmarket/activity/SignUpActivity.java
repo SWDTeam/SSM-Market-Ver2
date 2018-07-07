@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -125,11 +126,11 @@ public class SignUpActivity extends AppCompatActivity {
             checked = true;
         }
         if (txtPass.length() < 6 || txtConfirmPass.length() < 6 || !txtPass.equalsIgnoreCase(txtConfirmPass)) {
-            if (txtPass.length() < 6 ) {
+            if (txtPass.length() < 6) {
                 checkPass.setVisibility(View.VISIBLE);
                 checkPass.setText("Password have 6 characters");
             }
-            if (txtConfirmPass.length() < 6 ) {
+            if (txtConfirmPass.length() < 6) {
                 checkConfirmPass.setVisibility(View.VISIBLE);
                 checkConfirmPass.setText("Password have 6 characters");
             }
@@ -147,12 +148,12 @@ public class SignUpActivity extends AppCompatActivity {
             checkAddress.setText("Please not empty");
             checked = true;
         }
-        if (!txtPhone.matches("0[1-9]{10,11}")) {
-            if (txtPhone.length() == 0) {
-                checkPhone.setVisibility(View.VISIBLE);
-                checkPhone.setText("Please input phone");
-                checked = true;
-            }
+        if (!txtPhone.matches("[0-9]{10,11}")) {
+
+            checkPhone.setVisibility(View.VISIBLE);
+            checkPhone.setText("Please input phone");
+            checked = true;
+
         }
         return checked;
     }
@@ -194,6 +195,16 @@ public class SignUpActivity extends AppCompatActivity {
                         Log.e("Reponse sign up ", response.toString());
 
                         try {
+                            JSONObject jsonReponse = new JSONObject(response.toString());
+                            JSONArray jsonArray = jsonReponse.getJSONArray("email");
+                            if (jsonArray.length() == 1) {
+                                Toast.makeText(SignUpActivity.this, "Email has already, please input another email", Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
                             int userId = response.getInt("id");
                             String email = response.getString("email");
                             String username = response.getString("name");
@@ -209,6 +220,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "Create Successfully", Toast.LENGTH_SHORT).show();
                             //database.getAllCustomer();
                             startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+
                         } catch (Exception e) {
                             Log.e("ERROR SIGNUP ", e.getMessage());
                         }
@@ -218,7 +230,7 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(SignUpActivity.this, "Email has already, please input another email", Toast.LENGTH_LONG).show();
+
                         Log.e("ERRROR SIGNUP", "ERROR---- " + error.toString());
                     }
                 }

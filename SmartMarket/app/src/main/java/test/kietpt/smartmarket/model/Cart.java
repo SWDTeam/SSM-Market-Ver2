@@ -12,6 +12,15 @@ public class Cart implements Serializable{
    private Float productPrice;
    private int productQuantity;
    private int quantityTemp;
+   private float priceChekced;
+
+    public float getPriceChekced() {
+        return priceChekced;
+    }
+
+    public void setPriceChekced(float priceChekced) {
+        this.priceChekced = priceChekced;
+    }
 
     public int getQuantityTemp() {
         return quantityTemp;

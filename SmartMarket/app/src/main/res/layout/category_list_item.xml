@@ -5,7 +5,7 @@
     android:layout_gravity="center"
     android:orientation="horizontal"
     android:weightSum="10"
-    android:background="#a6a396"
+    android:background="#ffffff"
     >
     <LinearLayout
         android:layout_width="0dp"

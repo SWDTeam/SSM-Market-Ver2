@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import test.kietpt.smartmarket.R;
 
@@ -16,6 +17,7 @@ public class SearchViewActi extends AppCompatActivity {
     Toolbar toolbar;
     EditText txtSearch;
     Button btnSearch;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +33,13 @@ public class SearchViewActi extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String search = txtSearch.getText().toString();
-                Intent intent = new Intent(getApplicationContext(),CategoryListActi.class);
-                intent.putExtra("txtSearchView",search);
-                startActivity(intent);
+                if (search.equals("") || search.length() == 0 || search == null) {
+                    Toast.makeText(SearchViewActi.this, "Please input something to search category", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), CategoryListActi.class);
+                    intent.putExtra("txtSearchView", search);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -52,9 +58,9 @@ public class SearchViewActi extends AppCompatActivity {
     }
 
     private void reflect() {
-        toolbar = (Toolbar)findViewById(R.id.toolbarSearchView);
+        toolbar = (Toolbar) findViewById(R.id.toolbarSearchView);
         txtSearch = (EditText) findViewById(R.id.txtSearchView);
-        btnSearch = (Button)findViewById(R.id.btnSearch);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
     }
 
 

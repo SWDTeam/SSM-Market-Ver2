@@ -142,8 +142,8 @@ public class ChangePassActi extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
 //                changePassword("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ChangePassCustomer?txtEmail=" + MainActivity.account.getEmail() + "&txtOldPassword="
 //                        + oldPass.getText().toString() + "&txtNewPassword=" + newPass.getText().toString());
-                //changePassword("https://ssm-market.herokuapp.com/api/v1/change_password");
-                changePassword("http://"+IpConfig.ipConfig+":3000/api/v1/change_password");
+                changePassword("https://ssm-market.herokuapp.com/api/v1/change_password");
+                //changePassword("http://"+IpConfig.ipConfig+":3000/api/v1/change_password");
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

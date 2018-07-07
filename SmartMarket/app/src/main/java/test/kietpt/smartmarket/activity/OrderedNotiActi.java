@@ -10,12 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import test.kietpt.smartmarket.R;
 
 public class OrderedNotiActi extends AppCompatActivity {
 
-    TextView accountOrderNoti,myOrderOrderNoti,orderCodeOrderNoti,prrceNoti;
+    TextView accountOrderNoti,myOrderOrderNoti,orderCodeOrderNoti,priceNoti;
     Button btnContinueNoti;
 
     @Override
@@ -32,7 +33,7 @@ public class OrderedNotiActi extends AppCompatActivity {
         String orderAndPrice = intent.getStringExtra("OrderCodeAndPrice");
         String[] orderArr = orderAndPrice.split("-");
         orderCodeOrderNoti.setText(orderArr[0].trim().toString());
-        prrceNoti.setText(orderArr[1].trim().toString()+" $ ");
+        priceNoti.setText(orderArr[1].trim().toString()+" $ ");
         accountOrderNoti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,10 +68,6 @@ public class OrderedNotiActi extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-//            case R.id.menuCart:
-//                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-//                startActivity(intentCart);
-//                break;
             case R.id.menuSearch:
                 Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
                 startActivity(intentSearch);
@@ -106,8 +103,14 @@ public class OrderedNotiActi extends AppCompatActivity {
         accountOrderNoti = (TextView)findViewById(R.id.accountOrderNoti);
         myOrderOrderNoti = (TextView)findViewById(R.id.myOrderOrderNoti);
         orderCodeOrderNoti = (TextView)findViewById(R.id.orderCodeOrderNoti);
-        prrceNoti = (TextView)findViewById(R.id.priceOrderNoti);
+        priceNoti = (TextView)findViewById(R.id.priceOrderNoti);
         btnContinueNoti = (Button)findViewById(R.id.btnContinueOrderNoti);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please click to Back to home to return ", Toast.LENGTH_SHORT).show();
+
     }
 
 }

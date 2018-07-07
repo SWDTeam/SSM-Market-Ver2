@@ -13,6 +13,9 @@ public class OrderDetailDTO implements Serializable {
     private String productKey;
     private String imgKey;
 
+
+
+
     public OrderDetailDTO() {
     }
 

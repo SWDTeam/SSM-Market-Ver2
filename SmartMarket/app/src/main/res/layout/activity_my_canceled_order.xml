@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolbarMyCanceledOrder"
         app:title="My Canceled order"
-        android:background="#FF81835B"
+        android:background="#3d96c1"
         app:titleTextColor="#ffffff"
         ></android.support.v7.widget.Toolbar>
     <LinearLayout

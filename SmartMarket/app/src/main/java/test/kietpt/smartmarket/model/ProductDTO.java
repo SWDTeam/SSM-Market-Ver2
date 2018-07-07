@@ -22,9 +22,18 @@ public class ProductDTO implements Serializable {
     }
 
     private float price;
+    private float priceChecked;
+
+    public float getPriceChecked() {
+        return priceChecked;
+    }
+
+    public void setPriceChecked(float priceChecked) {
+        this.priceChecked = priceChecked;
+    }
 
     public ProductDTO(String productName, String description, String urlPic, String productKey, int categoryId,
-                      int productId, float price, String manufacturer, String manuDate, String expiredDate,int quantity) {
+                      int productId, float price, String manufacturer, String manuDate, String expiredDate, int quantity,float priceChecked) {
         this.productName = productName;
         this.description = description;
         this.urlPic = urlPic;
@@ -36,6 +45,7 @@ public class ProductDTO implements Serializable {
         this.manuDate = manuDate;
         this.expiredDate = expiredDate;
         this.quantity = quantity;
+        this.priceChecked = priceChecked;
     }
 
     public String getProductKey() {

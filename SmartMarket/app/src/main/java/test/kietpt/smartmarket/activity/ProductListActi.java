@@ -13,10 +13,12 @@ import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -132,47 +134,52 @@ public class ProductListActi extends AppCompatActivity {
         //int position = 0;
         //position = Integer.parseInt(checked1[0]);
         toolbar.setTitle(cate[1]);
-        Log.e("CATEID PRODUCT LIST ", Integer.parseInt(cate[0]) + "");
-        getData("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetProductListByCateId?txtCateId=" + Integer.parseInt(cate[0]));
+        Log.e("category id product list ", Integer.parseInt(cate[0]) + "");
+        getData("https://ssm-market.herokuapp.com/api/v1/list_products/" + Integer.parseInt(cate[0]));
     }
 
 
     private void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+        JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET,url, null,
+                new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONArray response) {
-                Log.e("RESPONSE PRODUCT LIST ", response.toString());
-                if (response.toString() != null) {
-                    try {
-                        for (int i = 0; i < response.length(); i++) {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            int id = jsonObject.getInt("productId");
-                            String name = jsonObject.getString("productName");
-                            String des = jsonObject.getString("description");
-                            String urlPic = jsonObject.getString("urlPic");
-                            String key = jsonObject.getString("productKey");
-                            int cateId = jsonObject.getInt("categoryId");
-                            float price = (float) jsonObject.getDouble("price");
-                            String manufacture = jsonObject.getString("manufacturer");
-                            String manuDate = jsonObject.getString("manuDate");
-                            String expiredDate = jsonObject.getString("expiredDate");
-                            int quantity = jsonObject.getInt("quantity");
-                            String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
+            public void onResponse(JSONObject response) {
+                Log.e("reponse json product", response + "");
+                try {
+                    JSONObject jsonObject = new JSONObject(response.toString());
+                    JSONArray jsonArray = jsonObject.getJSONArray("products");
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                            listProduct.add(new ProductDTO(name, des, urlTest, key, cateId, id, price,manufacture,manuDate,expiredDate,quantity));
-                            productListAdapter.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        JSONObject jsonProduct = jsonArray.getJSONObject(i);
+                        int id = jsonProduct.getInt("id");
+                        String name = jsonProduct.getString("name");
+                        String des = jsonProduct.getString("description");
+                        String urlPic = jsonProduct.getString("url");
+                        String productKey = jsonProduct.getString("product_key");
+                        int quantity = jsonProduct.getInt("quantity");
+                        int cateId = jsonProduct.getInt("category_id");
+                        String manufacture = jsonProduct.getString("manufacturer");
+                        String manuDate = jsonProduct.getString("manu_date");
+                        String expiredDate = jsonProduct.getString("expired_date");
+                        float price = (float) jsonProduct.getDouble("price");
+                        float priceChecked = (float) jsonProduct.getDouble("price");
+                        String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
+
+                        listProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate, quantity,priceChecked));
+                        productListAdapter.notifyDataSetChanged();
+
+
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                    Log.e("error product list json ",error.toString());
                     }
                 }
         );

@@ -46,6 +46,7 @@ public class ProductDetailActi extends AppCompatActivity {
     String productKey = "";
     String urlPic = "";
     float price;
+    float priceChecked;
     String manu = "";
     String manuTime = "";
     String expiredTime = "";
@@ -165,7 +166,8 @@ public class ProductDetailActi extends AppCompatActivity {
         expiredTime = dto.getExpiredDate();
         des = dto.getDescription();
         quantityTemp = dto.getQuantity();
-
+        priceChecked = dto.getPriceChecked();
+        Log.e("PRice checked Product detail = ",priceChecked+"");
 
         txtNameDetail.setText(productName);
         DecimalFormat format = new DecimalFormat("###,###,###");
@@ -215,6 +217,7 @@ public class ProductDetailActi extends AppCompatActivity {
         dto.setProductName(productName);
         dto.setProductPrice(price * Integer.parseInt(selected));
         dto.setProductQuantity(Integer.parseInt(selected));
+        dto.setPriceChekced(priceChecked);
         dto.setUrlPic(urlPic);
         if (!database.checkProductIdInCart(productKey)) {
             int userId = 0;

@@ -21,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -30,11 +31,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.adapter.CartConfirmAdapter;
+import test.kietpt.smartmarket.model.OrderDTO;
+import test.kietpt.smartmarket.model.OrderDetailDTO;
 import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.Database;
 import test.kietpt.smartmarket.ulti.IpConfig;
@@ -151,7 +156,8 @@ public class ConfirmCartActi extends AppCompatActivity {
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            insertCart("http://" + IpConfig.ipConfig + ":8084/SSM_Project/OrderCusController");
+                            insertCart("https://ssm-market.herokuapp.com/api/v1/orders");
+
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -174,75 +180,98 @@ public class ConfirmCartActi extends AppCompatActivity {
     }
 
     private void insertCart(String url) {
+
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < MainActivity.listCart.size(); i++) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("product_id", MainActivity.listCart.get(i).getProductId());
+                jsonObject.put("quantity", MainActivity.listCart.get(i).getProductQuantity());
+                jsonObject.put("price", MainActivity.listCart.get(i).getPriceChekced());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(jsonObject);
+        }
+
+        JSONObject jsonOrder = new JSONObject();
+        JSONObject jsOrder = new JSONObject();
+        try {
+            jsonOrder.put("address_ship", addressShip.getText().toString());
+            jsonOrder.put("account_id", MainActivity.account.getUserId());
+            jsOrder.put("order", jsonOrder);
+            jsOrder.put("order_product", jsonArray);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.e("Json request insert to cart ", jsOrder + "");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(final String response) {
-                Log.e("OrderCode and Price ", response.toString());
-                if (response.toString().contains("/")) {
-                    String[] errorQuantity = response.toString().split("/");
-                    for (int i = 0; i < errorQuantity.length; i++) {
-                        Toast.makeText(ConfirmCartActi.this, errorQuantity[i].toString(), Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    final Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                runOnUiThread(new Runnable() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsOrder,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(final JSONObject response) {
+
+                        Log.e("OrderCode and Price ", response.toString());
+
+                        try {
+//                            boolean checked = response.getBoolean("success");
+//                            Log.e("Checked ", checked + "");
+//                            if (!checked) {
+//
+//                            } else {
+                                JSONObject jsOrder = response.getJSONObject("order");
+                                int orderId = jsOrder.getInt("id");
+                                final String orderCode = jsOrder.getString("code");
+                                final float totalPrice = (float) jsOrder.getDouble("total_price");
+                                String statusOrder = jsOrder.getString("status");
+                                int totalQuantity = jsOrder.getInt("total_quantity");
+                                int accountId = jsOrder.getInt("account_id");
+
+                                Log.e("json reponse order ", orderId + " - " + " - " + orderCode + " - " + totalPrice + " - " + statusOrder +
+                                        " - " + totalQuantity + " - " + accountId);
+
+                                final Thread thread = new Thread() {
                                     @Override
                                     public void run() {
-                                        progressBar.setVisibility(View.VISIBLE);
+                                        try {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    progressBar.setVisibility(View.VISIBLE);
+                                                }
+                                            });
+                                            synchronized (this) {
+                                                wait(3000);
+
+                                            }
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        database.deleteCart(MainActivity.listCart);
+                                        MainActivity.listCart = null;
+                                        Intent intent = new Intent(getApplicationContext(), OrderedNotiActi.class);
+                                        intent.putExtra("OrderCodeAndPrice", orderCode+"-"+totalPrice);
+                                        startActivity(intent);
                                     }
-                                });
-                                synchronized (this) {
-                                    wait(3000);
-
-                                }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            database.deleteCart(MainActivity.listCart);
-                            MainActivity.listCart = null;
-                            Intent intent = new Intent(getApplicationContext(), OrderedNotiActi.class);
-                            intent.putExtra("OrderCodeAndPrice", response.toString());
-                            startActivity(intent);
+                                };
+                                thread.start();
+                            //}
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    };
-                    thread.start();
 
-                }
-            }
-        }, new Response.ErrorListener() {
+
+
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("FAIL INSERT ORDER ", error.getMessage());
+                Log.e("fail insert order ", error.toString());
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < MainActivity.listCart.size(); i++) {
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("productId", MainActivity.listCart.get(i).getProductId());
-                        jsonObject.put("productKey", MainActivity.listCart.get(i).getProductKey());
-                        jsonObject.put("productName", MainActivity.listCart.get(i).getProductName());
-                        jsonObject.put("productPrice", MainActivity.listCart.get(i).getProductPrice());
-                        jsonObject.put("productQuantity", MainActivity.listCart.get(i).getProductQuantity());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    jsonArray.put(jsonObject);
-                }
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("listCart", jsonArray.toString());
-                params.put("userId", String.valueOf(MainActivity.account.getUserId()));
-                params.put("addressShip", addressShip.getText().toString());
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
+        });
+        requestQueue.add(jsonObjectRequest);
     }
 
     @Override

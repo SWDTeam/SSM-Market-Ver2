@@ -45,7 +45,7 @@ public class MyCartActi extends AppCompatActivity {
         setContentView(R.layout.activity_my_cart);
         reflect();
         if(CheckConnection.haveNetworkConnection(this)){
-            //actionToolBar();
+            actionToolBar();
             checkCart();
             getDataInCart();
             buyProduct();

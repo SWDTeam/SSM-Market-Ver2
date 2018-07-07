@@ -9,7 +9,7 @@
         android:layout_height="?attr/actionBarSize"
         android:id="@+id/toolbarProductListItem"
         app:title="Dien thoai"
-        android:background="#737357"
+        android:background="#3d96c1"
         app:titleTextColor="#fafaf8">
     </android.support.v7.widget.Toolbar>
     <ListView

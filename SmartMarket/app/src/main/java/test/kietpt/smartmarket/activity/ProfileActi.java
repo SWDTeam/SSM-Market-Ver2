@@ -39,19 +39,19 @@ public class ProfileActi extends AppCompatActivity {
     Spinner gender;
     String selectdSpinner;
     Database database;
-    TextView checkUsername, checkAddress,checkPhone;
+    TextView checkUsername, checkAddress, checkPhone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         reflect();
-        if(CheckConnection.haveNetworkConnection(this)){
+        if (CheckConnection.haveNetworkConnection(this)) {
             getDataCusInfo();
-        }else{
-            CheckConnection.showConnection(this,"Please check your wifi!!!");
+        } else {
+            CheckConnection.showConnection(this, "Please check your wifi!!!");
         }
-
 
 
     }
@@ -118,12 +118,10 @@ public class ProfileActi extends AppCompatActivity {
             checkAddress.setText("Please not empty");
             checked = true;
         }
-        if (!txtPhone.matches("0[1-9]{10,11}")) {
-            if (txtPhone.length() == 0) {
-                checkPhone.setVisibility(View.VISIBLE);
-                checkPhone.setText("Please input phone");
-                checked = true;
-            }
+        if (!txtPhone.matches("[0-9]{10,11}")) {
+            checkPhone.setVisibility(View.VISIBLE);
+            checkPhone.setText("Please input correct phone nummber");
+            checked = true;
         }
         return checked;
     }
@@ -208,9 +206,9 @@ public class ProfileActi extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int cusId = database.getCustomerId(email.getText().toString());
-                Log.e("USERID = ",cusId+"");
-                updateProfileCustomer("https://ssm-market.herokuapp.com/api/v1/accounts/"+cusId);
-                if(cusId == 0){
+                Log.e("USERID = ", cusId + "");
+                updateProfileCustomer("https://ssm-market.herokuapp.com/api/v1/accounts/" + cusId);
+                if (cusId == 0) {
                     Toast.makeText(ProfileActi.this, "Some thing wrong when update!!!!", Toast.LENGTH_SHORT).show();
                 }
 
