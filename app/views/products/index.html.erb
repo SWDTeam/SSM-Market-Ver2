@@ -56,69 +56,81 @@
 
   <!--content of table-->
   <% @products.each.with_index do |product, index| index += 1%>
-  <% if product.quantity < 1 %>
-      <!-- cho cái row này text đỏ in đậm hết hộ chị -->
-    <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
-      <!--No-->
-      <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
-      <!--Name-->
-      <div class="col-3"><%= product.name %></div>
-      <!--Category-->
-      <div class="col-2"><%= Category.find(product.category_id).name %></div>
-      <!--QUANTITY-->
-      <div class="col-1 text-center"><%= product.quantity %></div>
-      <!-- STATUS-->
-      <div class="col-2 text-center"><%= product.status %></div>
-      <!--SHOW-->
+    <% if product.quantity < 1 %>
+        <!-- cho cái row này text đỏ in đậm hết hộ chị -->
+      <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
+        <!--No-->
+        <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
+        <!--Name-->
+        <div class="col-3"><%= product.name %></div>
+        <!--Category-->
+        <div class="col-2"><%= Category.find(product.category_id).name %></div>
+        <!--QUANTITY-->
+        <div class="col-1 text-center"><%= product.quantity %></div>
+        <!-- STATUS-->
+        <div class="col-2 text-center"><%= product.status %></div>
+        <!--SHOW-->
+        <div class="col-1 text-center">
+          <center>
+            <%= link_to product_path(product) do %>
+              <i class="fa fa-search-plus edit-bnt-index-category"></i>
+            <% end %>
+          </center>
+        </div>
+
+      <% else %>
+      <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
+        <!--No-->
+        <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
+        <!--Name-->
+        <div class="col-3"><%= product.name %></div>
+        <!--Category-->
+        <div class="col-2"><%= Category.find(product.category_id).name %></div>
+        <!--QUANTITY-->
+        <div class="col-1 text-center"><%= product.quantity %></div>
+        <!-- STATUS-->
+        <div class="col-2 text-center"><%= product.status %></div>
+        <!--SHOW-->
+        <div class="col-1 text-center">
+          <center>
+            <%= link_to product_path(product) do %>
+              <i class="fa fa-search-plus edit-bnt-index-category"></i>
+            <% end %>
+          </center>
+        </div>
+    <% end %>
+      <!--ACTION-->
+    <% if product.status == "active" %>   
       <div class="col-1 text-center">
         <center>
-          <%= link_to product_path(product) do %>
-            <i class="fa fa-search-plus edit-bnt-index-category"></i>
-          <% end %>
+        <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
+          <i class="fa fa-unlock del-bnt-index-category"></i>
+        <% end %>  
         </center>
       </div>
     <% else %>
-    <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
-      <!--No-->
-      <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
-      <!--Name-->
-      <div class="col-3"><%= product.name %></div>
-      <!--Category-->
-      <div class="col-2"><%= Category.find(product.category_id).name %></div>
-      <!--QUANTITY-->
-      <div class="col-1 text-center"><%= product.quantity %></div>
-      <!-- STATUS-->
-      <div class="col-2 text-center"><%= product.status %></div>
-      <!--SHOW-->
       <div class="col-1 text-center">
         <center>
-          <%= link_to product_path(product) do %>
-            <i class="fa fa-search-plus edit-bnt-index-category"></i>
-          <% end %>
+        <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
+          <i class="fa fa-lock del-bnt-index-category"></i>
+        <% end %>  
         </center>
       </div>
-  <% end %>
-    
-
-      <!--ACTION-->
-      <% if product.status == "active" %>   
-        <div class="col-1 text-center">
-          <center>
-          <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
-            <i class="fa fa-unlock del-bnt-index-category"></i>
-          <% end %>  
-          </center>
-        </div>
-      <% else %>
-        <div class="col-1 text-center">
-          <center>
-          <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
-            <i class="fa fa-lock del-bnt-index-category"></i>
-          <% end %>  
-          </center>
-        </div>
-      <% end %>
+    <% end %>
     </div>
   <% end %>
   <!--content of table-->
 </div>
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-index-product");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>
+

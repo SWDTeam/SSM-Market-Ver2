@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :roles
 
-  get '/change_password/new', to: 'accounts#change_password', as: 'change_password'
+  get '/change_password/:id/new', to: 'accounts#change_password', as: 'change_password'
   post '/change_password/:account_id/edit', to: 'accounts#edit_password', as: 'edit_change_password'
 
   get '/home', to: 'products#home', as: "home" 

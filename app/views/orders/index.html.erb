@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%= notice %></p>
 
 <h1>Orders</h1>
 
@@ -16,22 +16,101 @@
   </thead>
 
   <tbody>
-    <% @orders.each do |order| %>
+    <%# @orders.each do |order| %>
       <tr>
-        <td><%= order.code %></td>
-        <td><%= order.payment_date %></td>
-        <td><%= order.address_ship %></td>
-        <td><%= order.total_price %></td>
-        <td><%= order.status %></td>
-        <td><%= order.total_quantity %></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%#= order.code %></td>
+        <td><%#= order.payment_date %></td>
+        <td><%#= order.address_ship %></td>
+        <td><%#= order.total_price %></td>
+        <td><%#= order.status %></td>
+        <td><%#= order.total_quantity %></td>
+        <td><%#= link_to 'Show', order %></td>
+        <td><%#= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%#= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+    <%# end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Order', new_order_path %>
+<%#= link_to 'New Order', new_order_path %>-->
+
+<div class="wrap-index-category">
+  <div class="title-index-category mb-4">
+    Oders
+  </div>
+
+  <!--LABEL-->
+  <div class="row pb-2 wrap-label-index-category">
+    <!--CODE-->
+    <div class="col-1 text-center label-index-category">Code</div>
+    <!--PAYMENT DATE-->
+    <div class="col-2 label-index-category">Payment Date</div>
+    <!--ADDRESS SHIP-->
+    <div class="col-3 label-index-category">Address Ship</div>
+    <!--TOTAL QUANLITY-->
+    <div class="col-2 text-center label-index-category">Total Quanlity</div>
+    <!--STATUS-->
+    <div class="col-1 text-center label-index-category">Status</div>
+    <!---->
+    <div class="col-3 label-index-category"></div>
+  </div>
+
+  <!--content-->
+  <%# @orders.each do |order| %>
+    <div class="row py-3 wrap-content-index-category content-index-order">
+      <!--CODE-->
+      <div class="col-1 text-center"><%#= order.code %>cdcdcdcd</div>
+      <!--PAYMENT DATE-->
+      <div class="col-2"><%#= order.payment_date %>dcdcdcd</div>
+      <!--ADDRESS SHIP-->
+      <div class="col-3"><%#= order.address_ship %>dcdcdcd</div>
+      <!--TOTAL QUANLITY-->
+      <div class="col-2 text-center"><%#= order.total_price %>dcdcdc</div>
+      <!--STATUS-->
+      <div class="col-1 text-center"><%#= order.status %>cdcd</div>
+      <!---->
+      <div class="col-3 col-2-5 px-2">
+        <div class="row">
+          <div class="col-4 pl-3 pr-0">
+            <center>
+              <i class="fa fa-search-plus show-bnt-index-order align-items-center">
+                <span class="px-1 align-items-center" style="font-size: 13px;"><br>Show</span>
+              </i>
+            </center>
+          </div>
+
+          <div class="col-4 px-2">
+            <center>
+              <i class="fa fa-edit edit-bnt-index-order align-items-center">
+                <span class="px-1 align-items-center" style="font-size: 13px;"><br>Edit</span>
+              </i>
+            </center>
+          </div>
+
+          <div class="col-4 pl-0 pr-4">
+            <center>
+              <i class="fa fa-trash destroy-bnt-index-order align-items-center">
+                <span class="px-1 align-items-center" style="font-size: 13px;"><br>Destroy</span>
+              </i>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%# end %>
+</div>
+
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-index-order");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>
