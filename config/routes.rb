@@ -36,13 +36,17 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       # accounts
-      resources :accounts, only: [:edit, :update, :show]
+      resources :accounts, only: [:edit, :update, :show] 
+
       post "change_password", to: "accounts#change_password"
       devise_scope :account do
         post "sign_up", :to => 'registrations#create'
         post "sign_in", :to => 'sessions#create'
         delete "sign_out", :to => 'sessions#destroy'
       end
+      # order products
+      resources :orders, only: [:create]
+      # resources :order_products, only: [:create]
       # categories
       resources :categories, only: [:index]
       get 'search_category_name/:category_name', to: "categories#search_categories_by_name"      

@@ -22,8 +22,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   protected
 
   def ensure_params_exist
-    puts " aaaaaa " + params[:session][:email]
-
+    # puts " aaaaaa " + params[:session][:email]
     return render json: {success: false, message: "missing user_login parameter"}, status: 422 if params[:session][:email].blank? || params[:session][:password].blank?
   end
   

@@ -25,9 +25,9 @@ class Api::V1::AccountsController < ActionController::API
   
   def change_password
     account = Account.find_by_id(params[:account][:id])
-    puts `change password:  #{account}`
+    # puts `change password:  #{account}`
     old_password = params[:account][:old_password]
-    puts "old pass " + old_password
+    # puts "old pass " + old_password
     if BCrypt::Password.new(account.encrypted_password) == old_password #check old pass match in db
       if account.update_attributes(password: params[:account][:new_password])
         render json: account.as_json.merge({success: true}).to_json, status: 200

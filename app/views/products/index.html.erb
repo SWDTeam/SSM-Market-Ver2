@@ -56,6 +56,8 @@
 
   <!--content of table-->
   <% @products.each.with_index do |product, index| index += 1%>
+  <% if product.quantity < 1 %>
+      <!-- cho cái row này text đỏ in đậm hết hộ chị -->
     <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
       <!--No-->
       <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
@@ -75,6 +77,28 @@
           <% end %>
         </center>
       </div>
+    <% else %>
+    <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
+      <!--No-->
+      <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
+      <!--Name-->
+      <div class="col-3"><%= product.name %></div>
+      <!--Category-->
+      <div class="col-2"><%= Category.find(product.category_id).name %></div>
+      <!--QUANTITY-->
+      <div class="col-1 text-center"><%= product.quantity %></div>
+      <!-- STATUS-->
+      <div class="col-2 text-center"><%= product.status %></div>
+      <!--SHOW-->
+      <div class="col-1 text-center">
+        <center>
+          <%= link_to product_path(product) do %>
+            <i class="fa fa-search-plus edit-bnt-index-category"></i>
+          <% end %>
+        </center>
+      </div>
+  <% end %>
+    
 
       <!--ACTION-->
       <% if product.status == "active" %>   
