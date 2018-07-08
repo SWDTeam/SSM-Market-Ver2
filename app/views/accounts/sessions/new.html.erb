@@ -18,12 +18,13 @@
     <div class="P-wrap-login-board">
       <h1 class="pb-2 P-title-login">SSM Market</h1>
       <h1 class= "pb-5 P-title-login">Login</h1>
-      <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class:"", id: "form--login"} do |f| %>
+      <%= form_for resource, as: resource_name, url: session_path(resource_name), html: {class:"form--login"} do |f| %>
         <div class="wrap-login-email">
           <%= f.email_field :email, autofocus: true, autocomplete: "off", class: "P-input-login", id: "loginEmail", placeholder: "Email"%>
-          <!-- <span class="holder-login-email"></span> -->
+          <p id="error--email" class="text-left validate-field-login"></p>
         </div>
         <%= f.password_field :password, autocomplete: "off", class: "P-input-login", id:"loginPassword", placeholder: "Password"%>
+        <p id="error--pass" class="text-left validate-field-login"></p>
                 <!-- <input class="input100" type="password" id="loginPassword" name="txtPassword"> -->
         <% if devise_mapping.rememberable? -%>
           <div class="field mt-1 float-left ml-3">

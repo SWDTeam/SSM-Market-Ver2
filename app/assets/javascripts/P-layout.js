@@ -1,20 +1,23 @@
-function changeActiveClass() {
-  var ele = document.getElementsByClassName("active")[0];
-  $(ele).removeClass("active");
+document.addEventListener("turbolinks:load", function (event) {
+  
 
-  ele = document.getElementsByClassName("nav-li-admin-page");
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar').toggleClass('show');
+    $('.overlay').toggleClass('show');
+    $('.content-admin-page').css('overflow', 'hidden');
+    if ($('.icon-collapse').hasClass("fa-bars")) {
+      $('.icon-collapse').removeClass("fa-bars");
+      $('.icon-collapse').addClass("fa-times");
+    } else {
+      $('.icon-collapse').addClass("fa-bars");
+      $('.icon-collapse').removeClass("fa-times");
+    }
+  });
 
-  var pgurl = window.location.href;
-
-  if (pgurl.includes("home")) {
-    $(ele[0]).addClass("active");
-  } else if (pgurl.includes("accounts")) {
-    $(ele[1]).addClass("active");
-  } else if (pgurl.includes("products")) {
-    $(ele[2]).addClass("active");
-  } else if (pgurl.includes("orders")) {
-    $(ele[3]).addClass("active");
-  } else {
-    $(ele[4]).addClass("active");
-  }
-}
+  $('.overlay').on('click', function() {
+    // hide sidebar
+    $('#sidebar').removeClass('show');
+    // hide overlay
+    $('.overlay').removeClass('show');
+  });
+});

@@ -1,6 +1,7 @@
 .wrap-admin-page {
   display: inline-flex;
   width: 100%;
+  align-items: stretch;
 }
 
 .adminpage-logo {
@@ -43,7 +44,6 @@
 
 .dropdown-content-adpage {
   display: none;
-  z-index: 100;
 }
 
 .show-adpage {
@@ -55,7 +55,6 @@
   min-height: 100%;
   overflow: hidden;
   width: 260px;
-  z-index: 4;
   box-shadow: inset -1px 0px 0px 0px #DDDDDD;
 }
 
@@ -94,9 +93,13 @@
 
 .content-admin-page {
   background-color: #F4F3EF;
-  width: calc(100% - 260px);
+  width: calc(100% - 250px);
   min-height: 100vh;
-  padding: 60px 20px;
+  padding: 10px 5px;
+}
+
+.wrap-content-page {
+  padding: 40px 20px;
 }
 
 .active::before {
@@ -106,18 +109,20 @@
   content: "";
   display: inline-block;
   position: absolute;
-  left: 244px;
+  left: 233px;
+  box-shadow: inset -1px 0px 0px 0px #DDDDDD;
 }
 
-/*.active::after {
+.active::after {
   border-right: 17px solid #f4f3ef;
   border-top: 17px solid transparent;
   border-bottom: 17px solid transparent;
   content: "";
   display: inline-block;
   position: absolute;
-  left: 244px;
-}*/
+  left: 233px;
+  box-shadow: inset -1px 0px 0px 0px #DDDDDD;
+}
 
 .active > a > span, .active > a > i, .active {
   color: rgb(235, 94, 40);
@@ -131,4 +136,68 @@
 .dropdown-detail:hover {
   color: rgb(102, 97, 91);
   text-decoration: none;
+}
+
+#sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  height: 100vh;
+  position: relative;
+  z-index: 999;
+  box-shadow: inset -1px 0px 0px 0px #DDDDDD;
+  background: white;
+  animation: .5s;
+}
+
+#sidebar.show {
+  animation: .5s;
+}
+
+#content-collapse {
+  display: none;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* full screen */
+  width: 100vw;
+  height: 100vh;
+  /* transparent black */
+  background: rgba(0, 0, 0, 0);
+  /* middle layer, i.e. appears below the sidebar */
+  z-index: 1;
+  opacity: 0;
+  /* animate the transition */
+  transition: all 0.5s ease-in-out;
+}
+
+.overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+.btn {
+  font-size: 20px;
+  color: #888888;
+}
+
+@media (max-width: 991px) {
+  #sidebar {
+      margin-left: -250px;
+      overflow: hidden;
+  }
+  #sidebar.show {
+      margin-left: 0;
+  }
+  #content-collapse {
+    display: block;
+    position: relative;
+    z-index: 999;
+  }
+  .content-admin-page {
+    min-width: 100vw;
+  }
 }
