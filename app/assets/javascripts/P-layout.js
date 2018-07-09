@@ -4,7 +4,6 @@ document.addEventListener("turbolinks:load", function (event) {
   $('#sidebarCollapse').on('click', function() {
     $('#sidebar').toggleClass('show');
     $('.overlay').toggleClass('show');
-    $('.content-admin-page').css('overflow', 'hidden');
     if ($('.icon-collapse').hasClass("fa-bars")) {
       $('.icon-collapse').removeClass("fa-bars");
       $('.icon-collapse').addClass("fa-times");

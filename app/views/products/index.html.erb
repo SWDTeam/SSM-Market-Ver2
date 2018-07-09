@@ -9,23 +9,23 @@
   <!-- <form class="filter-index-product mb-4"> -->
     <div class="row">
       <!--SORT by status-->
-      <div class="col-lg-3">
+      <div class="col-lg-3 my-2">
       <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
       </div>
 
       <!--SORT by CATE-->
-      <div class="col-lg-3">
+      <div class="col-lg-3 my-2">
         <%= form.collection_select(:category_id, @categories, :id, :name, {prompt: 'Find By Category'}, id: 'select_category', class:'filter-select-index-product input-filter-index-category custom-select') %>
       </div>
   
       <!--input for SEARCH name-->
-      <div class="col-lg-3">
+      <div class="col-lg-3 my-2">
         <!-- <input type="text" placeholder="Name..."  class="input-filter-index-category" id="txt_search_name"> -->
         <%= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
       </div>
       
       <!--submit bnt-->
-      <div class="col-lg-2">
+      <div class="col-lg-2 my-2">
       <!-- <button class="bnt-index-category" id="M-btn-search">Find</button>e -->
         <%= form.button 'Find', type: 'button',class: "bnt-index-category", id: 'M-btn-search'%>
       </div>
@@ -33,6 +33,7 @@
     <% end %>
   <!-- </form> -->
 
+  <div class="wrap-table-category"><!--.wrap-table in P-index-category file-->
   <!--label for tabel-->
   <div class="row pb-2 wrap-label-index-category">
     <!--KEY-->
@@ -120,6 +121,7 @@
     </div>
   <% end %>
   <!--content of table-->
+</div>
 </div>
 <script>
   $(document).ready(function() {
