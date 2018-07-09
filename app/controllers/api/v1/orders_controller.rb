@@ -39,6 +39,14 @@ class Api::V1::OrdersController < ActionController::API
     render json: {order: @order, order_product: t}
   end
 
+  def index_orders_by_account_id
+    if params[:account_id]
+      @orders = Order.where(account_id: params[:account_id], status: 'pending')
+      return render json: {errors: 'Not found'}, status: 404 if @orders.size < 1
+      render json: @orders.as_json
+    end 
+  end
+
   protected
   def ensure_params_exist
     if params[:order][:address_ship].blank? || params[:order][:account_id].blank? || params[:order_product].size < 1
@@ -56,8 +64,6 @@ class Api::V1::OrdersController < ActionController::API
       return render json: {success: false, message: "price not match"} if product.price != detail[:price]
     end
   end
-  
-
 
   private
   def order_params

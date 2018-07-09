@@ -49,6 +49,8 @@ Rails.application.routes.draw do
       end
       # order products
       resources :orders, only: [:create]
+      get 'lists_orders/:account_id', to: 'orders#index_orders_by_account_id' # find list orders by account id and status pending
+      get 'order_details/:order_id', to: 'order_products#index_order_products_by_order_id'
       # resources :order_products, only: [:create]
       # categories
       resources :categories, only: [:index]

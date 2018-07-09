@@ -32,11 +32,11 @@ class AccountsController < ApplicationController
   end
 
   def show
-    
+    @account = Account.find_by_id(params[:id])
   end
   
   def edit
-    
+    @user = Account.find_by_id(current_account.id)
   end
 
   def new
@@ -70,13 +70,27 @@ class AccountsController < ApplicationController
   
   def update
     @account = Account.find_by_id(params[:id])
-    respond_to do |format|
-      if @account.update(account_params)
-        format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
-      else
-        format.html { render :edit }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+    @user = Account.find_by_id(current_account.id)
+
+    if @account.id != current_account.id
+      respond_to do |format|
+        if @account.update(account_params)
+          format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
+          format.json { render :show, status: :ok, location: @account }
+        else
+          format.html { render :edit }
+          format.json { render json: @account.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        if @user.update(account_params)
+          format.html { redirect_to edit_account_path(@user), notice: 'Account was successfully updated.' }
+          format.json { render :edit, status: :ok, location: @user }
+        else
+          format.html { render :edit }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

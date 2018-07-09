@@ -38,35 +38,32 @@
 
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">
-    Orders
+    All Orders
   </div>
-
+<%= form_with(model: @order, local: true, method: 'get') do |form| %>
   <div class="row mb-4">
     <!--SORT by status-->
     <div class="col-lg-3">
-      <select class="filter-select-index-product input-filter-index-category custom-select">Status</select>
-      <%#= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
+      <%= form.select :status, [['Pending', 'pending'], ['Payment', 'payment']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select"%>
     </div>
-
     <div class="col-lg-4"></div>
-
     <!--input for SEARCH name-->
     <div class="col-lg-3">
-      <input type="text" placeholder="ID Order..."  class="input-filter-index-category">
-      <%#= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
+      <%= form.text_field :search_name, placeholder: "Search Code Order", class:"input-filter-index-category", id: 'txt_search_name' %>
     </div>
-      
     <!--submit bnt-->
     <div class="col-lg-2">
-      <button class="bnt-index-category" id="M-btn-search">Filter</button>
-      <%#= form.button 'Filter', type: 'button', class: "bnt-index-category"%>
+      <%= form.button 'Find', type: 'button', class: "bnt-index-category", id:"M-btn-order-search"%>
     </div>
   </div>
+<% end %>
   
   <!--LABEL-->
   <div class="row pb-2 wrap-label-index-category">
-    <!--CODE-->
+    <!--INDEX-->
     <div class="col-1 text-center label-index-category">ID</div>
+     <!--CODE-->
+    <div class="col-1 text-center label-index-category">Code</div>
     <!--CUSTOMER NAME-->
     <div class="col-3 px-1 label-index-category">Customer's Name</div>
     <!--TOTAL-->
@@ -78,12 +75,13 @@
     <!--ACTION-->
     <div class="col-2 pl-0 pr-3 text-center label-index-category">Action</div>
   </div>
-
   <!--content-->
   <%# @orders.each do |order| %>
     <div class="row py-3 wrap-content-index-category content-index-order">
-      <!--CODE-->
+      <!-- INDEX -->
       <div class="col-1 text-center">1</div>
+      <!--CODE-->
+      <div class="col-2 px-1">06283798</div>
       <!--CUSTOMER NAME-->
       <div class="col-3 px-1">Dakota Rice</div>
       <!--TOTAL-->
