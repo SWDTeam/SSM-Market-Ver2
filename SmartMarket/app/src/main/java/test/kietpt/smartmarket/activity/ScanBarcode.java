@@ -126,7 +126,7 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
     public void handleResult(Result result) {
         String scanResult = result.getText();
         Toast.makeText(this, scanResult, Toast.LENGTH_LONG).show();
-        getBarcode("http://"+IpConfig.ipConfig+":8084/SSM_Project/GetBarcode?barcode="+scanResult);
+        getBarcode("https://ssm-market.herokuapp.com/api/v1/products_barcode/"+scanResult);
     }
     public void getBarcode(String url){
         Log.e("da vao day", " da vao day r ne");
@@ -140,18 +140,18 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
                         if(response.toString() != null) {
                             try {
 
-                                int id = response.getInt("productId");
-                                String name = response.getString("productName");
+                                int id = response.getInt("id");
+                                String name = response.getString("name");
                                 String des = response.getString("description");
-                                String urlPic = response.getString("urlPic");
-                                String key = response.getString("productKey");
+                                String urlPic = response.getString("url");
+                                String key = response.getString("product_key");
 
                                 float price = (float) response.getDouble("price");
                                 String manufacture = response.getString("manufacturer");
-                                String manuDate = response.getString("manuDate");
-                                String expiredDate = response.getString("expiredDate");
+                                String manuDate = response.getString("manu_date");
+                                String expiredDate = response.getString("expired_date");
 
-                                String urlTest = "http://" + IpConfig.ipConfig + ":8084/SSM_Project/img/" + urlPic;
+                                String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
 
                                 ProductDTO dto = new ProductDTO();
                                 dto.setProductId(id);

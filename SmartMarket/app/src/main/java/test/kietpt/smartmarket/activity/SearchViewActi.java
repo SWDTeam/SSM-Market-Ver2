@@ -3,6 +3,7 @@ package test.kietpt.smartmarket.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +16,7 @@ import test.kietpt.smartmarket.R;
 public class SearchViewActi extends AppCompatActivity {
 
     Toolbar toolbar;
-    EditText txtSearch;
+    SearchView txtSearch;
     Button btnSearch;
 
     @Override
@@ -32,7 +33,7 @@ public class SearchViewActi extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String search = txtSearch.getText().toString();
+                String search = txtSearch.getQuery().toString();
                 if (search.equals("") || search.length() == 0 || search == null) {
                     Toast.makeText(SearchViewActi.this, "Please input something to search category", Toast.LENGTH_SHORT).show();
                 } else {
@@ -59,7 +60,7 @@ public class SearchViewActi extends AppCompatActivity {
 
     private void reflect() {
         toolbar = (Toolbar) findViewById(R.id.toolbarSearchView);
-        txtSearch = (EditText) findViewById(R.id.txtSearchView);
+        txtSearch = (SearchView) findViewById(R.id.txtSearchView);
         btnSearch = (Button) findViewById(R.id.btnSearch);
     }
 

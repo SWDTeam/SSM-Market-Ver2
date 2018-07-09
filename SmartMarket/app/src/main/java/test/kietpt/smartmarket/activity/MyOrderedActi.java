@@ -47,7 +47,7 @@ public class MyOrderedActi extends AppCompatActivity {
         setContentView(R.layout.activity_my_ordered);
         reflect();
         actionBar();
-        getListOrdered("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListOrderedCus?userId=" + MainActivity.account.getUserId());
+        getListOrdered("https://ssm-market.herokuapp.com/api/v1/lists_orders/" + MainActivity.account.getUserId());
         catchListOrdered();
     }
 
@@ -69,18 +69,16 @@ public class MyOrderedActi extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 Log.e("My Ordered :", response.toString());
-                if(response.toString().equals("[]")){
-                    orderedIsEmpty.setVisibility(View.VISIBLE);
-                }
+
                 if (response.toString() != null) {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            int orderId = jsonObject.getInt("orderId");
-                            String orderCode = jsonObject.getString("orderCode");
-                            String date = jsonObject.getString("startTime");
-                            int quantity = jsonObject.getInt("totalQuantity");
-                            float price = (float) jsonObject.getDouble("totalPrice");
+                            int orderId = jsonObject.getInt("id");
+                            String orderCode = jsonObject.getString("code");
+                            String date = jsonObject.getString("created_at");
+                            int quantity = jsonObject.getInt("total_quantity");
+                            float price = (float) jsonObject.getDouble("total_price");
                             String status = jsonObject.getString("status");
                             Toast.makeText(MyOrderedActi.this, orderId+" - "+orderCode+" - "+date+" - "+
                                     quantity+" - "+price+" - "+status, Toast.LENGTH_SHORT).show();

@@ -214,13 +214,25 @@ public class ConfirmCartActi extends AppCompatActivity {
                     public void onResponse(final JSONObject response) {
 
                         Log.e("OrderCode and Price ", response.toString());
+                        try{
+                            boolean checked = response.getBoolean("success");
+                            Log.e("Checked ", checked + "");
+                            if (!checked) {
+                                String errorName = response.getString("name");
+                                int errorQuantity = response.getInt("quantity");
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmCartActi.this);
+                                builder.setTitle("Error Quantity!!!");
+                                builder.setMessage(errorName + " has only " + errorQuantity + " in stock! Please decrease your quantity");
+                                builder.show();
 
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                         try {
-//                            boolean checked = response.getBoolean("success");
-//                            Log.e("Checked ", checked + "");
-//                            if (!checked) {
-//
-//                            } else {
+
+
+                            //if (flag == 1) {
                                 JSONObject jsOrder = response.getJSONObject("order");
                                 int orderId = jsOrder.getInt("id");
                                 final String orderCode = jsOrder.getString("code");
@@ -252,7 +264,7 @@ public class ConfirmCartActi extends AppCompatActivity {
                                         database.deleteCart(MainActivity.listCart);
                                         MainActivity.listCart = null;
                                         Intent intent = new Intent(getApplicationContext(), OrderedNotiActi.class);
-                                        intent.putExtra("OrderCodeAndPrice", orderCode+"-"+totalPrice);
+                                        intent.putExtra("OrderCodeAndPrice", orderCode + "-" + totalPrice);
                                         startActivity(intent);
                                     }
                                 };
@@ -261,7 +273,6 @@ public class ConfirmCartActi extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
 
                     }

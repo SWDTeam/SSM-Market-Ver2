@@ -65,10 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    //loginCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_in");
+
                     loginCustomer("https://ssm-market.herokuapp.com/api/v1/sign_in");
-//                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString() +
-//                            "&txtPassword=" + pass.getText().toString());
+
                 }
             }
         });
@@ -121,15 +120,6 @@ public class LoginActivity extends AppCompatActivity {
                             String phoneReponse = response.getString("phone");
                             String addressReponse = response.getString("address");
                             String statusReponse = response.getString("status");
-
-//                        int userReponse = response.getInt("userId");
-//                        String emailReponse = response.getString("email");
-//                        Log.e("EMAILREPONSE + ", emailReponse);
-//                        String usernameReponse = response.getString("username");
-//                        String genderReponse = response.getString("gender");
-//                        String phoneReponse = response.getString("phone");
-//                        String addressReponse = response.getString("address");
-//                        String statusReponse = response.getString("status");
 
                             MainActivity.account = new Account(userReponse, emailReponse, usernameReponse, genderReponse, phoneReponse, pass.getText().toString(),
                                     addressReponse, statusReponse);
