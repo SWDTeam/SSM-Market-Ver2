@@ -54,6 +54,7 @@
 
 .bnt-creat-product {
   width: 20%;
+  min-width: 155px;
   background: #EB5E28;
   border: #EB5E28;
   outline: none;
@@ -67,4 +68,11 @@
 .bnt-creat-product:hover {
   background: #F03E58;
   border: #F03E58;
+}
+
+@media (max-width: 991px) {
+  .filter-index-product {
+    max-width: 400px;
+    text-align: center;
+  }
 }

@@ -38,65 +38,71 @@
 
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">
-    Oders
+    Orders
   </div>
 
+  <div class="row mb-4">
+    <!--SORT by status-->
+    <div class="col-lg-3">
+      <select class="filter-select-index-product input-filter-index-category custom-select">Status</select>
+      <%#= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
+    </div>
+
+    <div class="col-lg-4"></div>
+
+    <!--input for SEARCH name-->
+    <div class="col-lg-3">
+      <input type="text" placeholder="ID Order..."  class="input-filter-index-category">
+      <%#= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
+    </div>
+      
+    <!--submit bnt-->
+    <div class="col-lg-2">
+      <button class="bnt-index-category" id="M-btn-search">Filter</button>
+      <%#= form.button 'Filter', type: 'button', class: "bnt-index-category"%>
+    </div>
+  </div>
+  
   <!--LABEL-->
   <div class="row pb-2 wrap-label-index-category">
     <!--CODE-->
-    <div class="col-1 text-center label-index-category">Code</div>
-    <!--PAYMENT DATE-->
-    <div class="col-2 label-index-category">Payment Date</div>
-    <!--ADDRESS SHIP-->
-    <div class="col-3 label-index-category">Address Ship</div>
-    <!--TOTAL QUANLITY-->
-    <div class="col-2 text-center label-index-category">Total Quanlity</div>
-    <!--STATUS-->
-    <div class="col-1 text-center label-index-category">Status</div>
-    <!---->
-    <div class="col-3 label-index-category"></div>
+    <div class="col-1 text-center label-index-category">ID</div>
+    <!--CUSTOMER NAME-->
+    <div class="col-3 px-1 label-index-category">Customer's Name</div>
+    <!--TOTAL-->
+    <div class="col-2 px-1 label-index-category">Total</div>
+    <!--CURRENT STATUS-->
+    <div class="col-2 px-1 text-center label-index-category">Current Status</div>
+    <!--CHANGE STATUS-->
+    <div class="col-2 text-center label-index-category">Change Status</div>
+    <!--ACTION-->
+    <div class="col-2 pl-0 pr-3 text-center label-index-category">Action</div>
   </div>
 
   <!--content-->
   <%# @orders.each do |order| %>
     <div class="row py-3 wrap-content-index-category content-index-order">
       <!--CODE-->
-      <div class="col-1 text-center"><%#= order.code %>cdcdcdcd</div>
-      <!--PAYMENT DATE-->
-      <div class="col-2"><%#= order.payment_date %>dcdcdcd</div>
-      <!--ADDRESS SHIP-->
-      <div class="col-3"><%#= order.address_ship %>dcdcdcd</div>
-      <!--TOTAL QUANLITY-->
-      <div class="col-2 text-center"><%#= order.total_price %>dcdcdc</div>
-      <!--STATUS-->
-      <div class="col-1 text-center"><%#= order.status %>cdcd</div>
-      <!---->
-      <div class="col-3 col-2-5 px-2">
-        <div class="row">
-          <div class="col-4 pl-3 pr-0">
-            <center>
-              <i class="fa fa-search-plus show-bnt-index-order align-items-center">
-                <span class="px-1 align-items-center" style="font-size: 13px;"><br>Show</span>
-              </i>
-            </center>
-          </div>
-
-          <div class="col-4 px-2">
-            <center>
-              <i class="fa fa-edit edit-bnt-index-order align-items-center">
-                <span class="px-1 align-items-center" style="font-size: 13px;"><br>Edit</span>
-              </i>
-            </center>
-          </div>
-
-          <div class="col-4 pl-0 pr-4">
-            <center>
-              <i class="fa fa-trash destroy-bnt-index-order align-items-center">
-                <span class="px-1 align-items-center" style="font-size: 13px;"><br>Destroy</span>
-              </i>
-            </center>
-          </div>
-        </div>
+      <div class="col-1 text-center">1</div>
+      <!--CUSTOMER NAME-->
+      <div class="col-3 px-1">Dakota Rice</div>
+      <!--TOTAL-->
+      <div class="col-2 px-1">1000000</div>
+      <!--CURRENT STATUS-->
+      <!--accept: #31C55B ; cancel: #E53348-->
+      <div class="col-2 px-1 text-center">
+        <span class="order-status" style="background-color: #F6AC43;">Pending</span>
+        <span class="order-status" style="background-color: #008AFF;">Payment</span>
+      </div>
+      <!--CHANGE STATUS-->
+      <div class="col-2 text-center" style="font-size: 12px;">
+        <select class="custom-select" style="width: 90%;">
+          <option>Accepted</option>
+        </select>
+      </div>
+      <!--ACTION-->
+      <div class="col-2 pl-0 text-center pr-3">
+        <button class="bnt-submit-order">Submit</button>
       </div>
     </div>
   <%# end %>

@@ -9,23 +9,23 @@
   <!-- <form class="filter-index-product mb-4"> -->
     <div class="row">
       <!--SORT by status-->
-      <div class="col-lg-3">
+      <div class="col-lg-3 my-2">
       <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select" %>
       </div>
 
       <!--SORT by CATE-->
-      <div class="col-lg-3">
+      <div class="col-lg-3 my-2">
         <%= form.collection_select(:category_id, @categories, :id, :name, {prompt: 'Find By Category'}, id: 'select_category', class:'filter-select-index-product input-filter-index-category custom-select') %>
       </div>
   
       <!--input for SEARCH name-->
-      <div class="col-lg-3">
+      <div class="col-lg-3 my-2">
         <!-- <input type="text" placeholder="Name..."  class="input-filter-index-category" id="txt_search_name"> -->
         <%= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
       </div>
       
       <!--submit bnt-->
-      <div class="col-lg-2">
+      <div class="col-lg-2 my-2">
       <!-- <button class="bnt-index-category" id="M-btn-search">Find</button>e -->
         <%= form.button 'Find', type: 'button',class: "bnt-index-category", id: 'M-btn-search'%>
       </div>
@@ -33,6 +33,7 @@
   <% end %>
   <!-- </form> -->
 
+  <div class="wrap-table-category"><!--.wrap-table in P-index-category file-->
   <!--label for tabel-->
   <div class="row pb-2 wrap-label-index-category">
     <!--KEY-->
@@ -58,7 +59,7 @@
   <% @products.each.with_index do |product, index| index += 1%>
     <% if product.quantity < 1 %>
         <!-- cho cái row này text đỏ in đậm hết hộ chị -->
-      <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
+      <div class="row py-3 wrap-content-index-product content-index-product M-test" id="<%= product.id %>" style="color: red; font-weight: bold;">
         <!--No-->
         <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
         <!--Name-->
@@ -78,8 +79,8 @@
           </center>
         </div>
 
-    <% else %>
-      <div class="row py-3 wrap-content-index-product M-test" id="<%= product.id %>">
+      <% else %>
+      <div class="row py-3 wrap-content-index-product content-index-product M-test" id="<%= product.id %>">
         <!--No-->
         <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
         <!--Name-->
@@ -120,6 +121,7 @@
     </div>
   <% end %>
   <!--content of table-->
+</div>
 </div>
 <script>
   $(document).ready(function() {

@@ -1,9 +1,10 @@
-<%= form_with(model: @category, local: true, url:{action: "create"}) do |form| %>
+<%= form_with(model: @category, local: true, url:{action: "create"}, id:"form--add--cate") do |form| %>
   <div class="wrap-index-category wrap-new-category">
     <p class="label-new-category">New Category</p>
     <div class="field-new-category">
       <%= form.label :name, class: "label-form-new-category" %><br>
       <%= form.text_field :name, id: :category_name %>
+      <p class="validate-new-product" id="error--name--cate"></p>
     </div>
 
   <div class="row mt-2 justify-content-center" id="category_img_field_container">
@@ -18,6 +19,7 @@
         </div>
       <% end %>
     </div>
+    <p class="validate-new-product text-center" id="error--pic--cate"></p>
 
     <div class="actions mt-5 submit-creat-category">
       <%= form.submit class: "submit-bnt-new-category" %>
