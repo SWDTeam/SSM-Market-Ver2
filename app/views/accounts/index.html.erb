@@ -53,68 +53,68 @@
   <!--LABEL-->
   <div class="row pb-2 wrap-label-index-category">
     <!--NO-->
-    <div class="col-1 px-0 text-center label-index-category">No.</div>
+    <div class="col-1 text-center label-index-category">No.</div>
     <!--NAME-->
-    <div class="col-2 col-2-5 pl-0 pr-2 label-index-category">Name</div>
+    <div class="col-2 label-index-category">Name</div>
     <!--EMAIL-->
-    <div class="col-3 pl-2 pr-0 label-index-category">Email</div>
+    <div class="col-3 label-index-category">Email</div>
     <!--ROLE-->
-    <div class="col-1 px-2 label-index-category">Role</div>
+    <div class="col-1 label-index-category">Role</div>
     <!--STATUS-->
-    <div class="col-1 px-2 label-index-category text-center">
+    <div class="col-1 label-index-category text-center">
       Status
     </div>
     <!--SHOW-->
-    <div class="col-1 px-1 text-center label-index-category">Profile</div>
+    <div class="col-2 text-center label-index-category">Profile</div>
     <!--ACTION-->
-    <div class="col-3 col-2-5 px-3 label-index-category">Action</div>
+    <div class="col-2 text-center label-index-category">Action</div>
   </div>
 
   <% @accounts.each_with_index do |account, index| index += 1 %>
     <div class="row py-3 wrap-content-index-product content-index-account M-test" id="<%= account.id %>">
       <!--NO-->
-      <div class="col-1 px-0 text-center" id="<%= account.id %>-index"><%= index %></div>
+      <div class="col-1 text-center" id="<%= account.id %>-index"><%= index %></div>
       <!--NAME-->
-      <div class="col-2 col-2-5 pl-0 pr-2"><%= account.name %></div>
+      <div class="col-2"><%= account.name %></div>
       <!--EMAIL-->
-      <div class="col-3 pl-2 pr-0"><%= account.email %></div>
+      <div class="col-3"><%= account.email %></div>
       <!--ROLE-->
-      <div class="col-1 px-2"><%= Role.find(account.role_id).name.upcase %></div>
+      <div class="col-1"><%= Role.find(account.role_id).name.upcase %></div>
        <!--STATUS-->
-      <div class="col-1 px-2 text-center"> <%= account.status.capitalize %> </div>
+      <div class="col-1 text-center"> <%= account.status.capitalize %> </div>
       <!--SHOW-->
-      <div class="col-1 px-2">
+      <div class="col-2">
       <%= link_to account_path(account) do %>
         <center>
-          <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
+          <i class="fa fa-search-plus show-bnt-index-account align-items-center" style="width: 65%;"></i>
         </center>
       <% end %>
       </div>
       <!--ACTION-->
-      <div class="col-2 col-2-5 px-2">
-        <div class="row">
+      <div class="col-2">
+        <!--<div class="row">-->
           <% if account.status == 'active' %>
-             <div class="col-6 px-2">
+             <!--<div class="col-12 px-2">-->
                 <center>
                   <%= link_to account_path(account, account: {status: 'hidden'}), method: :put do %>
-                  <i class="fa fa-lock ban-bnt-index-account align-items-center">
+                  <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 65%;">
                     <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
                   </i>
                   <% end %>
                 </center>
-              </div>
+              <!--</div>-->
             <% else %>
-            <div class="col-6 pr-2 pl-0">
+            <!--<div class="col-12 px-2">-->
               <%= link_to account_path(account, account: {status: 'active'}), method: :put do %>
                 <center>
-                  <i class="fa fa-lock active-bnt-index-account align-items-center">
+                  <i class="fa fa-unlock active-bnt-index-account align-items-center" style="width: 65%;">
                     <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
                   </i>
                 </center>
               <% end %>
-            </div>
+            <!--</div>-->
           <% end %>          
-        </div>
+        <!--</div>-->
       </div>
     </div>
   <% end %>
