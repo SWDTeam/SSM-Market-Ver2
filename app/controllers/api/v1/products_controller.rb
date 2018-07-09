@@ -1,4 +1,5 @@
 class Api::V1::ProductsController < ActionController::API
+  
   def index_products_by_category_id
     h = Hash.new
     results = Array.new
@@ -34,8 +35,6 @@ class Api::V1::ProductsController < ActionController::API
     h[:products] = t
     render json: h.as_json
   end
-  
-
 
   def show
     product = Product.find_by_id(params[:id])
@@ -47,7 +46,14 @@ class Api::V1::ProductsController < ActionController::API
     render json: {errors: 'Not found'}, status: 404
   end
 
- 
-  
+  def search_barcode
+    product = Product.find_by_product_key(params[:product_key])
+    name = Category.find(product.category_id).name
+    unless product.nil?
+      render json: product.as_json.merge({category_name: name}).to_json, status: 200 
+      return      
+    end
+    render json: {errors: 'Not found'}, status: 404
+  end
 
 end

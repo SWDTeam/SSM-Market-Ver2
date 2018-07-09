@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :accounts,  controllers: {
     sessions: 'accounts/sessions',
     passwords: 'accounts/passwords',
-    registrations: 'accounts/registrations',
+    # registrations: 'accounts/registrations',
   }
   resources :accounts do
     resources :categories, only: [:new, :edit, :update, :destroy, :create]  do 
@@ -18,8 +18,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :roles
 
-  get '/change_password/:id/new', to: 'accounts#change_password', as: 'change_password'
-  post '/change_password/:account_id/edit', to: 'accounts#edit_password', as: 'edit_change_password'
+  get '/change_password/:id/new', to: 'accounts#edit_change_password', as: 'change_password'
+  post '/change_password/:id', to:'accounts#change_password'
 
   get '/home', to: 'products#home', as: "home" 
   # post '/change_pass' 
@@ -27,6 +27,9 @@ Rails.application.routes.draw do
     root "accounts/sessions#new"
   end
 #---------------Ajax---------------
+  get '/account_by_role', to: 'accounts#search_accounts_by_role'
+  get '/account_by_name', to: 'accounts#search_accounts_by_name'
+
   get '/products_by_status', to: "products#search_products_by_status"
   get '/products_by_category', to: "products#search_products_by_category"
   get '/products_by_name', to: "products#search_products_by_name"
@@ -53,6 +56,7 @@ Rails.application.routes.draw do
       #products
       resources :products, only: [:show, :index]
       get 'list_products/:category_id', to: "products#index_products_by_category_id"  #find list product by category id
+      get 'products_barcode/:product_key', to: "products#search_barcode"
     end
   end
 

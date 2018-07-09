@@ -1,9 +1,7 @@
 <!--css in index-account-->
-
+<%= form_with(model: @account, local: true, url: {action: 'create', controller: 'accounts'}) do |form| %>
 <div class="wrap-index-category" style="padding: 30px 50px;">
-  <div class="title-index-category mb-4">
-    Add admin
-  </div>
+  <div class="title-index-category mb-4">Add admin</div>
 
   <div class="row my-3">
     <div class="col-lg-6">
@@ -15,7 +13,8 @@
       <!--input EMAIL-->
       <div class="row">
         <div class="col-lg-12">
-          <input type="text" class="input-filter-index-category">
+         <%= form.email_field :email, autofocus: true, autocomplete: "email", class: 'input-filter-index-category' %>
+          <!-- <input type="text" class="input-filter-index-category"> -->
         </div>
       </div>
     </div>
@@ -29,51 +28,51 @@
       <!--input NAME-->
       <div class="row">
         <div class="col-lg-12">
-          <input type="text" class="input-filter-index-category">
+          <%= form.text_field :name, id: :account_name, class:'input-filter-index-category' %>
+          <!-- <input type="text" class="input-filter-index-category"> -->
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row my-3">
-    <div class="col-lg-4">
+   <div class="row my-3">
+  <!--  <div class="col-lg-4"> -->
       <!--label PASS-->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-12 label-account">Password</div>
-      </div>
+      </div> -->
 
       <!--input PASS-->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-12">
           <input type="password" class="input-filter-index-category">
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="col-lg-4">
+    <!-- <div class="col-lg-4"> -->
       <!--label CON-PASS-->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-12 label-account">Confirm Password</div>
-      </div>
+      </div> -->
 
       <!--input CON-PASS-->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-12">
           <input type="password" class="input-filter-index-category">
         </div>
       </div>
-    </div>
+    </div>  -->
 
     <div class="col-lg-4">
       <!--label ROLE-->
       <div class="row">
         <div class="col-lg-12 label-account">Role</div>
       </div>
-
       <!--input ROLE-->
       <div class="row">
         <div class="col-lg-12">
-          <input type="text" class="input-filter-index-category" value="admin" disabled>
+          <%= form.text_field :role, id: :account_role, class:'input-filter-index-category', disabled:true, value:'Admin' %>         
         </div>
       </div>
     </div>
@@ -81,7 +80,9 @@
 
   <div class="row mb-2 mt-4">
     <div class="col-lg-12 text-center">
-      <input type="submit" class="bnt-index-category" value="Add New Admin" style="width: 20%; padding: 8px 0;">
+    <%= form.submit 'Add New Admin', class: 'bnt-index-category col-lg-3', html:{style:"width: 20%; padding: 8px 0;"} %>
     </div>
   </div>
 </div>
+
+<% end %>
