@@ -47,6 +47,30 @@ class Api::V1::OrdersController < ActionController::API
     end 
   end
 
+  def destroy
+    if params[:id]
+      order = Order.where(id: params[:id], status: 'pending')
+      return render json: {errors: 'Not found'}, status: 404 if order.size < 1
+      order_products = OrderProduct.where(order_id: params[:id])
+      order_products.each do |details|
+        product = Product.find_by_id(details.product_id)
+        puts 'product'
+        puts product.quantity
+        puts details.quantity
+        requantity = product.quantity + details.quantity
+        puts 'new quantity'
+        puts requantity
+        product.update_attributes(quantity: requantity)
+      end
+      
+      order_products.destroy_all
+      order.destroy_all
+      render json: {message: 'Canceled order successfully'}
+    end
+    
+  end
+  
+
   protected
   def ensure_params_exist
     if params[:order][:address_ship].blank? || params[:order][:account_id].blank? || params[:order_product].size < 1

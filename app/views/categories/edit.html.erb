@@ -1,4 +1,5 @@
 <%= form_with(model: @category, local: true, url:{action: "update"}) do |form| %>
+  <%= @category.errors[:name].first %>
   <div class="wrap-new-category">
     <p class="label-new-category">Edit Category</p>
     <div class="field-new-category">

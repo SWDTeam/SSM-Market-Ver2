@@ -32,6 +32,7 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
+    @categories = Category.all
     @user = current_account
     # @product = Product.new(product_params)
     @product = @user.products.build(product_params)
@@ -55,6 +56,7 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
+    @categories = Category.all
     respond_to do |format|
       if @product.update(product_params)
         unless params[:images].nil?

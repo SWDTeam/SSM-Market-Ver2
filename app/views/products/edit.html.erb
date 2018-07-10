@@ -1,5 +1,6 @@
 <div class="wrap-new-product">
   <%= form_with(model: @product, local: true, url: {action: 'update'}) do |form| %>
+  <%= @product.errors[:product_key].first %>
     <div class="new-product-title mb-3">
       Edit Product
     </div>
