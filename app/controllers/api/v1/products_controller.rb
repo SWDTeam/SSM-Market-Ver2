@@ -23,7 +23,7 @@ class Api::V1::ProductsController < ActionController::API
   def index
     h = Hash.new
     t = Array.new
-    @products = Product.includes(:images).where(status: 'active').order(:created_at).last(2)
+    @products = Product.includes(:images).where(status: 'active').order(:created_at).last(4)
     @products.each do |p|
       cate_name = Category.find(p.category_id).name
       t.push({id: p.id, name: p.name, url: p.images.first.url.url, 
