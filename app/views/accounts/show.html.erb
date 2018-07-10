@@ -4,42 +4,50 @@
   <div class="row" style="padding: 0 70px;">
     <div class="col-12">
       <!--EMAIL-->
-      <div class="row"><div class="col-12 mr-5">Email</div></div>
-
       <div class="row">
-        <div class="col-12 mr-5">
+        <div class="col-2"></div>
+        <div class="col-8">Email</div>
+        <div class="col-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
           <input type="text" class="input-filter-index-category" value=" <%= @account.email %>" disabled>
         </div>
+        <div class="col-2"></div>
       </div>
       <!--NAME-->
-      <div class="row"><div class="col-12 mr-5">Name</div></div>
       <div class="row">
-        <div class="col-12 mr-5">
-          <input type="text" class="input-filter-index-category" value=" <%= @account.name %>" disabled>
+        <div class="col-2"></div>
+        <div class="col-8">Name</div>
+        <div class="col-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+           <input type="text" class="input-filter-index-category" value=" <%= @account.name %>" disabled>
         </div>
+        <div class="col-2"></div>
       </div>
 
-      <!--PHONE-->
-      <div class="row"><div class="col-12 mr-5">Phone</div></div>
+      <!--PHONE + GENDER-->
       <div class="row">
-        <div class="col-12 mr-5">
-          <input type="number" class="input-filter-index-category" value=" <%= @account.phone %>" disabled>
-        </div>
+        <div class="col-2"></div>
+        <!--PHONE-->
+        <div class="col-sm-4">Phone</div>
+        <!--GENDER-->
+        <div class="col-sm-4">Gender</div>
+        <div class="col-2"></div>
       </div>
-
-      <!--ROLE-->
-      <div class="row"><div class="col-12 mr-5">Role</div></div>
       <div class="row">
-        <div class="col-12 mr-5">
-          <input type="text" class="input-filter-index-category" value=" <%= Role.find_by_id(@account.role_id).name.upcase %>" disabled>
+        <div class="col-2"></div>
+        <!--PHONE-->
+        <div class="col-4">
+          <input type="text" class="input-filter-index-category" value=" <%= @account.phone %>" disabled>
         </div>
-      </div>
-
-      <!--GENDER-->
-      <div class="row"><div class="col-12 mr-5">Gender</div></div>
-      <div class="row">
-        <div class="col-12 mr-5">
-        <% if @account.gender == 'male' %>
+        <!--GENDER-->
+        <div class="col-4">
+          <% if @account.gender == 'male' %>
           <input type="radio" class="radio-profile" name="gender" disabled checked><span class="pl-2 pr-3">Male</span>
           <input type="radio" class="radio-profile" name="gender" disabled ><span class="pl-2 pr-3">Female</span>
         <% elsif @account.gender == 'female' %>
@@ -50,22 +58,43 @@
           <input type="radio" class="radio-profile" name="gender" disabled><span class="pl-2 pr-3">Female</span>
         <% end %>
         </div>
+        <div class="col-2"></div>
+      </div>
+
+      <!--ROLE + STATUS-->
+      <div class="row">
+        <div class="col-2"></div>
+        <!--ROLE-->
+        <div class="col-4">Role</div>
+        <!--STATUS-->
+        <div class="col-4">Status</div>
+        <div class="col-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <!--ROLE-->
+        <div class="col-4">
+          <input type="text" class="input-filter-index-category" value=" <%= Role.find_by_id(@account.role_id).name.upcase %>" disabled>
+        </div>
+        <!--STATUS-->
+        <div class="col-4">
+          <input type="text" class="input-filter-index-category" value="<%= @account.status.capitalize%>" disabled>
+        </div>
+        <div class="col-2"></div>
       </div>
 
       <!--ADDRESS-->
-      <div class="row"><div class="col-12 mr-5">Address</div></div>
       <div class="row">
-        <div class="col-12 mr-5">
+        <div class="col-2"></div>
+        <div class="col-8">Address</div>
+        <div class="col-2"></div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
           <input type="text" class="input-filter-index-category" value="<%= @account.address%>" disabled>
         </div>
-      </div>
-
-      <!--STATUS-->
-      <div class="row"><div class="col-12 mr-5">Status</div></div>
-      <div class="row">
-        <div class="col-12 mr-5">
-          <input type="text" class="input-filter-index-category" value="<%= @account.status.capitalize%>" disabled>
-        </div>
+        <div class="col-2"></div>
       </div>
     </div>
   </div>

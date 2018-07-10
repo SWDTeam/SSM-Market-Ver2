@@ -74,7 +74,7 @@
         <div class="col-1 text-center">
           <center>
             <%= link_to product_path(product) do %>
-              <i class="fa fa-search-plus edit-bnt-index-category"></i>
+              <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
             <% end %>
           </center>
         </div>
@@ -95,7 +95,7 @@
         <div class="col-1 text-center">
           <center>
             <%= link_to product_path(product) do %>
-              <i class="fa fa-search-plus edit-bnt-index-category"></i>
+              <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
             <% end %>
           </center>
         </div>
@@ -105,7 +105,9 @@
       <div class="col-1 text-center">
         <center>
         <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
-          <i class="fa fa-unlock del-bnt-index-category"></i>
+          <i class="fa fa-unlock active-bnt-index-account align-items-center" style="width: 115%;">
+            <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
+          </i>
         <% end %>  
         </center>
       </div>
@@ -113,7 +115,9 @@
       <div class="col-1 text-center">
         <center>
         <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
-          <i class="fa fa-lock del-bnt-index-category"></i>
+          <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 115%;">
+            <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
+          </i>
         <% end %>  
         </center>
       </div>
