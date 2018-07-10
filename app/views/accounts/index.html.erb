@@ -86,35 +86,31 @@
       <div class="col-1 pr-0">
       <%= link_to account_path(account) do %>
         <center>
-          <i class="fa fa-search-plus show-bnt-index-account align-items-center" style="width: 65%;"></i>
+          <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
         </center>
       <% end %>
       </div>
 
       <!--ACTION-->
       <div class="col-2">
-        <!--<div class="row">-->
         <% if account.role_id != 1 %>
-          <% if account.status == 'active' %>
-             <!--<div class="col-12 px-2">-->
-                <center>
-                  <%= link_to account_path(account, account: {status: 'hidden'}), method: :put do %>
-                  <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 65%;">
-                    <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
-                  </i>
-                  <% end %>
-                </center>
-              <!--</div>-->
-            <% else %>
-            <!--<div class="col-12 px-2">-->
-              <%= link_to account_path(account, account: {status: 'active'}), method: :put do %>
-                <center>
-                  <i class="fa fa-unlock active-bnt-index-account align-items-center" style="width: 65%;">
-                    <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
-                  </i>
-                </center>
+          <% if account.status == 'Active' %>
+            <center>
+              <%= link_to account_path(account, account: {status: 'hidden'}), method: :put do %>
+                <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 65%;">
+                  <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
+                </i>
               <% end %>
-            <% end %> 
+            </center>
+          <% else %>
+            <center>
+              <%= link_to account_path(account, account: {status: 'active'}), method: :put do %>
+                <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 65%;">
+                  <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
+                </i>
+              <% end %>
+            </center>
+          <% end %> 
         <% else %> 
         <% end %>
       </div>
