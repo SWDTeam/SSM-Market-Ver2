@@ -7,6 +7,7 @@ class Api::V1::OrderProductsController < ActionController::API
         results.push({
           order_products_id: d.id,
           product_id: d.product_id,
+          product_name: Product.find_by_id(d.product_id).name,
           url: Image.find_by_product_id(d.product_id).url.url,
           price: d.price, 
           quantity: d.quantity,

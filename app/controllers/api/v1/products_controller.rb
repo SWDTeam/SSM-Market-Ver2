@@ -49,8 +49,9 @@ class Api::V1::ProductsController < ActionController::API
   def search_barcode
     product = Product.find_by_product_key(params[:product_key])
     name = Category.find(product.category_id).name
+    img = Image.find_by_product_id(product.id).url.url
     unless product.nil?
-      render json: product.as_json.merge({category_name: name}).to_json, status: 200 
+      render json: product.as_json.merge({category_name: name, url: img}).to_json, status: 200 
       return      
     end
     render json: {errors: 'Not found'}, status: 404
