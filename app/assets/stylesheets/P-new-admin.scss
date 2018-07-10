@@ -1,0 +1,17 @@
+.bnt-new-admin {
+  width: 75%;
+  max-width: 160px;
+  background: #EB5E28;
+  border: #EB5E28;
+  outline: none;
+  color: white;
+  padding: 5px 0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.bnt-new-admin:hover {
+  background: #F03E58;
+  border: #F03E58;
+}
