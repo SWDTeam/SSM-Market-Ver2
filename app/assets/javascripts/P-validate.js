@@ -90,30 +90,6 @@ function checkNewPass() {
     return t;
 }
 
-function checkAddNAdmin() {
-    resetTextErrors();
-    var t = true;
-    t = checkEmailNameRole();
-    var pass = $("#u--pass").val();
-    var confirmPass = $("#u--confirm--pass").val();
-    if (pass === "" || pass === null) {
-        $("#error--pass").text("Password can't be blank!").css("color", "red");
-        t = false;
-    } else if (pass.length < 6 || pass.length > 30) {
-        $("#error--pass").text("Password is length in range [6,30]!").css("color", "red");
-        t = false;
-    }
-    if (confirmPass === null || confirmPass === "") {
-        $("#error--confirm--pass").text("Confirm password can't be blank!").css("color", "red");
-        t = false;
-    }
-    if (confirmPass !== pass) {
-        $("#error--confirm--pass").text("Confirm password not match!").css("color", "red");
-        t = false;
-    }
-    return t;
-}
-
 function checkNewProduct() {
     resetTextErrors();
     var t = true;
