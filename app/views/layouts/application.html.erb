@@ -11,85 +11,15 @@
 
   <body>
     <div class="wrap-admin-page">
-      <!--LARGE SCREEN
-      <!--<div class="slidebar-admin-page" style="display: none;">
-        <div class="adminpage-logo py-4 mb-2">SSM Admin Page</div>
-
-        <div class="account-admin-page" onclick="dropDownAdPage()">
-          <i class="fa fa-address-card"></i>
-          <span>Hello, <%#= current_account.name %></span>
-          <i class="fa fa-angle-down change-icon"></i>
-
-          <ul id="dropdown-admin-page" class="dropdown-content-adpage mb-0">
-            <!-- not done
-            <li><%#= link_to 'Profile', root_path, class:"dropdown-detail" %></li> 
-            <li><%#= link_to 'Change Password', change_password_path(current_account), class:"dropdown-detail" %></li>
-            <!-- not done
-            <li><%#= link_to 'Logout', destroy_account_session_path, class:"dropdown-detail", method: 'delete' %></li>
-          </ul>
-        </div>
-
-        <ul class="nav">
-          <li class="nav-li-admin-page mt-4">
-            <%#= link_to root_path, class:"slidebar-field" do %>
-              <i class="fa fa-columns"></i>
-              <span>DASHBOARD</span>
-            <%# end %>
-          </li>
-
-          <li class="nav-li-admin-page slidebar-field" onclick="dropContentMenu('dropdown-user-adminpage', 1)">
-            <i class="fa fa-users"></i>
-            <span>USER</span>
-            <i class="fa fa-angle-down change-icon"></i>
-
-            <ul id="dropdown-user-adminpage" class="dropdown-content-adpage mb-0">
-              <li><%#= link_to 'View All User', accounts_path, class:"dropdown-detail" %></li>
-              <li><%#= link_to 'Add Administrator', new_account_path, class:"dropdown-detail" %></li>
-            </ul>
-          </li>
-
-          <li class="nav-li-admin-page slidebar-field" onclick="dropContentMenu('dropdown-product-adminpage', 2)"> 
-            <i class="fa fa-shopping-cart"></i>
-            <span>PRODUCTS</span>
-            <i class="fa fa-angle-down change-icon"></i>
-
-            <ul id="dropdown-product-adminpage" class="dropdown-content-adpage mb-0">
-              <li><%#= link_to 'View All Products', products_path, class:"dropdown-detail" %></li>
-              <li><%#= link_to 'Add Product', new_account_product_path(current_account), class:"dropdown-detail" %></li>
-            </ul>
-          </li>
-
-          <li class="nav-li-admin-page">
-            <%#= link_to orders_path, class:"slidebar-field" do %>
-              <i class="fa fa-address-book"></i>
-              <span>ORDER</span>
-
-              <ul class="dropdown-content-adpage mb-0"></ul>
-            <%# end %>
-          </li>
-
-          <li class="nav-li-admin-page slidebar-field" onclick="dropContentMenu('dropdown-category-adminpage', 3)">
-            <i class="fa fa-archive"></i>
-            <span>CATEGORIES</span>
-            <i class="fa fa-angle-down change-icon"></i>
-
-            <ul id="dropdown-category-adminpage" class="dropdown-content-adpage mb-0">
-              <li><%#= link_to 'View All Categories', categories_path, class:"dropdown-detail" %></li>
-              <li><%#= link_to 'Add Category', new_account_category_path(current_account), class:"dropdown-detail" %></li>
-            </ul>
-          </li>
-        </ul>
-      </div>-->
-      <!--END OF LARGE SCREEN-->
-
-      <!--SMALL SCREEN-->
       <div id="sidebar">
         <div class="adminpage-logo py-4 mb-2">SSM Admin Page</div>
 
         <div class="account-admin-page" onclick="dropDownAdPage()">
-          <i class="fa fa-address-card"></i>
-          <span>Hello, <%= current_account.name %></span>
-          <i class="fa fa-angle-down change-icon"></i>
+          <div class="row align-items-center justify-content-center">
+            <i class="fa fa-address-card"></i>
+            <span class="px-2">Hello, <%= current_account.name %></span>
+            <i class="fa fa-angle-down change-icon"></i>
+          </div>
 
           <ul id="dropdown-admin-page" class="dropdown-content-adpage mb-0">
             <!-- not done -->
@@ -151,7 +81,6 @@
           </li>
         </ul>
       </div>
-      <!--END OF SMALL SCREEN-->
 
       <div class="content-admin-page">
         <div id="content-collapse">
@@ -185,12 +114,12 @@
       if (pgurl.includes("home")) {
         $(ele[0]).addClass("active");
       } else if (pgurl.includes("accounts") && !pgurl.includes("categories") && !pgurl.includes("products")) {
-        $(ele[1]).addClass("active");
+        if (!pgurl.includes("edit")) $(ele[1]).addClass("active");
       } else if (pgurl.includes("products")) {
         $(ele[2]).addClass("active");
       } else if (pgurl.includes("orders")) {
         $(ele[3]).addClass("active");
-      } else {
+      } else if (pgurl.includes("categories")) {
         $(ele[4]).addClass("active");
       }
     })

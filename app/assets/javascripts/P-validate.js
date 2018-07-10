@@ -27,6 +27,13 @@ document.addEventListener("turbolinks:load", function (event) {
         flag = checkNewCate();
         return flag;
     });
+
+//-------------change password page-------------
+    flag = true;
+    $("#form--change--password").submit(function () {
+        flag = checkChangePassword();
+        return flag;
+    });
 });
 
 function resetTextErrors() {
@@ -38,6 +45,7 @@ function resetTextErrors() {
     $("#error--role").text("");
     $("#error--status").text("");
     $("#error--pass").text("");
+    $("#error--pass--change").text("");
     $("#error--confirm--pass").text("");
     $("#error--old--pass").text("");
     $("#error--manufacturer").text("").css("color", "red");
@@ -69,7 +77,7 @@ function checkLogin() {
   return t;
 }
 
-function checkNewPass() {
+function checkNewPass() { 
     resetTextErrors();
     var email = $("#loginEmailNewPass").val();
     var t = true;
@@ -212,6 +220,42 @@ function checkNewCate() {
     }
     if (img === null || img === "") {
         $("#error--pic--cate").text("Image can't empty!");
+        t = false;
+    }
+    return t;
+}
+
+function checkChangePassword() {
+    resetTextErrors();
+    var t = true;
+    var oldPass = $("#old_password").val();
+
+    t = checkPassword();
+    if (oldPass === "" || oldPass === null) {
+        $("#error--old--pass").text("Current password is invaild!").css("color", "red");
+        t = false;
+    }
+    return t;
+}
+
+function checkPassword() {
+    resetTextErrors();
+    var pass = $("#new_password").val();
+    var confirmPass = $("#confirm_password").val();
+    var t = true;
+    if (pass === "" || pass === null) {
+        $("#error--pass--change").text("Password can't be blank!").css("color", "red");
+        t = false;
+    } else if (pass.length < 6 || pass.length > 30) {
+        $("#error--pass--change").text("Password is length in range [6,30]!").css("color", "red");
+        t = false;
+    }
+    if (confirmPass === null || confirmPass === "") {
+        $("#error--confirm--pass").text("Confirm password can't be blank!").css("color", "red");
+        t = false;
+    }
+    if (confirmPass !== pass) {
+        $("#error--confirm--pass").text("Confirm password not match!").css("color", "red");
         t = false;
     }
     return t;

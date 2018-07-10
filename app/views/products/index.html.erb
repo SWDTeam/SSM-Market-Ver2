@@ -92,10 +92,11 @@
         <!-- STATUS-->
         <div class="col-2 text-center"><%= product.status %></div>
         <!--SHOW-->
-        <div class="col-1 text-center">
+        <div class="col-1 text-center align-items-center">
           <center>
             <%= link_to product_path(product) do %>
-              <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
+              <i class="fa fa-search-plus show-bnt-index-account align-items-center justify-content-center" style="height: 48px; display: flex;"><br>
+              </i>
             <% end %>
           </center>
         </div>
@@ -105,8 +106,8 @@
       <div class="col-1 text-center">
         <center>
         <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
-          <i class="fa fa-unlock active-bnt-index-account align-items-center" style="width: 115%;">
-            <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
+          <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 115%;">
+            <br><span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
           </i>
         <% end %>  
         </center>
