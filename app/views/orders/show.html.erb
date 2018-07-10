@@ -1,34 +1,130 @@
-<p id="notice"><%= notice %></p>
+<!--<p id="notice"><%#= notice %></p>
 
 <p>
   <strong>Code:</strong>
-  <%= @order.code %>
+  <%#= @order.code %>
 </p>
 
 <p>
   <strong>Payment date:</strong>
-  <%= @order.payment_date %>
+  <%#= @order.payment_date %>
 </p>
 
 <p>
   <strong>Address ship:</strong>
-  <%= @order.address_ship %>
+  <%#= @order.address_ship %>
 </p>
 
 <p>
   <strong>Total price:</strong>
-  <%= @order.total_price %>
+  <%#= @order.total_price %>
 </p>
 
 <p>
   <strong>Status:</strong>
-  <%= @order.status %>
+  <%#= @order.status %>
 </p>
 
 <p>
   <strong>Total quantity:</strong>
-  <%= @order.total_quantity %>
+  <%#= @order.total_quantity %>
 </p>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<%#= link_to 'Edit', edit_order_path(@order) %> |
+<%#= link_to 'Back', orders_path %>-->
+
+<!--use css of index categories-->
+<div class="wrap-index-category">
+  <div class="title-index-category mb-4">
+    Invoice #001
+  </div>
+
+  <div class="row">
+    <div class="col-12 text-center">SSM Market</div>
+  </div>
+
+  <div class="row">
+    <!--Customer's Name-->
+    <div class="col-6 pl-6 text-left">
+      Customer's Name: <span>Minh Bác Ái</span>
+    </div>
+    <!--Order Date-->
+    <div class="col-6 pr-6 text-right">
+      Order Date: <span>12:00</span>, <span>06/24/2018</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <!--Phone-->
+    <div class="col-6 pl-6 text-left">
+      Phone: <span>09133443434</span>
+    </div>
+    <!--Status-->
+    <div class="col-6 pr-6 text-right">
+      Status: 
+      <span class="order-status" style="background-color: #008AFF; font-size: 14px;">Payment</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <!--Store Address-->
+    <div class="col-12 pr-6 text-left">
+      Store Address: <span>Quang Trung Software Center</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 px-6 wrap-label-show-order">
+      <div class="row">
+        <!--PID-->
+        <div class="col-2 text-center">PID</div>
+        <!--Code-->
+        <div class="col-2 text-center">Code</div>
+        <!--Name-->
+        <div class="col-2 text-center">Name</div>
+        <!--Quantity-->
+        <div class="col-2 text-center">Quantity</div>
+        <!--Unit Price-->
+        <div class="col-2 text-center">Unit Price</div>
+        <!--Subtotal-->
+        <div class="col-2 text-center">Subtotal</div>
+      </div>
+
+      <div class="row content-show-order">
+        <!--PID-->
+        <div class="col-2 text-center">1</div>
+        <!--Code-->
+        <div class="col-2 text-center">9999999</div>
+        <!--Name-->
+        <div class="col-2 text-center">Banana</div>
+        <!--Quantity-->
+        <div class="col-2 text-center">25</div>
+        <!--Unit Price-->
+        <div class="col-2 text-center">999999999</div>
+        <!--Subtotal-->
+        <div class="col-2 text-center">999999999</div>
+      </div>
+
+      <div class="row .wrap-label-show-order">
+        <div class="col-2 text-center"></div>
+        <div class="col-2 text-center"></div>
+        <div class="col-2 text-center"></div>
+        <div class="col-2 text-center"></div>
+        <div class="col-2 text-center">Total</div>
+        <div class="col-2 text-center">55545455</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function() {
+    var element = document.getElementsByClassName("content-show-order");
+
+    var i;
+    for (i = 0; i < element.length; i++) {
+      if (i % 2 != 0) {
+        $(element[i]).css("background-color", "#F4F3EF");
+      }
+    }
+  })
+</script>

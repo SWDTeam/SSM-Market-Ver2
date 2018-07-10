@@ -216,6 +216,7 @@ function checkChangePassword() {
 
 function checkPassword() {
     resetTextErrors();
+    var oldPass = $("#old_password").val();
     var pass = $("#new_password").val();
     var confirmPass = $("#confirm_password").val();
     var t = true;
@@ -224,6 +225,9 @@ function checkPassword() {
         t = false;
     } else if (pass.length < 6 || pass.length > 30) {
         $("#error--pass--change").text("Password is length in range [6,30]!").css("color", "red");
+        t = false;
+    } else if (pass == oldPass) {
+        $("#error--pass--change").text("New Password can't be the same as Old Password").css("color", "red");
         t = false;
     }
     if (confirmPass === null || confirmPass === "") {
