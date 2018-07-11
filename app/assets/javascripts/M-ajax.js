@@ -1,4 +1,5 @@
 document.addEventListener("turbolinks:load", function (event) {
+  //categories
   $("#select_status").change(function () {
     $("#select_category").val('');
     getListProductByStatus();
@@ -26,7 +27,14 @@ document.addEventListener("turbolinks:load", function (event) {
     getListUsersByName();
   });
 
+  //order
+  $("#select_order_status").change(function () {
+    getListOrdersByStatus();
+  });
 
+  $("#M-btn-order-search").click(function () {
+    getListOrdersByCode();
+  });
 })
 
 //reset list
@@ -303,3 +311,89 @@ function getListUsersByName() {
 }
 
 // SORT BY USER NAME OF USER
+
+//================Order index====================
+// SORT BY ORDER STATUS OF ORDER
+function getListOrdersByStatus() {
+  var value = $("#select_order_status").val();
+  // alert(value);
+  // reset
+  if (value == "") {
+    resetListProducts();
+  }
+  // call ajax value != ''
+  else {
+    $.ajax({
+      url: "/orders_by_status",
+      method: "get",
+      data: {
+        status: value
+      },
+      success: function (data) {
+        if (data.length < 1) alert("Not found");
+        else {
+          var row_product = $(".M-test");
+          var count = 1;
+          $.each(row_product, function (key, value) {
+            data.some(function (item) {
+              var id = $(value).attr('id');
+              if (item.id == id) {
+                $("#" + id).css("display", "");
+                $("#" + id + "-index").text(count);
+                count++;
+                //color
+                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
+                else $('#' + id).css("background-color", "white");
+                return item.id == id;
+              } else $("#" + id).css("display", "none");
+            });
+          })
+        }
+      }
+    })
+  }
+}
+
+// SORT BY ORDER STATUS OF ORDER
+
+// SORT BY ORDER CODE OF ORDER
+function getListOrdersByCode(){
+  var value = $("#txt_search_name").val();
+  alert(value);
+  // reset
+  if (value == "") {
+    resetListProducts();
+  }
+  // call ajax value != ''
+  else {
+    $.ajax({
+      url: "/orders_by_code",
+      method: "get",
+      data: {
+        code: value
+      },
+      success: function (data) {
+        if (data.length < 1) alert("Not found");
+        else {
+          var row_product = $(".M-test");
+          var count = 1;
+          $.each(row_product, function (key, value) {
+            data.some(function (item) {
+              var id = $(value).attr('id');
+              if (item.id == id) {
+                $("#" + id).css("display", "");
+                $("#" + id + "-index").text(count);
+                count++;
+                //color
+                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
+                else $('#' + id).css("background-color", "white");
+                return item.id == id;
+              } else $("#" + id).css("display", "none");
+            });
+          })
+        }
+      }
+    })
+  }
+}
+// SORT BY ORDER CODE OF ORDER

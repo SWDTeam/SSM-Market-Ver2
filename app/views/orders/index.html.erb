@@ -44,7 +44,7 @@
   <div class="row mb-4">
     <!--SORT by status-->
     <div class="col-lg-3">
-      <%= form.select :status, [['Pending', 'pending'], ['Payment', 'payment']], {prompt: 'Find By Status'}, id: 'select_status',class:"filter-select-index-product input-filter-index-category custom-select"%>
+      <%= form.select :status, [['Pending', 'pending'], ['Payment', 'payment']], {prompt: 'Find By Status'}, id: 'select_order_status',class:"filter-select-index-product input-filter-index-category custom-select"%>
     </div>
     <div class="col-lg-4"></div>
     <!--input for SEARCH name-->
@@ -71,39 +71,53 @@
     <!--CURRENT STATUS-->
     <div class="col-2 text-center label-index-category">Current Status</div>
     <!--CHANGE STATUS-->
-    <div class="col-2 px-1 text-center label-index-category">Change Status</div>
+    <div class="col-2 px-1 text-center label-index-category">Show</div>
     <!--ACTION-->
-    <div class="col-2 pl-0 pr-3 text-center label-index-category">Action</div>
+    <div class="col-2 pl-0 pr-3 text-center label-index-category">Pay Order</div>
   </div>
   <!--content-->
-  <%# @orders.each do |order| %>
-    <div class="row py-3 wrap-content-index-category content-index-order">
+  <% @orders.each_with_index do |order, index| index += 1 %>
+    <div class="row py-3 wrap-content-index-category content-index-order M-test" id="<%= order.id %>">
       <!--ID-->
-      <div class="col-1 px-2 text-center">1</div>
+      <div class="col-1 px-2 text-center" id="<%= order.id%>-index"><%= index %></div>
       <!--CODE-->
-      <div class="col-1 pl-1 text-center">06283798</div>
+      <div class="col-1 pl-1 text-center"><%= order.code %></div>
       <!--CUSTOMER NAME-->
-      <div class="col-3 pl-4">Dakota Rice</div>
+      <div class="col-3 pl-4"><%= Account.find_by_id(order.account_id).name %></div>
       <!--TOTAL-->
-      <div class="col-1 px-1 text-center">1000000</div>
+      <div class="col-1 px-1 text-center"><%= order.total_price %></div>
       <!--CURRENT STATUS-->
       <!--accept: #31C55B ; cancel: #E53348-->
       <div class="col-2 text-center">
+      <% if order.status == 'pending' %>
         <span class="order-status" style="background-color: #F6AC43;">Pending</span>
+      <% else %>      
         <span class="order-status" style="background-color: #008AFF;">Payment</span>
+      <% end %>
       </div>
       <!--CHANGE STATUS-->
       <div class="col-2 px-1 text-center" style="font-size: 15px;">
-        <select class="custom-select" style="width: 90%;">
+        <!-- <select class="custom-select" style="width: 90%;">
           <option>Accepted</option>
-        </select>
+        </select> -->
+        <%= link_to order_path(order) do %>
+          <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
+        <% end %>
       </div>
       <!--ACTION-->
       <div class="col-2 pl-0 text-center pr-3">
-        <button class="bnt-submit-order" style="width: 70%;">Submit</button>
+      <% if order.status != 'payment' %>
+        <%= link_to account_order_path(current_account, order, order: {status: 'payment', cashier_id: current_account.id}), method: :put  do %>
+          <button class="bnt-submit-order" style="width: 70%;">Payment</button>
+        <% end %>  
+      <% else %>
+        <%#= link_to account_order_path(current_account, order, order: {status: 'pending', cashier_id: current_account.id}), method: :put do %>
+          <!-- <button class="bnt-submit-order" style="width: 70%;">Pending</button> -->
+        <%# end %>  
+        <% end %>
       </div>
     </div>
-  <%# end %>
+  <% end %>
 </div>
 
 <script>
@@ -117,4 +131,5 @@
       }
     }
   })
+
 </script>

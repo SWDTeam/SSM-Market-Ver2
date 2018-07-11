@@ -42,8 +42,8 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-        format.json { render :show, status: :ok, location: @order }
+        format.html { redirect_to orders_path, notice: 'Order was successfully updated.' }
+        format.json { render :index, status: :ok, location: @order }
       else
         format.html { render :edit }
         format.json { render json: @order.errors, status: :unprocessable_entity }
@@ -61,6 +61,23 @@ class OrdersController < ApplicationController
     end
   end
 
+  def seach_orders_by_status
+    if params[:status]
+      @orders = Order.select(:id).where(status: params[:status])
+      render json: @orders.as_json
+    end
+
+  end
+  
+  def search_orders_by_code
+    if params[:code]
+      @orders = Order.select(:id).where("code LIKE ?", "%#{params[:code]}%")
+      render json: @orders.as_json
+    end
+  
+  end
+  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
@@ -69,6 +86,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:code, :payment_date, :address_ship, :total_price, :status, :total_quantity)
+      params.require(:order).permit(:code, :payment_date, :address_ship, :total_price, :status, :total_quantity, :cashier_id)
     end
 end

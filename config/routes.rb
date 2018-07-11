@@ -11,12 +11,13 @@ Rails.application.routes.draw do
     resources :products, only: [:new, :edit, :update, :destroy, :create] do
       resources :images, only: [:create, :edit, :update, :show, :destroy]
     end
+    resources :orders, only: [:update, :edit]
   end
   resources :products, only: [:index, :show]
   resources :categories, only: [:index]
   resources :order_products
-  resources :orders
-  resources :roles
+  resources :orders, only: [:index, :show]
+  # resources :roles
 
   get '/change_password/:id/new', to: 'accounts#edit_change_password', as: 'change_password'
   post '/change_password/:id', to:'accounts#change_password'
@@ -35,6 +36,9 @@ Rails.application.routes.draw do
   get '/products_by_name', to: "products#search_products_by_name"
 
   get '/categories_by_name', to: "categories#search_categories_by_name"
+
+  get '/orders_by_status', to: 'orders#seach_orders_by_status'
+  get '/orders_by_code', to: 'orders#search_orders_by_code'
 #---------------Mobile api---------------
   namespace :api do
     namespace :v1 do
