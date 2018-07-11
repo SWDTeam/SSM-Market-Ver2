@@ -52,7 +52,7 @@
     <!--SHOW-->
     <div class="col-1 text-center label-index-category">Show</div>
     <!--ACTION-->
-    <div class="col-1 text-center label-index-category">Action</div>
+    <div class="col-2 text-center label-index-category">Action</div>
   </div>
 
   <!--content of table-->
@@ -95,7 +95,7 @@
         <div class="col-1 text-center align-items-center">
           <center>
             <%= link_to product_path(product) do %>
-              <i class="fa fa-search-plus show-bnt-index-account align-items-center justify-content-center" style="height: 48px; display: flex;"><br>
+              <i class="fa fa-search-plus show-bnt-index-account align-items-center justify-content-center">
               </i>
             <% end %>
           </center>
@@ -103,20 +103,20 @@
     <% end %>
       <!--ACTION-->
     <% if product.status == "active" %>   
-      <div class="col-1 text-center">
+      <div class="col-2">
         <center>
         <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
-          <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 115%;">
-            <br><span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
+          <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 85%;">
+            <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
           </i>
         <% end %>  
         </center>
       </div>
     <% else %>
-      <div class="col-1 text-center">
+      <div class="col-2">
         <center>
         <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
-          <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 115%;">
+          <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 85%;">
             <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
           </i>
         <% end %>  
@@ -130,7 +130,7 @@
 </div>
 <script>
   $(document).ready(function() {
-    var element = document.getElementsByClassName("content-show-order");
+    var element = document.getElementsByClassName("content-index-product");
 
     var i;
     for (i = 0; i < element.length; i++) {
