@@ -1,5 +1,5 @@
 document.addEventListener("turbolinks:load", function (event) {
-  //categories
+  //products
   $("#select_status").change(function () {
     $("#select_category").val('');
     getListProductByStatus();
@@ -11,9 +11,12 @@ document.addEventListener("turbolinks:load", function (event) {
   });
 
   $("#M-btn-search").click(function () {
+    $("#select_status").val('');
+    $("#select_category").val('');
     getListProductByName();
   });
 
+  //categories
   $("#M-btn-search-cates").click(function () {
     getListCategoriesByName();
   });
@@ -37,28 +40,12 @@ document.addEventListener("turbolinks:load", function (event) {
   });
 })
 
-//reset list
-function resetListProducts() {
-  var count = 1;
-  var row_product = $(".M-test");
-  $.each(row_product, function (key, value) {
-    var id = $(value).attr('id');
-    $("#" + id).css("display", "");
-    $("#" + id + "-index").text(count);
-    count++;
-    if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-    else $('#' + id).css("background-color", "white");
-  })
-}
 //================Product index====================
 // SORT BY STATUS OF PRODUCT
 function getListProductByStatus() {
   var value = $("#select_status").val();
   //reset
-  if (value == "") {
-    resetListProducts();
-  }
-
+  if (value == "") resetList();
   //call ajax
   if (value != "") {
     $.ajax({
@@ -68,32 +55,7 @@ function getListProductByStatus() {
         status: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              // console.log("item "+ item.id + "key" + id);
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                // console.log(id + "block"); 
-                $("#" + id + "-index").text(count);
-                count++;
-                // console.log("count " + count);
-
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else {
-                $("#" + id).css("display", "none");
-                // console.log(id + "none");    
-              }
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -103,11 +65,8 @@ function getListProductByStatus() {
 // SORT BY CATEGORY ID OF PRODUCT
 function getListProductByCategory() {
   var value = $("#select_category").val();
-  // alert(value);
   //reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   //call ajax value != ''
   else {
     $.ajax({
@@ -117,25 +76,7 @@ function getListProductByCategory() {
         category_id: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -145,11 +86,8 @@ function getListProductByCategory() {
 // SORT BY PRODUCT NAME OF PRODUCT
 function getListProductByName() {
   var value = $("#txt_search_name").val();
-  // alert(value);
   // reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   // call ajax value != ''
   else {
     $.ajax({
@@ -159,25 +97,7 @@ function getListProductByName() {
         name: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -187,11 +107,8 @@ function getListProductByName() {
 //SORT BY CATEGORY NAME OF CATEGORY
 function getListCategoriesByName() {
   var value = $("#txt_search_cate").val();
-  // alert(value);
   // reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   // call ajax value != ''
   else {
     $.ajax({
@@ -201,25 +118,7 @@ function getListCategoriesByName() {
         name: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -229,11 +128,8 @@ function getListCategoriesByName() {
 // SORT BY USER ROLE OF USER
 function getListUsersByRole() {
   var value = $("#account_role").val();
-  // alert(value);
   // reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   // call ajax value != ''
   else {
     $.ajax({
@@ -243,25 +139,7 @@ function getListUsersByRole() {
         role_id: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -272,11 +150,8 @@ function getListUsersByRole() {
 // SORT BY USER NAME OF USER
 function getListUsersByName() {
   var value = $("#txt_search_name").val();
-  // alert(value);
   // reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   // call ajax value != ''
   else {
     $.ajax({
@@ -286,25 +161,7 @@ function getListUsersByName() {
         name: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -316,11 +173,8 @@ function getListUsersByName() {
 // SORT BY ORDER STATUS OF ORDER
 function getListOrdersByStatus() {
   var value = $("#select_order_status").val();
-  // alert(value);
   // reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   // call ajax value != ''
   else {
     $.ajax({
@@ -330,25 +184,7 @@ function getListOrdersByStatus() {
         status: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
@@ -357,13 +193,10 @@ function getListOrdersByStatus() {
 // SORT BY ORDER STATUS OF ORDER
 
 // SORT BY ORDER CODE OF ORDER
-function getListOrdersByCode(){
+function getListOrdersByCode() {
   var value = $("#txt_search_name").val();
-  alert(value);
   // reset
-  if (value == "") {
-    resetListProducts();
-  }
+  if (value == "") resetList();
   // call ajax value != ''
   else {
     $.ajax({
@@ -373,27 +206,46 @@ function getListOrdersByCode(){
         code: value
       },
       success: function (data) {
-        if (data.length < 1) alert("Not found");
-        else {
-          var row_product = $(".M-test");
-          var count = 1;
-          $.each(row_product, function (key, value) {
-            data.some(function (item) {
-              var id = $(value).attr('id');
-              if (item.id == id) {
-                $("#" + id).css("display", "");
-                $("#" + id + "-index").text(count);
-                count++;
-                //color
-                if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
-                else $('#' + id).css("background-color", "white");
-                return item.id == id;
-              } else $("#" + id).css("display", "none");
-            });
-          })
-        }
+        getSuccessData(data);
       }
     })
   }
 }
 // SORT BY ORDER CODE OF ORDER
+
+//--------sub function----------
+function getSuccessData(data) {
+  if (data.length < 1) alert("Not found");
+  else {
+    var row_product = $(".M-test");
+    var count = 1;
+    $.each(row_product, function (key, value) {
+      data.some(function (item) {
+        var id = $(value).attr('id');
+        if (item.id == id) {
+          $("#" + id).css("display", "");
+          $("#" + id + "-index").text(count);
+          count++;
+          //color
+          if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
+          else $('#' + id).css("background-color", "white");
+          return item.id == id;
+        } else $("#" + id).css("display", "none");
+      });
+    })
+  }
+}
+
+//reset list
+function resetList() {
+  var count = 1;
+  var row_product = $(".M-test");
+  $.each(row_product, function (key, value) {
+    var id = $(value).attr('id');
+    $("#" + id).css("display", "");
+    $("#" + id + "-index").text(count);
+    count++;
+    if (count % 2 != 0) $('#' + id).css("background-color", "#F4F3EF");
+    else $('#' + id).css("background-color", "white");
+  })
+}
