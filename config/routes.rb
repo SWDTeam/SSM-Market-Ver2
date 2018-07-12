@@ -39,6 +39,7 @@ Rails.application.routes.draw do
 
   get '/orders_by_status', to: 'orders#seach_orders_by_status'
   get '/orders_by_code', to: 'orders#search_orders_by_code'
+
 #---------------Mobile api---------------
   namespace :api do
     namespace :v1 do
@@ -53,7 +54,7 @@ Rails.application.routes.draw do
       end
       # order products
       resources :orders, only: [:create, :destroy]
-      get 'lists_orders/:account_id', to: 'orders#index_orders_by_account_id' # find list orders by account id and status pending
+      get 'lists_orders/:account_id/:status', to: 'orders#index_orders_by_account_id' # find list orders by account id and status pending
       get 'order_details/:order_id', to: 'order_products#index_order_products_by_order_id'
       # resources :order_products, only: [:create]
       # categories
