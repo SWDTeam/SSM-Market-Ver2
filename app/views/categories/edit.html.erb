@@ -1,14 +1,15 @@
-<%= form_with(model: @category, local: true, url:{action: "update"}) do |form| %>
+<%= form_with(model: @category, local: true, url:{action: "update"}, html: {id:"form--edit--category"}) do |form| %>
   <%= @category.errors[:name].first %>
   <div class="wrap-new-category">
     <p class="label-new-category">Edit Category</p>
     <div class="field-new-category">
       <%= form.label :name, class: "label-form-new-category" %><br>
-      <%= form.text_field :name, id: :category_name %>
+      <%= form.text_field :name, id: :category_name, class:"w-100" %>
+      <p class="validate-new-product" id="error--name--edit--cate"></p>
     </div>
     <div class="field-new-category">
       <%= form.label :status, class: "label-form-new-category" %><br>
-      <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {}, id: :category_status, class: 'input-filter-index-category custome-select' %>
+      <%= form.select :status, [['Active', 'active'], ['Hidden', 'hidden']], {}, id: :category_status, class: 'input-filter-index-category custome-select w-100' %>
     </div>
     <div class="row mt-2 justify-content-center" id="category_img_field_container"> 
        <div class="M-img-field">

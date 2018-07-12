@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", function (event) {
     flag = true;
     $("#form--add--cate").submit(function () {
         flag = checkNewCate();
-        return flag;
+        return false;
     });
 
 //-------------change password page-------------
@@ -42,6 +42,19 @@ document.addEventListener("turbolinks:load", function (event) {
         flag = checkChangePassword();
         return flag;
     });
+
+    //-------------add admin page-------------
+    $("#form--add--admin").submit(function () {
+        flag = checkAddNAdmin();
+        return flag;
+    });
+
+    //-----------edit category---------------
+    flag = true;
+    $("#form--edit--category").submit(function() {
+        flag = checkEditCate();
+        return flag;
+    })
 });
 
 function resetTextErrors() {
@@ -72,6 +85,26 @@ function resetTextErrors() {
     $("#error--product--key").text("").css("color", "red");
     $("#error--product--cate").text("").css("color", "red");
     $("#error--description").text("").css("color", "red");
+
+    $("#error--email--add-admin").text("");
+    $("#error--name--add-admin").text("");
+
+    $("#error--name--edit--cate").text("");
+}
+
+function checkEditCate() {
+    resetTextErrors();
+    var t = true;
+    var name = $("#category_name").val();
+
+    if (name === "" || name === null) {
+        $("#error--name--edit--cate").text("Name can't be blank!").css("color", "red");
+        t = false;
+    } else if (name.length > 50) {
+        $("#error--name--edit--cate").text("Name maximum is 50 characters!").css("color", "red");
+        t = false;
+    }
+    return t;
 }
 
 function checkLogin() {
@@ -199,19 +232,23 @@ function checkNewCate() {
 
     var t = true;
     var name = $("#category_name").val();
-//  console.log(name);
-    var img = $("#category_images_url").val();
+
+    var img = $("#img__new_category").css("display");
+    alert(img);
+
+    /*if (result == -1) {
+        $("#error--pic--cate").text("Image can't empty!");
+        t = false;
+    }
+
     if (name === "" || name === null) {
         $("#error--name--cate").text("Name can't be blank!");
         t = false;
     } else if (name.length > 50) {
-        $("#error--name").text("Name maximum is 50 characters!");
+        $("#error--name--cate").text("Name maximum is 50 characters!");
         t = false;
-    }
-    if (img === null || img === "") {
-        $("#error--pic--cate").text("Image can't empty!");
-        t = false;
-    }
+    }*/
+    t= false;
     return t;
 }
 
@@ -260,17 +297,12 @@ function checkProfile() {
     var email = $("#u--email").val();
     var name = $("#u--name").val();
     var phone = $("#u--phone").val();
-    var gender = $(".u--gender");
     var addr = $("#u--address").val();
-    var phoneExp = /^[0]\d{9,10}$/;
+    var phoneExp = /^\d{10,11}$/;
     var emailExp = /^[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|vn|info))$/;
 
     var t = true;
 
-    if (gender[0].val().checked !== true & gender[1].val().checked !== true) {
-        $("#error--gender").text("Gender can't be blank!").css("color", "red");
-        t = false;
-    }
     if (phone === "" || phone === null) {
         $("#error--phone").text("Phone can't be blank!").css("color", "red");
         t = false;
@@ -290,7 +322,42 @@ function checkProfile() {
     }
 
     if (name === "" || name === null) {
-        $("#error--name--edit--profile").text("Name can't be blank!");
+        $("#error--name--edit--profile").text("Name can't be blank!").css("color", "red");
+        t = false;
+    } else if (name.length > 30) {
+        $("#error--name--edit--profile").text("Name maximum is 30 characters!").css("color", "red");
+        t = false;
+    }
+
+    if (addr === "" || addr === null) {
+        $("#error--address--edit--profile").text("Address can't be blank!").css("color", "red");
+        t = false;
+    } else if (addr.length > 100) {
+        $("#error--address--edit--profile").text("Address maximum is 100 characters!").css("color", "red");
+        t = false;
+    }
+    return t;
+}
+
+function checkAddNAdmin() {
+    resetTextErrors();
+    var t = true;
+
+    var email = $("#email-add-admin").val();
+    var name = $("#account_name").val();
+    var emailExp = /^[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|vn|info))$/;
+
+
+    if (!email.match(emailExp)) {
+        $("#error--email--add-admin").text("Email is invaild!").css("color", "red");
+    }
+
+    if (email === "" || email === null) {
+        $("#error--email--add-admin").text("Email can't be blank!").css("color", "red");
+    }
+
+    if (name === "" || name === null) {
+        $("#error--name--add-admin").text("Name can't be blank!").css("color", "red");
         t = false;
     }
     return t;

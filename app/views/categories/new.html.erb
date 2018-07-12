@@ -1,4 +1,4 @@
-<%= form_with(model: @category, local: true, url:{action: "create"}, id:"form--add--cate") do |form| %>
+<%= form_with(model: @category, local: true, url:{action: "create"}, html: {id:"form--add--cate"}) do |form| %>
 <%= @category.errors[:name].first %>
   <div class="wrap-index-category wrap-new-category">
     <p class="label-new-category">New Category</p>
@@ -14,7 +14,7 @@
           <button class='btn btn-dark M-btn-image'><i class="fa fa-image fa-3x"></i></br>Add Image
           </button>
            <%= i.file_field :url, multiple: false, name: "images[url][]", class: "M-image-input", onchange:"previewImages(event)" %>
-          <div class="M-image-output">
+          <div class="M-image-output" id="img__new_category" style="color: black;">
             <div class='btn btn-light M-image-remove' onclick='removeImages(event)'><i class="fa fa-trash"></i></div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <!--css in index-account-->
-<%= form_with(model: @account, local: true, url: {action: 'create', controller: 'accounts'}) do |form| %>
+<%= form_with(model: @account, local: true, url: {action: 'create', controller: 'accounts'}, html: {id:"form--add--admin"}) do |form| %>
 <div class="wrap-index-category" style="padding: 30px 50px;">
   <div class="title-index-category mb-4">Add admin</div>
 
@@ -14,8 +14,8 @@
       <!--input EMAIL-->
       <div class="row">
         <div class="col-12">
-         <%= form.email_field :email, autofocus: true, autocomplete: "email", class: 'input-filter-index-category' %>
-          <!-- <input type="text" class="input-filter-index-category"> -->
+          <%= form.email_field :email, autofocus: true, autocomplete: "email", class: 'input-filter-index-category', id: 'email-add-admin' %>
+          <p class="validate-new-product" id="error--email--add-admin"></p>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-12">
           <%= form.text_field :name, id: :account_name, class:'input-filter-index-category' %>
-          <!-- <input type="text" class="input-filter-index-category"> -->
+          <p class="validate-new-product" id="error--name--add-admin"></p>
         </div>
       </div>
     </div>
