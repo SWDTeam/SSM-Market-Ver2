@@ -36,7 +36,7 @@
 <!--use css of index categories-->
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">
-    Invoice #001
+    Invoice #<%= @order.code %>
   </div>
 
   <div class="row">
@@ -46,23 +46,32 @@
   <div class="row" style="margin: 0 3%;">
     <!--Customer's Name-->
     <div class="col-6 text-left">
-      Customer's Name: <span>Minh Bác Ái</span>
+      Customer's Name: <span><%= @account.name %></span>
     </div>
     <!--Order Date-->
     <div class="col-6 text-right">
-      Order Date: <span>12:00</span>, <span>06/24/2018</span>
+      Order Created: <span><%= @order.created_at.strftime("%H:%M, %a %b %d %y") %></span>
     </div>
   </div>
 
   <div class="row" style="margin: 0 3%;">
     <!--Phone-->
     <div class="col-6 text-left">
-      Phone: <span>09133443434</span>
+      Phone: <span><%= @account.phone %></span>
     </div>
     <!--Status-->
     <div class="col-6 text-right">
       Status: 
-      <span class="order-status" style="background-color: #008AFF; font-size: 14px;">Payment</span>
+      
+      <% if @order.status == 'payment' %>
+      <span class="order-status" style="background-color: #008AFF; font-size: 14px;">
+      <%= @order.status.capitalize %></span>
+      <% else %>
+        <span class="order-status" style="background-color: #F6AC43; font-size: 14px;">
+        <%= @order.status.capitalize %></span>
+      <% end %>
+      
+      
     </div>
   </div>
 
@@ -77,9 +86,9 @@
     <div class="col-12">
       <div class="row wrap-label-show-order">
         <!--PID-->
-        <div class="col-2 text-center">PID</div>
+        <div class="col-2 text-center">#</div>
         <!--Code-->
-        <div class="col-2 text-center">Code</div>
+        <!-- <div class="col-2 text-center">Code</div> -->
         <!--Name-->
         <div class="col-2 text-center">Name</div>
         <!--Quantity-->
@@ -89,29 +98,30 @@
         <!--Subtotal-->
         <div class="col-2 text-center">Subtotal</div>
       </div>
-
+    <% @order_products.each_with_index do |detail, index| index += 1 %>
       <div class="row content-show-order">
         <!--PID-->
-        <div class="col-2 text-center detail-content-show-order">1</div>
+        <div class="col-2 text-center detail-content-show-order"><%= index %></div>
         <!--Code-->
-        <div class="col-2 text-center detail-content-show-order">9999999</div>
+        <!-- <div class="col-2 text-center detail-content-show-order">9999999</div> -->
         <!--Name-->
-        <div class="col-2 text-center detail-content-show-order">Banana</div>
+        <div class="col-2 text-center detail-content-show-order"><%= Product.find_by_id(detail.product_id).name %></div>
         <!--Quantity-->
-        <div class="col-2 text-center detail-content-show-order">25</div>
+        <div class="col-2 text-center detail-content-show-order"><%= detail.quantity %></div>
         <!--Unit Price-->
-        <div class="col-2 text-center detail-content-show-order">999999999</div>
+        <div class="col-2 text-center detail-content-show-order"><%= detail.price %></div>
         <!--Subtotal-->
-        <div class="col-2 text-center detail-content-show-order">999999999</div>
+        <div class="col-2 text-center detail-content-show-order"><%= detail.quantity * detail.price %></div>
       </div>
+    <% end %>
 
       <div class="row wrap-total-show-order">
         <div class="col-2 text-center"></div>
-        <div class="col-2 text-center"></div>
+        <!-- <div class="col-2 text-center"></div> -->
         <div class="col-2 text-center"></div>
         <div class="col-2 text-center"></div>
         <div class="col-2 text-center">Total</div>
-        <div class="col-2 text-center">55545455</div>
+        <div class="col-2 text-center"><%= @order.total_price %></div>
       </div>
     </div>
   </div>

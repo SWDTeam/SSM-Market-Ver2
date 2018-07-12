@@ -40,8 +40,8 @@ class Api::V1::OrdersController < ActionController::API
   end
 
   def index_orders_by_account_id
-    if params[:account_id]
-      @orders = Order.where(account_id: params[:account_id], status: 'pending')
+    if params[:account_id] || params[:status]
+      @orders = Order.where(account_id: params[:account_id], status: params[:status])
       return render json: {errors: 'Not found'}, status: 404 if @orders.size < 1
       render json: @orders.as_json
     end 
