@@ -1,5 +1,5 @@
 <%= notice %>
-<%= form_with model: @user, local: true, url:{action: "update"}, method: :put do |form| %>
+<%= form_with model: @user, local: true, url:{action: "update"}, html:{id: "form--profile"}, method: :put do |form| %>
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">Profile of <%= @user.name %></div>
 
@@ -14,7 +14,8 @@
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-          <%= form.text_field :email, class:"input-filter-index-category", value: @user.email %>
+          <%= form.text_field :email, class:"input-filter-index-category", id:"u--email", value: @user.email %>
+          <p id="error--email--edit--profile" class="validate-new-product"></p>
         </div>
         <div class="col-2"></div>
       </div>
@@ -28,7 +29,8 @@
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-          <%= form.text_field :name, class:"input-filter-index-category", value: @user.name %>
+          <%= form.text_field :name, class:"input-filter-index-category", id:"u--name", value: @user.name %>
+          <p id="error--name--edit--profile" class="validate-new-product"></p>
         </div>
         <div class="col-2"></div>
       </div>
@@ -46,32 +48,35 @@
         <div class="col-2"></div>
         <!--PHONE-->
         <div class="col-4">
-          <%= form.text_field :phone, class:"input-filter-index-category", value: @user.phone %>
+          <%= form.text_field :phone, class:"input-filter-index-category", id:"u--phone", value: @user.phone %>
+          <p id="error--phone" class="validate-new-product"></p>
         </div>
         <!--GENDER-->
         <div class="col-4">
          <% if @user.gender == 'male' %>
           <label class="pl-2 pr-3">Male
-            <%= form.radio_button :gender, 'male', checked: true, class:"radio-profile" %>
+            <%= form.radio_button :gender, 'male', checked: true, class:"radio-profile u--gender" %>
           </label>
           <label class="pl-2 pr-3">Female
-            <%= form.radio_button :gender, 'female', class:"radio-profile" %>
+            <%= form.radio_button :gender, 'female', class:"radio-profile u--gender" %>
           </label>
         <% elsif @user.gender == 'female' %>
           <label class="pl-2 pr-3">Male
-            <%= form.radio_button :gender, 'male', class:"radio-profile" %>
+            <%= form.radio_button :gender, 'male', class:"radio-profile u--gender" %>
           </label>
           <label class="pl-2 pr-3">Female
-            <%= form.radio_button :gender, 'female', checked: true, class:"radio-profile" %>
+            <%= form.radio_button :gender, 'female', checked: true, class:"radio-profile u--gender" %>
           </label>
         <% else %>
           <label class="pl-2 pr-3">Male
-            <%= form.radio_button :gender, 'male', class:"radio-profile" %>
+            <%= form.radio_button :gender, 'male', class:"radio-profile u--gender" %>
           </label>
           <label class="pl-2 pr-3">Female
-            <%= form.radio_button :gender, 'female', class:"radio-profile" %>
+            <%= form.radio_button :gender, 'female', class:"radio-profile u--gender" %>
           </label>
         <% end %>
+
+          <p id="error--gender" class="validate-new-product"></p>
         </div>
         <div class="col-2"></div>
       </div>
@@ -107,7 +112,8 @@
       <div class="row">
         <div class="col-2"></div>
         <div class="col-8">
-          <%= form.text_field :address, class: 'input-filter-index-category',value: @user.address %>
+          <%= form.text_field :address, class: 'input-filter-index-category', id:"u--address", value: @user.address %>
+          <p id="error--address--edit--profile" class="validate-new-product"></p>
         </div>
         <div class="col-2"></div>
       </div>

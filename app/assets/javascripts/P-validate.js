@@ -8,8 +8,16 @@ document.addEventListener("turbolinks:load", function (event) {
     });
 
 //-------------forgot pass page-------------
+    flag = true;
     $(".form--forget--pass").submit(function () {
         flag = checkNewPass();
+        return flag;
+    });
+
+//-------------profile page-------------
+    flag = true;
+    $("#form--profile").submit(function () {
+        flag = checkProfile();
         return flag;
     });
 
@@ -40,14 +48,20 @@ function resetTextErrors() {
     $("#error--email").text("");
     $("#error--email--newpass").text("");
     $("#error--name").text("");
-    $("#error--phone").text("");
-    $("#error--gender").text("");
+    
     $("#error--role").text("");
     $("#error--status").text("");
     $("#error--pass").text("");
     $("#error--pass--change").text("");
     $("#error--confirm--pass").text("");
     $("#error--old--pass").text("");
+
+    $("#error--email--edit--profiles").text("");
+    $("#error--name--edit--profiles").text("");
+    $("#error--phone").text("");
+    $("#error--gender").text("");
+    $("#error--address--edit--profile").text("");
+
     $("#error--manufacturer").text("").css("color", "red");
     $("#error--price").text("").css("color", "red");
     $("#error--quantity").text("").css("color", "red");
@@ -236,6 +250,47 @@ function checkPassword() {
     }
     if (confirmPass !== pass) {
         $("#error--confirm--pass").text("Confirm password not match!").css("color", "red");
+        t = false;
+    }
+    return t;
+}
+
+function checkProfile() {
+    resetTextErrors();
+    var email = $("#u--email").val();
+    var name = $("#u--name").val();
+    var phone = $("#u--phone").val();
+    var gender = $(".u--gender");
+    var addr = $("#u--address").val();
+    var phoneExp = /^[0]\d{9,10}$/;
+    var emailExp = /^[\w]([^@\s,;]+)@(([\w-]+\.)+(com|edu|org|net|gov|mil|vn|info))$/;
+
+    var t = true;
+
+    if (gender[0].val().checked !== true & gender[1].val().checked !== true) {
+        $("#error--gender").text("Gender can't be blank!").css("color", "red");
+        t = false;
+    }
+    if (phone === "" || phone === null) {
+        $("#error--phone").text("Phone can't be blank!").css("color", "red");
+        t = false;
+    }
+    if (!phone.match(phoneExp)) {
+        $("#error--phone").text("Phone is invaild!").css("color", "red");
+        t = false;
+    }
+
+    if (email === "" || email === null) {
+        $("#error--email--edit--profile").text("Email can't be blank!").css("color", "red");
+        t = false;
+    }
+     if (!email.match(emailExp)) {
+        $("#error--email--edit--profile").text("Email is invaild!").css("color", "red");
+        t = false;
+    }
+
+    if (name === "" || name === null) {
+        $("#error--name--edit--profile").text("Name can't be blank!");
         t = false;
     }
     return t;

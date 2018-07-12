@@ -6,20 +6,38 @@
   font-weight: 600;
 }
 
-.bnt-submit-order {
+.bnt-payment-order {
   width: 80%;
   background: white;
-  border: #F03E58 1.5px solid;
+  border: #008AFF 1.5px solid;
   outline: none;
-  color: #F03E58;
+  color: #008AFF;
   padding: 3px;
   border-radius: 20px;
   cursor: pointer;
   transition: .3s;
 }
 
-.bnt-submit-order:hover {
-  background: #F03E58;
-  border: #F03E58 1.5px solid;
+.bnt-payment-order:hover {
+  background: #008AFF;
+  border: #008AFF 1.5px solid;
   color: white;
+} 
+
+.bnt-pending-order {
+  width: 80%;
+  background: white;
+  border: #F6AC43 1.5px solid;
+  outline: none;
+  color: #F6AC43;
+  padding: 3px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: .3s;
 }
+
+.bnt-pending-order:hover {
+  background: #F6AC43;
+  border: #F6AC43 1.5px solid;
+  color: white;
+} 

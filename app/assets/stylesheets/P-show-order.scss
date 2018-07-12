@@ -1,12 +1,32 @@
 .wrap-label-show-order {
   background-color: #F7ECB5;
+  font-size: 18.5px;
+}
+
+.wrap-label-show-order, .wrap-total-show-order {
+  padding: 20px 0;
 }
 
 .wrap-total-show-order {
   background-color: #F7ECB5;
   font-weight: bold;
+  font-size: 17px;
 }
 
 .title-show-order {
-  font-size: 22px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.wrap-table-show-order {
+  border: 1px solid black;
+}
+
+.wrap-label-show-order, .content-show-order {
+  border-bottom: 1px solid #CEC6B9;
+}
+
+.detail-content-show-order {
+  border-right: 1px solid #CEC6B9;
+  padding: 20px 0;
 }

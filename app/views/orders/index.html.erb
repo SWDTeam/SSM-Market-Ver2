@@ -65,20 +65,20 @@
           <option>Accepted</option>
         </select> -->
         <%= link_to order_path(order) do %>
-          <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
+          <i class="fa fa-search-plus show-bnt-index-account align-items-center" style="width: 70%;"></i>
         <% end %>
       </div>
       <!--ACTION-->
       <div class="col-2 pl-0 text-center pr-3">
       <% if order.status != 'payment' %>
         <%= link_to account_order_path(current_account, order, order: {status: 'payment', cashier_id: current_account.id}), method: :put  do %>
-          <button class="bnt-submit-order" style="width: 70%;">Payment</button>
+          <button class="bnt-payment-order" style="width: 70%;">Payment</button>
         <% end %>  
       <% else %>
         <%#= link_to account_order_path(current_account, order, order: {status: 'pending', cashier_id: current_account.id}), method: :put do %>
-          <!-- <button class="bnt-submit-order" style="width: 70%;">Pending</button> -->
+          <!--<button class="bnt-pending-order" style="width: 70%;">Pending</button>-->
         <%# end %>  
-        <% end %>
+      <% end %>
       </div>
     </div>
   <% end %>
