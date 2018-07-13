@@ -1,11 +1,11 @@
-<%= form_with(model: @category, local: true, url:{action: "update"}, html: {id:"form--edit--category"}) do |form| %>
+<%= form_with(model: @category, local: true, url:{action: "update"}, html: {id:"form--add--cate"}) do |form| %>
   <%= @category.errors[:name].first %>
   <div class="wrap-new-category">
     <p class="label-new-category">Edit Category</p>
     <div class="field-new-category">
       <%= form.label :name, class: "label-form-new-category" %><br>
       <%= form.text_field :name, id: :category_name, class:"w-100" %>
-      <p class="validate-new-product" id="error--name--edit--cate"></p>
+      <p class="validate-new-product" id="error--name--cate"></p>
     </div>
     <div class="field-new-category">
       <%= form.label :status, class: "label-form-new-category" %><br>
@@ -21,6 +21,7 @@
           </div>
         </div>
     </div>
+    <p class="validate-new-product text-center" id="error--pic--cate"></p>
     <div class="actions mt-5 submit-creat-category">
       <%= form.submit class: "submit-bnt-new-category" %>
     </div>

@@ -48,13 +48,6 @@ document.addEventListener("turbolinks:load", function (event) {
         flag = checkAddNAdmin();
         return flag;
     });
-
-    //-----------edit category---------------
-    flag = true;
-    $("#form--edit--category").submit(function() {
-        flag = checkEditCate();
-        return flag;
-    })
 });
 
 function resetTextErrors() {
@@ -88,23 +81,6 @@ function resetTextErrors() {
 
     $("#error--email--add-admin").text("");
     $("#error--name--add-admin").text("");
-
-    $("#error--name--edit--cate").text("");
-}
-
-function checkEditCate() {
-    resetTextErrors();
-    var t = true;
-    var name = $("#category_name").val();
-
-    if (name === "" || name === null) {
-        $("#error--name--edit--cate").text("Name can't be blank!").css("color", "red");
-        t = false;
-    } else if (name.length > 50) {
-        $("#error--name--edit--cate").text("Name maximum is 50 characters!").css("color", "red");
-        t = false;
-    }
-    return t;
 }
 
 function checkLogin() {
@@ -147,7 +123,7 @@ function checkNewProduct() {
     var manu = $("#product_manufacturer").val();
     var dateManu = $("#product_manu_date").val();
     var endManu = $("#product_expired_date").val();
-    var img = $("#product_images_attributes_0_url").val();
+    var img = $(".M-image-output").css("backgroundImage");
     var editor = $("#product_description").val();
     var productKey = $("#product_product_key").val();
     var cate = $("#product_product_category :selected").val();
@@ -222,8 +198,8 @@ function checkNewProduct() {
         $("#error--date--expiration").text("Expiration date invaild!");
         t = false;
     }
-    if (img === null || img === "") {
-        $("#error--pic").text("At least having one image!");
+    if (img === "none") {
+        $("#error--pic").text("At least having one image!").css("color", "red");
         t = false;
     }
     console.log("Check t " + t);
@@ -236,9 +212,9 @@ function checkNewCate() {
 
     var t = true;
     var name = $("#category_name").val();
-    var img = $("#img__new_category").val();
-
-    if (img === null || img === "") {
+    var img = $(".M-image-output").css("backgroundImage");
+    
+    if (img === "none") {
         $("#error--pic--cate").text("Image can't empty!");
         t = false;
     }

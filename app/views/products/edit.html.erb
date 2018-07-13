@@ -91,13 +91,15 @@
             <div class="row mt-2 justify-content-center" id="product_img_field_container"> 
               <div class="M-img-field">
                   <button class='btn btn-dark M-btn-image'><i class="fa fa-image fa-3x"></i></br>Add Image</button>
-                   <%= form.file_field :images, multiple: false, name: "images[url][]", class: "M-image-input", onchange:"previewProductImages(event)" %>
+                  <%= form.file_field :images, multiple: false, name: "images[url][]", class: "M-image-input", onchange:"previewProductImages(event)" %>
                   <div class="M-image-output" style="background-image: url('<%= asset_url @product.images.first.url%>'); display:block;">
                     <div class='btn btn-light M-image-remove' onclick='removeProductImages(event, <%= @product.images.first.id%>)'><i class="fa fa-trash"></i></div>
                   </div>
-                  <p class="validate-new-product" id="error--pic"></p>
-                </div>
               </div>
+            </div>
+            <div class="row justify-content-center">
+              <p class="validate-new-product" id="error--pic"></p>
+            </div>
           </div>
            <!--input for PICTURE-->
         </div>

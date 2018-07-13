@@ -59,11 +59,13 @@ function previewImages(event) {
   var reader = new FileReader();
   reader.onload = function () {
     var output = $(event.target).next();
+    
     output.css("backgroundImage", 'url(' + reader.result + ')');
     output.css("display", "block");
     showImageInputCategory();
   }
   reader.readAsDataURL(event.target.files[0]);
+  
 }
 
 function removeImages(event) {
@@ -78,10 +80,12 @@ function removeImages(event) {
 //Show add img button again when remove img
 function removeImages(event, id) {
   var file_field = $(event.target).parents(".M-img-field");
+  console.log(file_field);
   $("#category_img_field_container").append('<input type="hidden" value=' + id + ' name="images_delete[][id]"">');
   file_field.remove();
   //if (maxSizeImages) {
     showImageInputCategory();
   //   maxSizeImages = false;
   // }
+  //console.log(event.target.files[0]);
 }
