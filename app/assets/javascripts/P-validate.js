@@ -1,28 +1,25 @@
 document.addEventListener("turbolinks:load", function (event) {
 
 //-------------login page-------------
-    var flag = true;
+    var flag = false;
     $(".form--login").submit(function () {
         flag = checkLogin();
         return flag;
     });
 
 //-------------forgot pass page-------------
-    flag = true;
     $(".form--forget--pass").submit(function () {
         flag = checkNewPass();
         return flag;
     });
 
 //-------------profile page-------------
-    flag = true;
     $("#form--profile").submit(function () {
         flag = checkProfile();
         return flag;
     });
 
 //-------------new product page-------------
-    flag = true;
     $("#form--new--product").submit(function () {
         flag = checkNewProduct();
         console.log("flag " + flag);
@@ -30,14 +27,12 @@ document.addEventListener("turbolinks:load", function (event) {
     });
 
 //-------------new cate-------------
-    flag = true;
     $("#form--add--cate").submit(function () {
         flag = checkNewCate();
         return flag;
     });
 
 //-------------change password page-------------
-    flag = true;
     $("#form--change--password").submit(function () {
         flag = checkChangePassword();
         return flag;
@@ -116,7 +111,7 @@ function checkNewPass() {
 function checkNewProduct() {
     resetTextErrors();
     var t = true;
-    console.log("show 1");
+
     var name = $("#product_name").val();
     var price = $("#product_price").val();
     var amount = $("#product_quantity").val();
@@ -128,7 +123,6 @@ function checkNewProduct() {
     var productKey = $("#product_product_key").val();
     var cate = $("#product_product_category :selected").val();
 
-    console.log(editor);
     var numberExp = /^[0-9]*$/;
     var floatExp = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
 
@@ -202,7 +196,6 @@ function checkNewProduct() {
         $("#error--pic").text("At least having one image!").css("color", "red");
         t = false;
     }
-    console.log("Check t " + t);
     return t;
 }
 
@@ -210,7 +203,7 @@ function checkNewCate() {
     $("#error--name--cate").text("").css("color", "red");
     $("#error--pic--cate").text("").css("color", "red");
 
-    var t = false;
+    var t = true;
     var name = $("#category_name").val();
     var img = $(".M-image-output").css("backgroundImage");
     
@@ -226,7 +219,6 @@ function checkNewCate() {
         $("#error--name--cate").text("Name maximum is 50 characters!");
         t = false;
     }
-    alert(flag);
     return t;
 }
 
@@ -249,6 +241,7 @@ function checkPassword() {
     var pass = $("#new_password").val();
     var confirmPass = $("#confirm_password").val();
     var t = true;
+    
     if (pass === "" || pass === null) {
         $("#error--pass--change").text("Password can't be blank!").css("color", "red");
         t = false;
