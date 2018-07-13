@@ -226,7 +226,7 @@ function checkNewCate() {
         $("#error--name--cate").text("Name maximum is 50 characters!");
         t = false;
     }
-
+    alert(flag);
     return t;
 }
 
@@ -328,10 +328,12 @@ function checkAddNAdmin() {
 
     if (!email.match(emailExp)) {
         $("#error--email--add-admin").text("Email is invaild!").css("color", "red");
+        t = false;
     }
 
     if (email === "" || email === null) {
         $("#error--email--add-admin").text("Email can't be blank!").css("color", "red");
+        t = false;
     }
 
     if (name === "" || name === null) {
