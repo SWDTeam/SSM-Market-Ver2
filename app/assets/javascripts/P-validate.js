@@ -154,13 +154,16 @@ function checkNewProduct() {
 
     console.log(editor);
     var numberExp = /^[0-9]*$/;
+    var floatExp = /^\s*(\+|-)?((\d+(\.\d+)?)|(\.\d+))\s*$/;
 
     if (productKey === "" || productKey === null) {
         $("#error--product--key").text("Product key can't be blank");
+        t = false;
     }
 
     if (cate === "" || cate === null) {
-        $("#error--product--cate").text("Category key can't be blank")
+        $("#error--product--cate").text("Category key can't be blank");
+        t = false;
     }
 
     if (editor === "<p>&nbsp;</p>" || editor === "" || editor === null) {
@@ -177,14 +180,15 @@ function checkNewProduct() {
         $("#error--name").text("Name maximum is 100 characters!").css("color", "red");
         t = false;
     }
+    
     if (price === "" || price === null) {
         $("#error--price").text("Price can't be blank");
         t = false;
-    } else if (!price.match(numberExp)) {
+    } else if (!price.match(floatExp)) {
         $("#error--price").text("Price is invaild");
         t = false;
-    } else if (price.length > 6) {
-        $("#error--price").text("Max price is $999.999");
+    } else if (price > 1000000000) {
+        $("#error--price").text("Max price is 1 000 000 000");
         t = false;
     }
     if (manu === null || manu === "") {
@@ -232,11 +236,9 @@ function checkNewCate() {
 
     var t = true;
     var name = $("#category_name").val();
+    var img = $("#img__new_category").val();
 
-    var img = $("#img__new_category").css("display");
-    alert(img);
-
-    /*if (result == -1) {
+    if (img === null || img === "") {
         $("#error--pic--cate").text("Image can't empty!");
         t = false;
     }
@@ -247,8 +249,8 @@ function checkNewCate() {
     } else if (name.length > 50) {
         $("#error--name--cate").text("Name maximum is 50 characters!");
         t = false;
-    }*/
-    t= false;
+    }
+
     return t;
 }
 

@@ -86,42 +86,42 @@
     <div class="col-12">
       <div class="row wrap-label-show-order">
         <!--PID-->
-        <div class="col-2 text-center">#</div>
+        <div class="col-1 text-center">#</div>
         <!--Code-->
         <!-- <div class="col-2 text-center">Code</div> -->
         <!--Name-->
-        <div class="col-2 text-center">Name</div>
+        <div class="col-3 text-center">Name</div>
         <!--Quantity-->
         <div class="col-2 text-center">Quantity</div>
         <!--Unit Price-->
-        <div class="col-2 text-center">Unit Price</div>
+        <div class="col-3 text-center">Unit Price</div>
         <!--Subtotal-->
-        <div class="col-2 text-center">Subtotal</div>
+        <div class="col-3 text-center">Subtotal</div>
       </div>
     <% @order_products.each_with_index do |detail, index| index += 1 %>
       <div class="row content-show-order">
         <!--PID-->
-        <div class="col-2 text-center detail-content-show-order"><%= index %></div>
+        <div class="col-1 text-center detail-content-show-order"><%= index %></div>
         <!--Code-->
         <!-- <div class="col-2 text-center detail-content-show-order">9999999</div> -->
         <!--Name-->
-        <div class="col-2 text-center detail-content-show-order"><%= Product.find_by_id(detail.product_id).name %></div>
+        <div class="col-3 text-center detail-content-show-order"><%= Product.find_by_id(detail.product_id).name %></div>
         <!--Quantity-->
         <div class="col-2 text-center detail-content-show-order"><%= detail.quantity %></div>
         <!--Unit Price-->
-        <div class="col-2 text-center detail-content-show-order"><%= detail.price %></div>
+        <div class="col-3 text-center detail-content-show-order"><%= detail.price %></div>
         <!--Subtotal-->
-        <div class="col-2 text-center detail-content-show-order"><%= detail.quantity * detail.price %></div>
+        <div class="col-3 text-center detail-content-show-order"><%= detail.quantity * detail.price %></div>
       </div>
     <% end %>
 
       <div class="row wrap-total-show-order">
-        <div class="col-2 text-center"></div>
+        <div class="col-1 text-center"></div>
         <!-- <div class="col-2 text-center"></div> -->
+        <div class="col-3 text-center"></div>
         <div class="col-2 text-center"></div>
-        <div class="col-2 text-center"></div>
-        <div class="col-2 text-center">Total</div>
-        <div class="col-2 text-center"><%= @order.total_price %></div>
+        <div class="col-3 text-center">Total</div>
+        <div class="col-3 text-center"><%= @order.total_price %></div>
       </div>
     </div>
   </div>
