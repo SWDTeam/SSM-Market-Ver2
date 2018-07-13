@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", function (event) {
     flag = true;
     $("#form--add--cate").submit(function () {
         flag = checkNewCate();
-        return false;
+        return flag;
     });
 
 //-------------change password page-------------
@@ -210,7 +210,7 @@ function checkNewCate() {
     $("#error--name--cate").text("").css("color", "red");
     $("#error--pic--cate").text("").css("color", "red");
 
-    var t = true;
+    var t = false;
     var name = $("#category_name").val();
     var img = $(".M-image-output").css("backgroundImage");
     
