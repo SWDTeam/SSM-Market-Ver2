@@ -38,9 +38,15 @@ document.addEventListener("turbolinks:load", function (event) {
         return flag;
     });
 
-    //-------------add admin page-------------
+//-------------add admin page-------------
     $("#form--add--admin").submit(function () {
         flag = checkAddNAdmin();
+        return flag;
+    });
+
+//-------------change password----------
+    $("#new_account").submit(function () {
+        flag = checkForgotPass();
         return flag;
     });
 });
@@ -333,5 +339,32 @@ function checkAddNAdmin() {
         $("#error--name--add-admin").text("Name can't be blank!").css("color", "red");
         t = false;
     }
+    return t;
+}
+
+function checkForgotPass() {
+    resetTextErrors();
+    var t = true;
+
+    var pass = $("#account_password").val();
+    var confirmPass = $("account_password_confirmation").val();
+
+    if (pass === "" || pass === null) {
+        $("#error--pass--change").text("Password can't be blank!").css("color", "red");
+        t = false;
+    } else if (pass.length < 6 || pass.length > 30) {
+        $("#error--pass--change").text("Password is length in range [6,30]!").css("color", "red");
+        t = false;
+    }
+
+    if (confirmPass === null || confirmPass === "") {
+        $("#error--confirm--pass").text("Confirm password can't be blank!").css("color", "red");
+        t = false;
+    }
+    if (confirmPass !== pass) {
+        $("#error--confirm--pass").text("Confirm password not match!").css("color", "red");
+        t = false;
+    }
+
     return t;
 }
