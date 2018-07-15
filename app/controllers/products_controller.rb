@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
     end
     @users = Account.all.size
 
-    id = OrderProduct.order("quantity DESC").distinct.pluck(:product_id).take(3)
+    id = OrderProduct.distinct.pluck(:product_id).order("quantity DESC").take(3)
  
     @best_products = Product.where(id: id)
     # @best_products.each do |pid|
@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
 
     # vip customer
     money = 0
-    vip_id = Order.order("total_price DESC").distinct.pluck(:account_id).take(3)
+    vip_id = Order.distinct.pluck(:account_id).order("total_price DESC").take(3)
     @vip_customers = Account.where(id: vip_id)
     # @vip_customers.each do |cus|
     #   @t = Order.where(account_id: cus.id)
