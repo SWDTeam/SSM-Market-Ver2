@@ -62,6 +62,7 @@ Rails.application.routes.draw do
       get 'search_category_name/:category_name', to: "categories#search_categories_by_name"      
       #products
       resources :products, only: [:show, :index]
+      get 'list_products_low_price', to: "products#index_products_by_price" #get low price 
       get 'list_products/:category_id', to: "products#index_products_by_category_id"  #find list product by category id
       get 'products_barcode/:product_key', to: "products#search_barcode"
     end
