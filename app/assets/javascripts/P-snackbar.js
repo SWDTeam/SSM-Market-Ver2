@@ -23,7 +23,7 @@ function snackbarShow() {
 
 document.addEventListener("turbolinks:load", function (event) {
   var notice = $("#notice").text();
-  if (notice !== "") {
+  if (notice !== "" && notice !== " ") {
     snackbarShow();
   }
 });
