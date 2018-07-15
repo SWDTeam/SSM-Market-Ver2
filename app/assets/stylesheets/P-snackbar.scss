@@ -17,7 +17,7 @@
 #notice.show {
   visibility: visible;
   animation: fadein 0.5s, fadeout 0.5s 2.5s;
-
+}
 
 @keyframes fadein {
   from {bottom: 0; opacity: 0;}
