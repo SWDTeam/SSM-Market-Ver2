@@ -227,7 +227,10 @@ function getListOrdersByCode() {
 function getSuccessDataProducts(data) {
   var account_id = $("#txt_current").val();
 
-  if (data.length < 1) alert("Not found");
+  if (data.length < 1) {
+    $("#notice").text("Not found");
+    snackbarShow();
+  }
   else {
     var row_product = $(".M-test");
     var row_result = $("#M-result");
@@ -275,7 +278,10 @@ function getSuccessDataProducts(data) {
 function getSuccessDataCategories(data) {
   var account_id = $("#txt_current").val();
 
-  if (data.length < 1) alert("Not found");
+  if (data.length < 1) {
+    $("#notice").text("Not found");
+    snackbarShow();
+  }
   else {
     var row_product = $(".M-test");
     var row_result = $("#M-result");
@@ -312,7 +318,10 @@ function getSuccessDataCategories(data) {
 function getSuccessDataUsers(data) {
   var account_id = $("#txt_current").val();
 
-  if (data.length < 1) alert("Not found");
+  if (data.length < 1) {
+    $("#notice").text("Not found");
+    snackbarShow();
+  }
   else {
     var row_product = $(".M-test");
     var row_result = $("#M-result");
@@ -354,7 +363,10 @@ function getSuccessDataUsers(data) {
 function getSuccessDataOrders(data) {
   var account_id = $("#txt_current").val();
 
-  if (data.length < 1) alert("Not found");
+  if (data.length < 1) {
+    $("#notice").text("Not found");
+    snackbarShow();
+  }
   else {
     var row_product = $(".M-test");
     var row_result = $("#M-result");
