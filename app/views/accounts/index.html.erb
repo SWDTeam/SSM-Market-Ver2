@@ -4,7 +4,7 @@
   <div class="title-index-category mb-4">
     View All Accounts
   </div>
-
+  <%= paginate @accounts, theme: 'twitter-bootstrap-4' %>
   <!--FILTER form-->
   <%= form_with(model: @account, local: true, method: 'get', class:"mb-4") do |form| %>
     <div class="row">
@@ -44,9 +44,9 @@
   </div>
 
   <% @accounts.each_with_index do |account, index| index += 1 %>
-    <div class="row py-3 wrap-content-index-product content-index-account M-test" id="<%= account.id %>">
+    <div class="row py-3 wrap-content-index-product content-index-account M-test">
       <!--NO-->
-      <div class="col-1 px-1 text-center" id="<%= account.id %>-index"><%= index %></div>
+      <div class="col-1 px-1 text-center"><%= index %></div>
       <!--NAME-->
       <div class="col-2 pl-0"><%= account.name %></div>
       <!--EMAIL-->
@@ -67,7 +67,7 @@
       <!--ACTION-->
       <div class="col-2">
         <% if account.role_id != 1 %>
-          <% if account.status == 'Active' %>
+          <% if account.status == 'active' %>
             <center>
               <%= link_to account_path(account, account: {status: 'hidden'}), method: :put do %>
                 <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 65%;">
@@ -89,6 +89,8 @@
       </div>
     </div>
   <% end %>
+
+  <div id="M-result"></div>
 </div>
 
 <script>

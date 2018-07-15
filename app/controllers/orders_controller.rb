@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   # GET /orders
   # GET /orders.json
   def index
-    @orders = Order.all
+    @orders = Order.all.page(params[:page]).per(5)
   end
 
   # GET /orders/1
@@ -66,16 +66,26 @@ class OrdersController < ApplicationController
 
   def seach_orders_by_status
     if params[:status]
-      @orders = Order.select(:id).where(status: params[:status])
-      render json: @orders.as_json
+      @orders = Order.where(status: params[:status])
+      result = Array.new
+      @orders.each do |t|
+        result.push({id: t.id, code: t.code, cus_name: Account.find_by_id(t.account_id).name,
+          status: t.status, total_price: t.total_price})
+      end
+      render json: result.to_json
     end
 
   end
   
   def search_orders_by_code
     if params[:code]
-      @orders = Order.select(:id).where("code LIKE ?", "%#{params[:code]}%")
-      render json: @orders.as_json
+      @orders = Order.where("code LIKE ?", "%#{params[:code]}%")
+      result = Array.new
+      @orders.each do |t|
+        result.push({id: t.id, code: t.code, cus_name: Account.find_by_id(t.account_id).name,
+          status: t.status, total_price: t.total_price})
+      end
+      render json: result.to_json
     end
   
   end

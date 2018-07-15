@@ -27,7 +27,7 @@ class AccountsController < ApplicationController
   end
   
   def index
-    @accounts = Account.all
+    @accounts = Account.all.page(params[:page]).per(5)
     @roles = Role.all
   end
 
@@ -97,15 +97,27 @@ class AccountsController < ApplicationController
 
   def search_accounts_by_name
     if params[:name]
-      @accounts = Account.select(:id).where("name LIKE ?", "%#{params[:name]}%")
-      render json: @accounts
+      @accounts = Account.where("name LIKE ?", "%#{params[:name]}%")
+
+      result = Array.new
+      @accounts.each do |t|
+        result.push({id: t.id, name: t.name, email: t.email, status: t.status.capitalize,
+          role: Role.find(t.role_id).name.upcase})
+      end
+      render json: result.to_json
     end
   end
   
   def search_accounts_by_role
     if params[:role_id]
-      @accounts = Account.select(:id).where(role_id: params[:role_id])
-      render json: @accounts
+      @accounts = Account.where(role_id: params[:role_id])
+      
+      result = Array.new
+      @accounts.each do |t|
+        result.push({id: t.id, name: t.name, email: t.email, status: t.status.capitalize,
+          role: Role.find(t.role_id).name.upcase})
+      end
+      render json: result.to_json
     end
   end
 

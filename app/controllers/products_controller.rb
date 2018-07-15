@@ -1,15 +1,46 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_account!
-  def home
 
+  def home
+    @products = Product.all.size
+    @orders = Order.all
+    @revenue = 0
+    @orders.each do |p|
+      @revenue += p.total_price
+    end
+    @users = Account.all.size
+
+    id = OrderProduct.order("quantity DESC").distinct.pluck(:product_id).take(3)
+ 
+    @best_products = Product.where(id: id)
+    # @best_products.each do |pid|
+    #   @p = OrderProduct.where(product_id: pid)
+    #   q = 0
+    #   @p.each do |i|
+    #     q += i.quantity
+    #   end
+    #   puts q
+    # end 
+
+    # vip customer
+    money = 0
+    vip_id = Order.order("total_price DESC").distinct.pluck(:account_id).take(3)
+    @vip_customers = Account.where(id: vip_id)
+    # @vip_customers.each do |cus|
+    #   @t = Order.where(account_id: cus.id)
+    #   @t.each do |i|
+    #     money += i.total_price
+    #   end
+    #   # puts money
+    # end
   end
 
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
-    @categories = Category.all.includes(:images)
+    @products = Product.all.page(params[:page]).per(5)
+    @categories = Category.all
   end
 
   # GET /products/1
@@ -91,22 +122,40 @@ class ProductsController < ApplicationController
 
   def search_products_by_status
     if params[:status]
-      @products = Product.select(:id).where(status: params[:status])
-      render json: @products
+      @products = Product.where(status: params[:status])
+      result = Array.new
+      @products.each do |t|
+        result.push({id: t.id, name: t.name, quantity: t.quantity, 
+          status: t.status, category_name: Category.find_by_id(t.category_id).name })
+      end
+      render json: result.to_json
     end
   end
 
   def search_products_by_category
     if params[:category_id]
-      @products = Product.select(:id).where(category_id: params[:category_id])
-      render json: @products
+      @products = Product.where(category_id: params[:category_id])      
+      result = Array.new
+      
+      @products.each do |t|
+        result.push({id: t.id, name: t.name, quantity: t.quantity, 
+          status: t.status, category_name: Category.find_by_id(params[:category_id]).name })
+      end
+      # puts result.to_json
+      render json: result.to_json
     end
   end
 
   def search_products_by_name
     if params[:name]
-      @products = Product.select(:id).where("name LIKE ?", "%#{params[:name]}%")
-      render json: @products
+      @products = Product.where("name LIKE ?", "%#{params[:name]}%")
+      result = Array.new
+      @products.each do |t|
+        result.push({id: t.id, name: t.name, quantity: t.quantity, 
+          status: t.status, category_name: Category.find_by_id(t.category_id).name })
+      end
+
+      render json: result.to_json
     end
   end
   

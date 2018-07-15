@@ -16,6 +16,9 @@ gem "font-awesome-rails"
 gem 'jquery-validation-rails'
 gem 'jquery-ui-rails'
 gem 'carrierwave' # upload image  
+# paging
+gem 'kaminari' 
+gem 'bootstrap4-kaminari-views' 
 # support window
 # gem 'wdm'
 group :production do

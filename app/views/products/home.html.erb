@@ -1,8 +1,6 @@
+<%= notice %>
+
 <div class="wrap-dashboard px-5">
-  <p id="notice"><%= notice %></p>
-
-  <p class="title-dasboard">Dashboard</p>
-
   <div class="row mx-0 pb-4">
     <div class="col-md-6">
       <div class="row justify-content-center">
@@ -17,18 +15,17 @@
               <div class="row">
                 <!--title-->
                 <div class="col-12 text-right title-sub-detail-dashboard">Products</div>
-
                 <!--number-->
-                <div class="col-12 text-right number-sub-detail-dashboard">105</div>
+                <div class="col-12 text-right number-sub-detail-dashboard"><%= @products %></div>
               </div>
             </div>
           </div>
           
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12 more-sub-detail-dashboard">
               <i class="fa fa-smile-o pr-2"></i><span>Last time</span>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-1 px-0"></div>
 
@@ -45,16 +42,16 @@
                 <div class="col-12 text-right title-sub-detail-dashboard">Revenue</div>
 
                 <!--number-->
-                <div class="col-12 text-right number-sub-detail-dashboard">$1324</div>
+                <div class="col-12 text-right number-sub-detail-dashboard">$ <%= @revenue %></div>
               </div>
             </div>
           </div>
           
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12 more-sub-detail-dashboard">
               <i class="fa fa-archive pr-2"></i><span>Last day</span>
             </div>
-          </div>
+          </div> -->
         </div>
 
       </div>
@@ -76,16 +73,16 @@
                 <div class="col-12 text-right title-sub-detail-dashboard">Orders</div>
 
                 <!--number-->
-                <div class="col-12 text-right number-sub-detail-dashboard">23</div>
+                <div class="col-12 text-right number-sub-detail-dashboard"><%= @orders.size %></div>
               </div>
             </div>
           </div>
           
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12 more-sub-detail-dashboard">
               <i class="fa fa-clock-o pr-2"></i><span>In the last hour</span>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-1"></div>
 
@@ -102,16 +99,16 @@
                 <div class="col-12 text-right title-sub-detail-dashboard">Users</div>
 
                 <!--number-->
-                <div class="col-12 text-right number-sub-detail-dashboard">+45</div>
+                <div class="col-12 text-right number-sub-detail-dashboard">+<%= @users %></div>
               </div>
             </div>
           </div>
           
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-12 more-sub-detail-dashboard">
               <i class="fa fa-circle-o-notch pr-2"></i><span>Updated now</span>
             </div>
-          </div>
+          </div> -->
         </div>      
 
       </div>
@@ -120,7 +117,7 @@
 
   <div class="wrap-best-seller pb-4 my-4">
     <div class="title-table-dashboard title-index-category">Best seller</div>
-    <p>In a week</p>
+    <!-- <p>In a week</p> -->
 
     <div class="row pb-2 ml-1 wrap-label-index-category">
       <!--STT-->
@@ -132,43 +129,54 @@
       <!--SOLD-->
       <div class="col-3 label-index-category">Sold</div>
     </div>
+  
+  <% @best_products.each_with_index do |pid, index| index += 1%>
 
     <div class="row ml-1 py-2 wrap-content-index-category align-items-center">
       <!--STT-->
-      <div class="col-2 text-center">1</div>
+      <div class="col-2 text-center"><%= index %></div>
       <!--NAME-->
-      <div class="col-4">vrververvv</div>
+      <div class="col-4"><%= pid.name %></div>
       <!--CATEGORY-->
-      <div class="col-3">tbrbtrbtrb</div>
+      <div class="col-3"><%= Category.find_by_id(pid.category_id).name %></div>
       <!--SOLD-->
-      <div class="col-3">545151</div>
+      <% @p = OrderProduct.where(product_id: pid) %>
+      <% q = 0 %>
+      <% @p.each do |i| q += i.quantity %><% end %>
+      <div class="col-3"><%= q %></div>
     </div>
+  <% end %>
   </div>
 
   <div class="wrap-best-seller mt-5 pb-4">
     <div class="title-table-dashboard title-index-category">Vip Customers</div>
-    <p>In a week</p>
+    <!-- <p>In a week</p> -->
 
     <div class="row pb-2 ml-1 wrap-label-index-category">
       <!--STT-->
       <div class="col-2 text-center label-index-category"></div>
       <!--NAME-->
-      <div class="col-4 label-index-category">Name</div>
+      <div class="col-3 label-index-category">Name</div>
       <!--CATEGORY-->
-      <div class="col-3 label-index-category">Category</div>
+      <div class="col-4 label-index-category">Email</div>
       <!--SOLD-->
-      <div class="col-3 label-index-category">Sold</div>
+      <div class="col-3 label-index-category">Total Money</div>
     </div>
-
-    <div class="row ml-1 py-2 wrap-content-index-category align-items-center">
-      <!--STT-->
-      <div class="col-2 text-center">1</div>
-      <!--NAME-->
-      <div class="col-4">vrververvv</div>
-      <!--CATEGORY-->
-      <div class="col-3">tbrbtrbtrb</div>
-      <!--SOLD-->
-      <div class="col-3">545151</div>
-    </div>
+    <% @vip_customers.each_with_index do |item, index| index += 1%>
+      <div class="row ml-1 py-2 wrap-content-index-category align-items-center">
+        <!--STT-->
+        <div class="col-2 text-center"><%= index %></div>
+        <!--NAME-->
+        <div class="col-3"><%= item.name %></div>
+        <!--CATEGORY-->
+        <div class="col-4"><%= item.email %></div>
+        <!--SOLD-->
+        <% @p = Order.where(account_id: item.id) %>
+        <% m = 0 %>
+        <% @p.each do |i| m += i.total_price %><% end %>
+        <div class="col-3"><%= m %></div>
+      </div>
+    <% end %>
+    
   </div>
 </div>

@@ -4,7 +4,8 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all.includes(:images)
+    
+    @categories = Category.all.includes(:images).page(params[:page]).per(5)
   end
 
   # GET /categories/1
@@ -81,8 +82,13 @@ class CategoriesController < ApplicationController
 
   def search_categories_by_name
     if params[:name]
-      @categories = Category.select(:id).where("name LIKE ?", "%#{params[:name]}%")
-      render json: @categories
+      @categories = Category.where("name LIKE ?", "%#{params[:name]}%")
+      result = Array.new
+      @categories.each do |t|
+        result.push({id: t.id, name: t.name, image: t.images.first.url.url, status: t.status,
+          count_products: Product.where(category_id: t.id).count(:name)})
+      end
+      render json: result.to_json
     end
     
   end

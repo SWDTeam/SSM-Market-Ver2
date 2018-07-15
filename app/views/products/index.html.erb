@@ -3,6 +3,7 @@
   <div class="title-index-category mb-4">
     View All Products
   </div>
+  <%= paginate @products, theme: 'twitter-bootstrap-4' %>
 
   <!--FILTER form-->
   <%= form_with(model: @product, local: true, method: 'get', class:"filter-index-product mb-4") do |form| %>
@@ -35,7 +36,7 @@
 
   <div class="wrap-table-category"><!--.wrap-table in P-index-category file-->
   <!--label for tabel-->
-  <div class="row pb-2 wrap-label-index-category">
+    <div class="row pb-2 wrap-label-index-category">
     <!--KEY-->
     <div class="col-1 text-center label-index-category">No</div>
     <!--Name-->
@@ -53,81 +54,83 @@
     <div class="col-1 text-center label-index-category">Show</div>
     <!--ACTION-->
     <div class="col-2 text-center label-index-category">Action</div>
-  </div>
+    </div>
 
   <!--content of table-->
-  <% @products.each.with_index do |product, index| index += 1%>
-    <% if product.quantity < 1 %>
-        <!-- cho cái row này text đỏ in đậm hết hộ chị -->
-      <div class="row py-3 wrap-content-index-product content-index-product M-test" id="<%= product.id %>" style="color: red; font-weight: bold;">
-        <!--No-->
-        <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
-        <!--Name-->
-        <div class="col-3"><%= product.name %></div>
-        <!--Category-->
-        <div class="col-2"><%= Category.find(product.category_id).name %></div>
-        <!--QUANTITY-->
-        <div class="col-1 text-center"><%= product.quantity %></div>
-        <!-- STATUS-->
-        <div class="col-2 text-center"><%= product.status %></div>
-        <!--SHOW-->
-        <div class="col-1 text-center">
-          <center>
-            <%= link_to product_path(product) do %>
-              <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
-            <% end %>
-          </center>
-        </div>
+  
+    <% @products.each.with_index do |product, index| index += 1%>
+      <% if product.quantity < 1 %>
+        <div class="row py-3 wrap-content-index-product content-index-product M-test" style="color: red; font-weight: bold;">
+          <!--No-->
+          <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
+          <!--Name-->
+          <div class="col-3"><%= product.name %></div>
+          <!--Category-->
+          <div class="col-2"><%= Category.find(product.category_id).name %></div>
+          <!--QUANTITY-->
+          <div class="col-1 text-center"><%= product.quantity %></div>
+          <!-- STATUS-->
+          <div class="col-2 text-center"><%= product.status %></div>
+          <!--SHOW-->
+          <div class="col-1 text-center">
+            <center>
+              <%= link_to product_path(product) do %>
+                <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
+              <% end %>
+            </center>
+          </div>
 
       <% else %>
-      <div class="row py-3 wrap-content-index-product content-index-product M-test" id="<%= product.id %>">
-        <!--No-->
-        <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
-        <!--Name-->
-        <div class="col-3"><%= product.name %></div>
-        <!--Category-->
-        <div class="col-2"><%= Category.find(product.category_id).name %></div>
-        <!--QUANTITY-->
-        <div class="col-1 text-center"><%= product.quantity %></div>
-        <!-- STATUS-->
-        <div class="col-2 text-center"><%= product.status.capitalize %></div>
-        <!--SHOW-->
-        <div class="col-1 text-center align-items-center">
+        <div class="row py-3 wrap-content-index-product content-index-product M-test" id="<%= product.id %>">
+          <!--No-->
+          <div class="col-1 text-center" id="<%= product.id %>-index"><%= index %></div>
+          <!--Name-->
+          <div class="col-3"><%= product.name %></div>
+          <!--Category-->
+          <div class="col-2"><%= Category.find(product.category_id).name %></div>
+          <!--QUANTITY-->
+          <div class="col-1 text-center"><%= product.quantity %></div>
+          <!-- STATUS-->
+          <div class="col-2 text-center"><%= product.status.capitalize %></div>
+          <!--SHOW-->
+          <div class="col-1 text-center align-items-center">
+            <center>
+              <%= link_to product_path(product) do %>
+                <i class="fa fa-search-plus show-bnt-index-account align-items-center justify-content-center"></i>
+              <% end %>
+            </center>
+          </div>
+      <% end %>
+        <!--ACTION-->
+      <% if product.status == "active" %>   
+        <div class="col-2">
           <center>
-            <%= link_to product_path(product) do %>
-              <i class="fa fa-search-plus show-bnt-index-account align-items-center justify-content-center">
-              </i>
-            <% end %>
+          <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
+            <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 85%;">
+              <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
+            </i>
+          <% end %>  
           </center>
         </div>
-    <% end %>
-      <!--ACTION-->
-    <% if product.status == "active" %>   
-      <div class="col-2">
-        <center>
-        <%= link_to account_product_path(current_account, product, product: {status: 'hidden'}), method: :put do %>
-          <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 85%;">
-            <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
-          </i>
-        <% end %>  
-        </center>
-      </div>
-    <% else %>
-      <div class="col-2">
-        <center>
-        <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
-          <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 85%;">
-            <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
-          </i>
-        <% end %>  
-        </center>
-      </div>
-    <% end %>
+      <% else %>
+        <div class="col-2">
+          <center>
+          <%= link_to account_product_path(current_account, product, product: {status: 'active'}), method: :put do %>
+            <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 85%;">
+              <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
+            </i>
+          <% end %>  
+          </center>
+        </div>
+      <% end %>
     </div>
-  <% end %>
+    <% end %>
   <!--content of table-->
+    
+    <div id="M-result"></div>
+  </div>
 </div>
-</div>
+
 <script>
   $(document).ready(function() {
     var element = document.getElementsByClassName("content-index-product");
