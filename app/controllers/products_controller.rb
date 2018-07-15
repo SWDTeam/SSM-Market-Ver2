@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
 
     # vip customer
     money = 0
-    vip_id = Order.order("total_price DESC").distinct.pluck(:account_id).take(3)
+    vip_id = Order.order("total_price DESC").take(3).pluck(:account_id).uniq
     @vip_customers = Account.where(id: vip_id)
     # @vip_customers.each do |cus|
     #   @t = Order.where(account_id: cus.id)
