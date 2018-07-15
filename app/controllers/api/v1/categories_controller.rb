@@ -14,7 +14,7 @@ class Api::V1::CategoriesController < ActionController::API
   def search_categories_by_name
     h = Hash.new
     results = Array.new
-    @categories = Category.includes(:images).where("name LIKE ?", "%#{params[:category_name]}%")
+    @categories = Category.includes(:images).where("name LIKE ?", "%#{params[:category_name]}%", status:'active')
     if @categories.size < 1
       render json: {errors: 'Not found'}, status: 404
     else

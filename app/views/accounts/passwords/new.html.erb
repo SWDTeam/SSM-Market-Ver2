@@ -10,6 +10,9 @@
   </head>
   
   <body class="P-full-login mt-3">
+  <% if devise_error_messages! != '' %>
+    <p id="notice" style="margin-left: -125px;">Email is invaild</p>
+  <% end %>
     <center>
       <div class="P-wrap-login-board">
         <h1 class= "pb-5 P-title-login">Forget your password?</h1>

@@ -39,7 +39,7 @@
       <div class="P-wrap-login-board">
       <h1 class= "pb-5 P-title-login">Change Password</h1>
         <%= form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :put } do |f| %>
-          <%= devise_error_messages! %>
+          <%#= devise_error_messages! %>
           <%= f.hidden_field :reset_password_token %>
           <div class="wrap-login-email">
             <%= f.password_field :password, autofocus: true, autocomplete: "off", class: "P-input-login", placeholder: "Password" %>
