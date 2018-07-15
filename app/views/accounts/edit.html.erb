@@ -1,4 +1,4 @@
-<%= notice %>
+<p id="notice"><%= notice %></p>
 <%= form_with model: @user, local: true, url:{action: "update"}, html:{id: "form--profile"}, method: :put do |form| %>
 <div class="wrap-index-category">
   <div class="title-index-category mb-4">Profile of <%= @user.name %></div>
