@@ -7,7 +7,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   def create
     user = Account.find_by_email(params[:session][:email])
     unless user.nil?
-	    if user.valid_password? params[:session][:password]
+	    if user.valid_password? params[:session][:password] && user.role_id == 2
         render json: user.as_json.merge({email: user.email, name: user.name, success: true}).to_json, status: 200
       return
       end
