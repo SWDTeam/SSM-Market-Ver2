@@ -43,8 +43,10 @@
           <%= f.hidden_field :reset_password_token %>
           <div class="wrap-login-email">
             <%= f.password_field :password, autofocus: true, autocomplete: "off", class: "P-input-login", placeholder: "Password" %>
+            <p id="error--pass--change" class="text-left validate-field-login"></p>
           </div>
           <%= f.password_field :password_confirmation, autocomplete: "off", class: "P-input-login", placeholder: "Confirm new password" %>
+          <p id="error--confirm--pass" class="text-left validate-field-login"></p>
           <%= f.submit "CHANGE", class:"P-login-bnt my-5" %>
         <% end %>
       </div>
