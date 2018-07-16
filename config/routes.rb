@@ -50,6 +50,9 @@ Rails.application.routes.draw do
       devise_scope :account do
         post "sign_up", :to => 'registrations#create'
         post "sign_in", :to => 'sessions#create'
+        post "forgot_password", to: 'passwords#forgot'
+        post "reset_password", to: 'passwords#reset'
+        # put 'password/update', to: 'password#update'
         delete "sign_out", :to => 'sessions#destroy'
       end
       # order products
