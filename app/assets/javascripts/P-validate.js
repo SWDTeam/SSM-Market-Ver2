@@ -45,7 +45,7 @@ document.addEventListener("turbolinks:load", function (event) {
     });
 
 //-------------change password----------
-    $("#new_account").submit(function () {
+    $(".new_account#new_account").submit(function () {
         flag = checkForgotPass();
         return flag;
     });
@@ -347,7 +347,7 @@ function checkForgotPass() {
     var t = true;
 
     var pass = $("#account_password").val();
-    var confirmPass = $("account_password_confirmation").val();
+    var confirmPass = $("#account_password_confirmation").val();
 
     if (pass === "" || pass === null) {
         $("#error--pass--change").text("Password can't be blank!").css("color", "red");
