@@ -25,49 +25,36 @@
                 android:minHeight="?attr/actionBarSize"
                 app:titleTextColor="#ffffff">
                 <android.support.constraint.ConstraintLayout
-                    android:layout_width="230dp"
+                    android:layout_width="260dp"
                     android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/txtToolbarProductName"
-                        android:layout_width="150dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:text="Home"
-                        android:textColor="#ffffff"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/imageViewProductDetail"
                         android:layout_width="30dp"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="32dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:background="@drawable/cart"
+                        android:background="@drawable/ic_shoppingcart"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.931"
-                        app:layout_constraintStart_toEndOf="@+id/txtToolbarProductName"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"/>
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <TextView
                         android:id="@+id/txtCountProductDetail"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
                         android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="32dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/round_outline"
                         android:gravity="center"
                         android:text="12"
-                        android:textColor="#ff4102"
-                        android:textSize="16sp"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -99,7 +86,7 @@
                         android:layout_margin="5dp"
                         android:text="ten san pham"
                         android:textColor="#000000"
-                        android:textSize="14sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -108,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="gia san pham"
-                        android:textColor="#ff0101"
+                        android:textColor="#D94F17"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -150,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Description"
-                    android:textColor="#31ff11"
+                    android:textColor="#033E8C"
                     android:textSize="25sp" />
 
                 <LinearLayout

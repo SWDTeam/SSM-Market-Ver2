@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -42,12 +43,12 @@ public class OrderedDetailActi extends AppCompatActivity {
 
     Toolbar toolbar;
     ListView listView;
-    Button btnConfirm, btnDelete;
+    Button btnDelete;
     OrderDetailAdapter orderDetailAdapter;
     static TextView txtTotalOrderDetail;
     static ArrayList<OrderDetailDTO> listOrderDetail;
     int orderId;
-    int flag = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class OrderedDetailActi extends AppCompatActivity {
         setContentView(R.layout.activity_ordered_detail);
         reflect();
         actionToolBar();
-        //getTotalPriceInOrderDetail();
+        getTotalPriceInOrderDetail();
         getOrderId();
 
 
@@ -76,7 +77,7 @@ public class OrderedDetailActi extends AppCompatActivity {
         Intent intent = getIntent();
         orderId = intent.getIntExtra("orderId", 1);
         Log.e("ORDERID ", orderId + "");
-        getOrderDetail("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetOrderDetailCus?orderId=" + orderId);
+        getOrderDetail("https://ssm-market.herokuapp.com/api/v1/order_details/" + orderId);
     }
 
     private void getOrderDetail(String url) {
@@ -89,25 +90,33 @@ public class OrderedDetailActi extends AppCompatActivity {
                     for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
-                            int id = jsonObject.getInt("orderDetailId");
-                            int orderId = jsonObject.getInt("orderId");
-                            int productId = jsonObject.getInt("productId");
-                            String name = jsonObject.getString("productName");
-                            String productKey = jsonObject.getString("productKey");
-                            float price = (float) jsonObject.getDouble("price");
-                            Log.e("PPICE = ", price + "");
+                            int id = jsonObject.getInt("order_products_id");
+
+                            int productId = jsonObject.getInt("product_id");
+                            String name = jsonObject.getString("product_name");
+                            //float price = (float) jsonObject.getDouble("price");
+
+
                             int quantity = jsonObject.getInt("quantity");
+                            float total = (float) jsonObject.getDouble("total");
+                            Log.e("PPICE = ", total + "");
                             String status = jsonObject.getString("status");
 
-                            String urlPic = jsonObject.getString("imgKey");
-                            String urlTest = "http://" + IpConfig.ipConfig + ":8084/SSM_Project/img/" + urlPic;
-
-                            listOrderDetail.add(new OrderDetailDTO(id, orderId, productId, productKey, name,
-                                    quantity, price, status, urlTest));
+                            String urlPic = jsonObject.getString("url");
+                            String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
+                            OrderDetailDTO dto = new OrderDetailDTO();
+                            dto.setId(id);
+                            dto.setProductId(productId);
+                            dto.setProductName(name);
+                            dto.setPrice(total);
+                            dto.setQuantity(quantity);
+                            dto.setStatus(status);
+                            dto.setImgKey(urlTest);
+                            listOrderDetail.add(dto);
                             getTotalPriceInOrderDetail();
 
                             orderDetailAdapter.notifyDataSetChanged();
-                            flag = 1;
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -129,7 +138,8 @@ public class OrderedDetailActi extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarOrderDetail);
         listView = (ListView) findViewById(R.id.listViewOrderDetail);
         txtTotalOrderDetail = (TextView) findViewById(R.id.txtTotalPriceOrderDetail);
-        btnConfirm = (Button) findViewById(R.id.btnConfirmOrderDetail);
+
+
         btnDelete = (Button) findViewById(R.id.btnDeleteOrderDetail);
         listOrderDetail = new ArrayList<>();
         orderDetailAdapter = new OrderDetailAdapter(OrderedDetailActi.this, listOrderDetail);
@@ -147,85 +157,6 @@ public class OrderedDetailActi extends AppCompatActivity {
         txtTotalOrderDetail.setText(decimalFormat.format(totalOfPrice) + " $ ");
     }
 
-    public void confirmOrdered(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e("Ordered Confirmed ", response.toString());
-                if (response.toString().contains("/")) {
-                    String[] errorQuantity = response.toString().split("/");
-                    for (int i = 0; i < errorQuantity.length; i++) {
-                        Toast.makeText(OrderedDetailActi.this, errorQuantity[i].toString(), Toast.LENGTH_LONG).show();
-                    }
-                } else if (response.equals("successfully")) {
-                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                    startActivity(intent);
-                }
-
-            }
-        },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Error ordered confirm ", error.getMessage());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < listOrderDetail.size(); i++) {
-                    Log.e("Testdasdasd", i + "");
-                }
-                for (int i = 0; i < listOrderDetail.size(); i++) {
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("orderDetailId", listOrderDetail.get(i).getId());
-                        jsonObject.put("productId", listOrderDetail.get(i).getProductId());
-                        jsonObject.put("productName", listOrderDetail.get(i).getProductName());
-                        jsonObject.put("productPrice", listOrderDetail.get(i).getPrice());
-                        jsonObject.put("productQuantity", listOrderDetail.get(i).getQuantity());
-                        jsonObject.put("productKey", listOrderDetail.get(i).getProductKey());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    jsonArray.put(jsonObject);
-                }
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("listConfirmOrdered", jsonArray.toString());
-                params.put("orderId", String.valueOf(orderId));
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
-    }
-
-    public void confirmOrdered(View view) {
-        if (flag == 1) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Confirm your ordered !!! ");
-            builder.setMessage("Do you want to confirm your ordered ?");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    confirmOrdered("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ConfirmOrderedCus");
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            dialog.dismiss();
-                        }
-                    });
-                }
-            });
-            builder.show();
-        }
-    }
 
     public void deleteOrdered(View view) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -234,7 +165,7 @@ public class OrderedDetailActi extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                deletedOrder("http://" + IpConfig.ipConfig + ":8084/SSM_Project/DeleteOrderedCus");
+                deletedOrder("https://ssm-market.herokuapp.com/api/v1/orders/" + orderId);
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -253,47 +184,35 @@ public class OrderedDetailActi extends AppCompatActivity {
 
     private void deletedOrder(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null
+                , new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(JSONObject response) {
                 Log.e("Deleted Ordered ", response.toString());
-                if (response.toString().equals("successfully")) {
-                    Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
-                    Toast.makeText(OrderedDetailActi.this, "Deleted Ordered Successfully!!!!", Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(OrderedDetailActi.this, "Delete fail , Something wrong!!! ", Toast.LENGTH_SHORT).show();
-                    Log.e("Delete Ordered ", " Delete fail");
+                try {
+                    String message = response.getString("message");
+                    if (message.equals("Canceled order successfully")) {
+                        Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
+                        Toast.makeText(OrderedDetailActi.this, "Deleted Ordered Successfully!!!!", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+
             }
         },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Delete Ordered ", error.getMessage());
-                    }
-                }
-        ) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < listOrderDetail.size(); i++) {
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("orderDetailId", listOrderDetail.get(i).getId());
-                        jsonObject.put("productId", listOrderDetail.get(i).getProductId());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    jsonArray.put(jsonObject);
-                }
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("listDeleteOrdered", jsonArray.toString());
-                params.put("orderId", String.valueOf(orderId));
-                return params;
 
-            }
-        };
-        requestQueue.add(stringRequest);
+                        Toast.makeText(OrderedDetailActi.this, "Delete fail , Something wrong!!! ", Toast.LENGTH_SHORT).show();
+                        Log.e("Delete Ordered ", " Delete fail");
+
+
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
     }
 }

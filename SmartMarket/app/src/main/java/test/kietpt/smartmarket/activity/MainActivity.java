@@ -1,15 +1,16 @@
 package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,9 +19,10 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -29,9 +31,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+
+import com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -39,11 +42,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.adapter.CategoryAdapter;
+import test.kietpt.smartmarket.adapter.CheapProductAdapter;
 import test.kietpt.smartmarket.adapter.HotProductAdapter;
 import test.kietpt.smartmarket.model.Account;
 import test.kietpt.smartmarket.model.Cart;
@@ -51,22 +54,20 @@ import test.kietpt.smartmarket.model.CategoryDTO;
 import test.kietpt.smartmarket.model.ProductDTO;
 import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.Database;
-import test.kietpt.smartmarket.ulti.IpConfig;
 
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ViewFlipper viewFlipper;
-    RecyclerView recyclerView;
-    NavigationView navigationView;
+    RecyclerView recyclerHotProductMain,recyclerCheapProductMain;
     ListView listViewMenu;
     DrawerLayout drawerLayout;
-    List<CategoryDTO> listCategory;
+    ArrayList<CategoryDTO> listCategory;
     CategoryAdapter categoryAdapter;
-    ArrayList<ProductDTO> listHotProduct;
+    ArrayList<ProductDTO> listHotProduct,listCheapProduct;
     HotProductAdapter hotProductAdapter;
-    ImageView imgCartMainActi;
+    CheapProductAdapter cheapProductAdapter;
     TextView txtCountMainActi;
     int id = 0;
     String cateName = "";
@@ -74,73 +75,33 @@ public class MainActivity extends AppCompatActivity {
     public static List<Cart> listCart;
     public static Account account;
     Database database;
+    HorizontalScrollMenuView menu;
+    ImageView imgScan,imgSearch;
+    TextView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         reflect();
+        createMenu();
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             actionBar();
             actionViewFlipper();
 
             getListCategory("https://ssm-market.herokuapp.com/api/v1/categories");
-
             getListHotProduct("https://ssm-market.herokuapp.com/api/v1/products");
+            getListCheapProduct("https://ssm-market.herokuapp.com/api/v1/list_products_low_price");
             catchOnMenuItem();
             getProductCount();
+            goToSearchView();
+            goToScanQrcode();
         } else {
             CheckConnection.showConnection(getApplicationContext(), "Check your connection with wifi");
             finish();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menuHome:
-                Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intentHome);
-                break;
-            case R.id.menuSearch:
-                Intent intentSearch = new Intent(getApplicationContext(), SearchViewActi.class);
-                startActivity(intentSearch);
-                break;
-            case R.id.menuAccount:
-                if (account != null) {
-                    Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
-                    startActivity(intentAccount);
-                } else {
-                    Intent intentAccount = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intentAccount);
-                }
-                break;
-            case R.id.menuCall:
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:01676243500"));
-                startActivity(intent);
-                break;
-            case R.id.menuMessage:
-                Intent intentasd = new Intent();
-                intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body", "");
-                intentasd.setData(Uri.parse("sms:01676243500"));
-                startActivity(intentasd);
-                break;
-            case R.id.menuScan:
-                Intent intentScan = new Intent(getApplicationContext(), ScanBarcode.class);
-                startActivity(intentScan);
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void catchOnMenuItem() {
         listViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -157,6 +118,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void getListCheapProduct(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null
+                , new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("reponse json product", response + "");
+                try {
+                    //JSONObject jsonObject = new JSONObject(response.toString());
+                    JSONArray jsonArray = response.getJSONArray("products");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject jsonProduct = jsonArray.getJSONObject(i);
+                        int id = jsonProduct.getInt("id");
+                        String name = jsonProduct.getString("name");
+                        String des = jsonProduct.getString("description");
+                        String urlPic = jsonProduct.getString("url");
+                        String productKey = jsonProduct.getString("product_key");
+                        int quantity = jsonProduct.getInt("quantity");
+                        int cateId = jsonProduct.getInt("category_id");
+                        String manufacture = jsonProduct.getString("manufacturer");
+                        String manuDate = jsonProduct.getString("manu_date");
+                        String expiredDate = jsonProduct.getString("expired_date");
+                        float price = (float) jsonProduct.getDouble("price");
+                        float priceChecked = (float) jsonProduct.getDouble("price");
+                        Log.e("Price checked Main = ",priceChecked+"");
+                        String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
+
+                        listCheapProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id,
+                                price, manufacture, manuDate, expiredDate, quantity,priceChecked));
+                    }
+                    cheapProductAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("reponse json product error", error.toString());
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
+    }
+
+
 
     private void getListHotProduct(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -188,10 +199,8 @@ public class MainActivity extends AppCompatActivity {
 
                             listHotProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id,
                                     price, manufacture, manuDate, expiredDate, quantity,priceChecked));
-                            hotProductAdapter.notifyDataSetChanged();
-
-
                     }
+                    hotProductAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -208,16 +217,16 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void getListCategory(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+    public void getListCategory(String url) {
+        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         JsonObjectRequest jsonArrayRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("reponse json category ", response + "");
                         try {
-                            JSONObject jsonObject = new JSONObject(response.toString());
-                            JSONArray jsonArray = jsonObject.getJSONArray("categories");
+
+                            JSONArray jsonArray = response.getJSONArray("categories");
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 try {
@@ -225,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
                                     id = jsonCategory.getInt("id");
                                     cateName = jsonCategory.getString("name");
                                     urlPic = jsonCategory.getString("url");
-                                    Log.e("TEST123456",id+" - "+cateName+" - "+urlPic);
+
                                     String urlTest = "https://ssm-market.herokuapp.com"+urlPic;
                                     listCategory.add(new CategoryDTO(id, cateName, urlTest));
                                     categoryAdapter.notifyDataSetChanged();
@@ -272,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
     private void actionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
+        toolbar.setNavigationIcon(R.drawable.menuicon);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,29 +302,38 @@ public class MainActivity extends AppCompatActivity {
 
     public void reflect() {
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
+        menu = (HorizontalScrollMenuView) findViewById(R.id.menuMainActivity);
+        imgScan = (ImageView)findViewById(R.id.imgScanQrcode);
+        searchView = (TextView) findViewById(R.id.textSearch);
+        imgSearch = (ImageView) findViewById(R.id.imgSearch);
         viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipperMain);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerMain);
-        navigationView = (NavigationView) findViewById(R.id.navigaView);
+        recyclerHotProductMain = (RecyclerView) findViewById(R.id.recyclerHotProductMain);
+        recyclerCheapProductMain = (RecyclerView) findViewById(R.id.recyclerCheapProductMain);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         listViewMenu = (ListView) findViewById(R.id.listViewNavigation);
-        imgCartMainActi = (ImageView) findViewById(R.id.imageViewCartMainActi);
         txtCountMainActi = (TextView) findViewById(R.id.txtCountMainActi);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
+        //get list category
         listCategory = new ArrayList<>();
-        listCategory.add(0, new CategoryDTO(0, "Home", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vmBj6G_kAJeoOsKTEF-woPgV7XLWn-6ydO5hqeqDiiH4wlq4"));
-        //listCategory.add(1, new CategoryDTO(1, "cocaTest", "http://southeasternbeers.co.uk/291-thickbox_default/330ml-coke-icon.jpg"));
-        //listCategory.add(2, new CategoryDTO(2, "7upTest", "http://muaban247.top/image/cache/catalog/7up-500x539.jpg"));
-        //listCategory.add(3, new CategoryDTO(3, "milkTest", "https://image.freepik.com/free-icon/milk-box-package_318-50886.jpg"));
+        listCategory.add(0, new CategoryDTO(0, "Home",String.valueOf(R.drawable.menuhome)));
         categoryAdapter = new CategoryAdapter(MainActivity.this, listCategory);
         listViewMenu.setAdapter(categoryAdapter);
 
+
+        //get list cheap product
+        listCheapProduct = new ArrayList<>();
+        cheapProductAdapter = new CheapProductAdapter(MainActivity.this, listCheapProduct);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        recyclerCheapProductMain.setLayoutManager(linearLayoutManager);
+        recyclerCheapProductMain.setAdapter(cheapProductAdapter);
+
+        // get list new product
         listHotProduct = new ArrayList<>();
         hotProductAdapter = new HotProductAdapter(MainActivity.this, listHotProduct);
-        recyclerView.setHasFixedSize(true);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        recyclerView.setAdapter(hotProductAdapter);
+        recyclerHotProductMain.setHasFixedSize(true);
+        recyclerHotProductMain.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerHotProductMain.setAdapter(hotProductAdapter);
 
         database = new Database(this);
         if (listCart != null) {
@@ -324,13 +342,66 @@ public class MainActivity extends AppCompatActivity {
             listCart = new ArrayList<>();
         }
 
-        imgCartMainActi.setOnClickListener(new View.OnClickListener() {
+    }
+    private void goToSearchView(){
+        searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MyCartActi.class);
-                startActivity(intent);
+                Intent intentSearch = new Intent(getApplicationContext(), SearchViewActi.class);
+                startActivity(intentSearch);
             }
         });
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentSearch = new Intent(getApplicationContext(), SearchViewActi.class);
+                startActivity(intentSearch);
+            }
+        });
+    }
+    private void goToScanQrcode(){
+        imgScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentScan = new Intent(getApplicationContext(), ScanBarcode.class);
+                startActivity(intentScan);
+            }
+        });
+    }
+    private void createMenu(){
+        menu.addItem("Home",R.drawable.ic_home);
+        menu.addItem("Category",R.drawable.ic_category);
+        menu.addItem("Cart",R.drawable.ic_shoppingcart);
+        menu.addItem("Account",R.drawable.ic_account);
+        menu.setOnHSMenuClickListener(new HorizontalScrollMenuView.OnHSMenuClickListener() {
+            @Override
+            public void onHSMClick(com.darwindeveloper.horizontalscrollmenulibrary.extras.MenuItem menuItem, int position) {
 
+
+                switch (position){
+                    case 0:
+                        break;
+                    case 1:
+                        drawerLayout.openDrawer(GravityCompat.START);
+                        break;
+                    case 2:
+                        Intent intent = new Intent(getApplicationContext(), MyCartActi.class);
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        if (account != null) {
+                            Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
+                            startActivity(intentAccount);
+                        } else {
+                            Intent intentAccount = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intentAccount);
+                        }
+                        break;
+                    case 4:
+                        default:
+                }
+
+            }
+        });
     }
 }

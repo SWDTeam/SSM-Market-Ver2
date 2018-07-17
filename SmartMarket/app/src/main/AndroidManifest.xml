@@ -36,13 +36,11 @@
         </activity>
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.AccountActivity" />
-        <activity android:name=".activity.BarcodeReaderActivity" />
         <activity android:name=".activity.ScanBarcode" />
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ProfileActi" />
         <activity android:name=".activity.ConfirmCartActi" />
         <activity android:name=".activity.MyCartActi" />
-        <activity android:name=".activity.MyCanceledOrdersActi" />
         <activity android:name=".activity.ChangePassActi" />
         <activity android:name=".activity.SearchViewActi" />
         <activity android:name=".activity.ProductListActi" />
@@ -52,7 +50,9 @@
         <activity android:name=".activity.MyOrderedActi" />
         <activity android:name=".activity.CanceledOrderActi" />
         <activity android:name=".activity.OrderedDetailActi" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.MyInvoiceActi" />
+        <activity android:name=".activity.InvoiceDetailActi"></activity>
     </application>
 
 </manifest>

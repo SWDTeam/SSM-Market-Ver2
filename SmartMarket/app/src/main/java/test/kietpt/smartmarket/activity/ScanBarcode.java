@@ -145,8 +145,8 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
                                 String des = response.getString("description");
                                 String urlPic = response.getString("url");
                                 String key = response.getString("product_key");
-
                                 float price = (float) response.getDouble("price");
+                                float priceChecked = (float) response.getDouble("price");
                                 String manufacture = response.getString("manufacturer");
                                 String manuDate = response.getString("manu_date");
                                 String expiredDate = response.getString("expired_date");
@@ -163,6 +163,7 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
                                 dto.setManuDate(manuDate);
                                 dto.setExpiredDate(expiredDate);
                                 dto.setUrlPic(urlTest);
+                                dto.setPriceChecked(priceChecked);
                                 Intent intent = new Intent(getApplicationContext(),ProductDetailActi.class);
                                 intent.putExtra("ProductInfo",dto);
                                 startActivity(intent);

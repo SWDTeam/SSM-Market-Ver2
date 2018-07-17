@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MyCanceledOrdersActi"
+    tools:context=".activity.MyInvoiceActi"
     android:orientation="vertical"
     >
-
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbarMyCanceledOrder"
-        app:title="My Canceled order"
+        android:id="@+id/toolbarMyInvoice"
+        app:title="My Invoice"
         android:background="#3d96c1"
         app:titleTextColor="#ffffff"
         ></android.support.v7.widget.Toolbar>
@@ -24,18 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:visibility="invisible"
-                android:id="@+id/txtOrderedIsEmptyCanceled"
+
+                android:id="@+id/txtInvoiceIsEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Ordered is empty"
+                android:text="Invoice is empty"
                 android:textSize="30sp" />
 
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/listviewCanceledOrdered"
+                android:id="@+id/listviewInvoice"
                 ></ListView>
         </FrameLayout>
     </LinearLayout>

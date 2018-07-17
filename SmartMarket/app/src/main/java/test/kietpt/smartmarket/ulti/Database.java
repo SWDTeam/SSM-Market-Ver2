@@ -13,22 +13,21 @@ import java.util.List;
 
 import test.kietpt.smartmarket.model.Account;
 import test.kietpt.smartmarket.model.Cart;
-import test.kietpt.smartmarket.model.OrderDTO;
-import test.kietpt.smartmarket.model.OrderDetailDTO;
-import test.kietpt.smartmarket.model.ProductDTO;
+import test.kietpt.smartmarket.model.SearchHistoryDTO;
 
 public class Database extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ssmarket";
     public static final String TABLE_NAME_ACCOUNT = "Account";
     public static final String TABLE_NAME_CART = "CartProduct";
-    public static final String TABLE_NAME_ORDER = "Orders";
-    public static final String TABLE_NAME_ORDER_DETAIL = "OrderDetail";
-    public static final int DATABASE_VERSION = 2;
+    public static final String TABLE_NAME_SEARCH_HISTORY = "SearchHistory";
+    public static final int DATABASE_VERSION = 6;
 
+    public Context context;
     // CursorFactory la con tro dung de duyet database
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
 
     }
 
@@ -55,22 +54,9 @@ public class Database extends SQLiteOpenHelper {
                 "userId INTEGER )"
         );
 
-        db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ORDER + "(" +
-                "orderId INTEGER PRIMARY KEY ," +
-                "orderCode VARCHAR (50) UNIQUE, " +
-                "totalPrice REAL, " +
-                "totalQuantity INTEGER, " +
-                "statusOrder VARCHAR (50) ," +
-                "accountId INTEGER )"
-        );
-
-        db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ORDER_DETAIL + "(" +
-                "id INTEGER PRIMARY KEY ," +
-                "orderId INTEGER, " +
-                "productId INTEGER, " +
-                "price REAL, " +
-                "quantity INTEGER, " +
-                "status VARCHAR (50) )"
+        db.execSQL(" CREATE TABLE " + TABLE_NAME_SEARCH_HISTORY + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT ," +
+                " searchName VARCHAR (50) ) "
         );
         Log.e("CREATE TABLE ", "tao table thanh cong");
     }
@@ -79,35 +65,60 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-    public int insertToOrderDetail(List<OrderDetailDTO> list) {
+
+    public void insertToSearchHistory(String txtSearch) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        for(int i = 0; i< list.size(); i++){
-            values.put("id", list.get(i).getId());
-            values.put("orderId", list.get(i).getOrderId());
-            values.put("productId", list.get(i).getProductId());
-            values.put("price", list.get(i).getPrice());
-            values.put("quantity", list.get(i).getQuantity());
-            values.put("status", list.get(i).getStatus());
-            db.insert(TABLE_NAME_ORDER_DETAIL, null, values);
-        }
-        Log.e("insert table order + ", "  insert order thanh cong ");
-        db.close();
-        return 2;
+        values.put("searchName",txtSearch);
+        db.insert(TABLE_NAME_SEARCH_HISTORY,null,values);
+        //db.close();
+        Log.e("insert table searchHistory + ", "  insert search history thanh cong ");
+
     }
-    public int insertToOrder(OrderDTO dto) {
+
+    public List<SearchHistoryDTO> getListBySearchName() {
+        Log.e("In list searchname ", "da vao de show danh sach search trong db");
+        List<SearchHistoryDTO> list = new ArrayList<>();
+        SQLiteDatabase sqlDB = this.getReadableDatabase();
+        Cursor cursor = sqlDB.rawQuery("Select * From SearchHistory ", null);
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+
+            SearchHistoryDTO dto = new SearchHistoryDTO();
+            dto.setId(id);
+            dto.setSearchName(name);
+            list.add(dto);
+        }
+        Log.e("Return list searchname  ", "Da return list search name");
+        return list;
+    }
+
+    public boolean checkSearchNameInHistory(String txtSearch) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from SearchHistory where searchName = '" + txtSearch + "'", null);
+        if (cursor.moveToNext()) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public void deleteAllSearchName(List<SearchHistoryDTO> listHistory) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("orderId", dto.getOrderId());
-        values.put("orderCode", dto.getOrderCode());
-        values.put("totalPrice", dto.getTotalPrice());
-        values.put("totalQuantity", dto.getTotalQuantity());
-        values.put("statusOrder", dto.getStatus());
-        values.put("accountId", dto.getUserId());
-        db.insert(TABLE_NAME_ORDER, null, values);
-        Log.e("insert table order + ", "  insert order thanh cong ");
-        db.close();
-        return 1;
+        for (int i = 0; i < listHistory.size(); i++) {
+            db.delete(TABLE_NAME_SEARCH_HISTORY, "searchName = '" + listHistory.get(i).getSearchName() + "'", null);
+        }
+        Log.e("delete list search history + ", "delete list history thanh cong trong Database ");
+    }
+
+    public void deleteItemsSearchName(String txtSearch) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.delete(TABLE_NAME_SEARCH_HISTORY, "searchName = '" + txtSearch + "'", null);
+
+        Log.e("delete search items name in history + ", "delete items history thanh cong trong Database ");
     }
 
     public void insertToCart(Cart dto, int userId) {
@@ -119,7 +130,7 @@ public class Database extends SQLiteOpenHelper {
         values.put("urlPic", dto.getUrlPic());
         values.put("quantity", dto.getProductQuantity());
         values.put("price", dto.getProductPrice());
-        values.put("priceChecked",dto.getPriceChekced());
+        values.put("priceChecked", dto.getPriceChekced());
         values.put("userId", userId);
         db.insert(TABLE_NAME_CART, null, values);
         Log.e("add to cart + ", "them thanh cong product vao cart trong Database ");
@@ -137,12 +148,13 @@ public class Database extends SQLiteOpenHelper {
         db.close();
     }
 
-    public int getProductCount(){
+    public int getProductCount() {
 
         SQLiteDatabase db = this.getReadableDatabase();
-        return (int) DatabaseUtils.longForQuery(db,"select count(*) from CartProduct ",null);
+        return (int) DatabaseUtils.longForQuery(db, "select count(*) from CartProduct ", null);
 
     }
+
     public void deleteProductInCart(int productId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME_CART, "productId = '" + productId + "'", null);

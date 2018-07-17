@@ -9,10 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -42,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     Database database;
     Button login;
     ImageView imgTest;
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         reflect();
         if (CheckConnection.haveNetworkConnection(this)) {
+
             loginInto();
         } else {
             CheckConnection.showConnection(this, "Please check your wifi!!!!");
@@ -65,7 +65,27 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
+                    final Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBar.setVisibility(View.VISIBLE);
 
+                                    }
+                                });
+                                synchronized (this) {
+                                    wait(3000);
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            finish();
+                        }
+                    };
+                    thread.start();
                     loginCustomer("https://ssm-market.herokuapp.com/api/v1/sign_in");
 
                 }
@@ -76,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     private void reflect() {
         email = (TextInputEditText) findViewById(R.id.txtEmail);
         pass = (TextInputEditText) findViewById(R.id.txtPassword);
+        progressBar = (ProgressBar)findViewById(R.id.progressBarLogin);
         imgTest = (ImageView) findViewById(R.id.imgTest);
         login = (Button) findViewById(R.id.btnLogin);
         database = new Database(this);
@@ -107,10 +128,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 Log.e("REPONSE LOGIN : ", response.toString());
                 if (response.toString() != null || !response.toString().equals("")) {
-                    Log.e("LOGIN ", "da vao Login ");
+
                     try {
                         boolean checked = response.getBoolean("success");
                         Log.e("Checked ", checked + "");
+
                         if (checked) {
                             int userReponse = response.getInt("id");
                             String emailReponse = response.getString("email");
@@ -138,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else {
                             Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+
                         }
 
                     } catch (Exception e) {

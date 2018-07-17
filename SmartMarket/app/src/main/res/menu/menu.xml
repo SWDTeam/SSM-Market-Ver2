@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menuHome" android:title="Home" />
     <item
         android:id="@+id/menuSearch"
-        android:icon="@drawable/search"
-        android:title="Search"
-        app:showAsAction="always" />
-    <item android:id="@+id/menuHome" android:title="Home" />
+        android:title="Search" />
     <item android:id="@+id/menuAccount" android:icon="@drawable/account"
         android:title="Account"/>
-    <item android:id="@+id/menuScan" android:icon="@drawable/barcode"
-        android:title="Scan Barcode"/>
-    <item android:title="Contact">
-        <menu>
-            <item android:id="@+id/menuCall" android:title="Call"/>
-            <item android:id="@+id/menuMessage" android:title="Send Message"/>
-        </menu>
-    </item>
+
 
 
 

@@ -81,19 +81,7 @@ public class OrderedNotiActi extends AppCompatActivity {
                     startActivity(intentAccount);
                 }
                 break;
-            case R.id.menuCall:
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:01676243500"));
-                startActivity(intent);
-                break;
-            case R.id.menuMessage:
-                Intent intentasd = new Intent();
-                intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body","");
-                intentasd.setData(Uri.parse("sms:01676243500"));
-                startActivity(intentasd);
-                break;
+
 
         }
         return super.onOptionsItemSelected(item);

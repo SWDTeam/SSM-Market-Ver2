@@ -43,7 +43,7 @@ public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.Ho
         ProductDTO productDTO = listProduct.get(position);
         holder.productName.setText(productDTO.getProductName());
         DecimalFormat format = new DecimalFormat("###,###,###");
-        holder.productPrice.setText("Price: "+format.format(productDTO.getPrice())+" $ ");
+        holder.productPrice.setText(" $ "+format.format(productDTO.getPrice()));
         Picasso.get().load(productDTO.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(holder.imgProduct);
 
     }

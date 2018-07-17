@@ -28,8 +28,9 @@
             android:orientation="vertical"
             >
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+
                 android:id="@+id/imgViewHotPro"
                 android:layout_margin="5dp"
                 />
@@ -37,8 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtNameHotPro"
-                android:textSize="20sp"
+
                 android:text="Name"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
@@ -46,9 +48,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtPriceHotPro"
-                android:textSize="20sp"
                 android:text="Price"
-                android:textColor="#ff1115"
+                android:textSize="20sp"
+                android:textColor="#D94F17"
                 android:textStyle="bold"
                 android:gravity="center"
                 />

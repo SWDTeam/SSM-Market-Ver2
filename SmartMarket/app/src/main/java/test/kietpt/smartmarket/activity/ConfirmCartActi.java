@@ -193,7 +193,7 @@ public class ConfirmCartActi extends AppCompatActivity {
             }
             jsonArray.put(jsonObject);
         }
-
+        Log.e("Json array = ",jsonArray+"");
         JSONObject jsonOrder = new JSONObject();
         JSONObject jsOrder = new JSONObject();
         try {
@@ -230,7 +230,6 @@ public class ConfirmCartActi extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         try {
-
 
                             //if (flag == 1) {
                                 JSONObject jsOrder = response.getJSONObject("order");

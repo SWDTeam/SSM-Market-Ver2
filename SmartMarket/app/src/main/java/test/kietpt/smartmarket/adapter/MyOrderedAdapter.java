@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import test.kietpt.smartmarket.R;
@@ -16,9 +18,9 @@ import test.kietpt.smartmarket.model.OrderDTO;
 
 public class MyOrderedAdapter extends BaseAdapter{
     Context context;
-    List<OrderDTO> listOrdered;
+    ArrayList<OrderDTO> listOrdered;
 
-    public MyOrderedAdapter(Context context, List<OrderDTO> listOrdered) {
+    public MyOrderedAdapter(Context context, ArrayList<OrderDTO> listOrdered) {
         this.context = context;
         this.listOrdered = listOrdered;
     }
@@ -39,6 +41,7 @@ public class MyOrderedAdapter extends BaseAdapter{
     }
     public class ViewHolder{
         TextView totalPrice,orderedDate,orderCode,totalQuantity,status;
+        ImageView img;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -51,6 +54,7 @@ public class MyOrderedAdapter extends BaseAdapter{
             viewHolder.orderedDate = (TextView)convertView.findViewById(R.id.txtDateOrdered);
             viewHolder.totalPrice = (TextView)convertView.findViewById(R.id.txtPriceOrdered);
             viewHolder.totalQuantity = (TextView)convertView.findViewById(R.id.txtQuantityOrdered);
+            viewHolder.img = (ImageView)convertView.findViewById(R.id.imgOrdered);
             viewHolder.status = (TextView)convertView.findViewById(R.id.txtStatusOrdered);
             convertView.setTag(viewHolder);
         }else{
@@ -60,9 +64,10 @@ public class MyOrderedAdapter extends BaseAdapter{
         viewHolder.orderCode.setText(orderDTO.getOrderCode());
         viewHolder.orderedDate.setText((orderDTO.getOrderedDate()));
         viewHolder.totalQuantity.setText(String.valueOf(orderDTO.getTotalQuantity()));
-        if(orderDTO.getStatus().equals("canceled")){
-            viewHolder.status.setTextColor(Color.parseColor("#FFAE6B35"));
+        if(orderDTO.getStatus().equals("payment")){
+            viewHolder.status.setTextColor(Color.parseColor("#f28016"));
             viewHolder.status.setText(orderDTO.getStatus());
+            viewHolder.img.setBackgroundResource(R.drawable.invoicelarge);
         }else{
             viewHolder.status.setText(orderDTO.getStatus());
         }

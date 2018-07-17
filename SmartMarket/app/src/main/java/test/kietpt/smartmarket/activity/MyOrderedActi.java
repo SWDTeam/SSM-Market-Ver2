@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,23 +42,26 @@ public class MyOrderedActi extends AppCompatActivity {
     MyOrderedAdapter orderedAdapter;
     ArrayList<OrderDTO> listOrderDto;
     TextView orderedIsEmpty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_ordered);
         reflect();
         actionBar();
-        getListOrdered("https://ssm-market.herokuapp.com/api/v1/lists_orders/" + MainActivity.account.getUserId());
+
+        getListOrdered("https://ssm-market.herokuapp.com/api/v1/lists_orders/" + MainActivity.account.getUserId() + "/pending");
         catchListOrdered();
+
     }
 
     private void catchListOrdered() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(),OrderedDetailActi.class);
-                Toast.makeText(MyOrderedActi.this, "orderId = "+listOrderDto.get(i).getOrderId(), Toast.LENGTH_SHORT).show();
-                intent.putExtra("orderId",listOrderDto.get(i).getOrderId());
+                Intent intent = new Intent(getApplicationContext(), OrderedDetailActi.class);
+                Toast.makeText(MyOrderedActi.this, "orderId = " + listOrderDto.get(i).getOrderId(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("orderId", listOrderDto.get(i).getOrderId());
                 startActivity(intent);
             }
         });
@@ -65,35 +69,35 @@ public class MyOrderedActi extends AppCompatActivity {
 
     private void getListOrdered(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.e("My Ordered :", response.toString());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("My Ordered :", response.toString());
 
-                if (response.toString() != null) {
-                    for (int i = 0; i < response.length(); i++) {
-                        try {
-                            JSONObject jsonObject = response.getJSONObject(i);
-                            int orderId = jsonObject.getInt("id");
-                            String orderCode = jsonObject.getString("code");
-                            String date = jsonObject.getString("created_at");
-                            int quantity = jsonObject.getInt("total_quantity");
-                            float price = (float) jsonObject.getDouble("total_price");
-                            String status = jsonObject.getString("status");
-                            Toast.makeText(MyOrderedActi.this, orderId+" - "+orderCode+" - "+date+" - "+
-                                    quantity+" - "+price+" - "+status, Toast.LENGTH_SHORT).show();
+                        if (response.toString() != null) {
 
-                            listOrderDto.add(new OrderDTO(orderId, orderCode, price, quantity, date,status));
-                            orderedAdapter.notifyDataSetChanged();
+                            try {
+                                for (int i = 0; i < response.length(); i++) {
+                                    JSONObject jsonObject = response.getJSONObject(i);
+                                    int orderId = jsonObject.getInt("id");
+                                    String orderCode = jsonObject.getString("code");
+                                    String date = jsonObject.getString("created_at");
+                                    int quantity = jsonObject.getInt("total_quantity");
+                                    float price = (float) jsonObject.getDouble("total_price");
+                                    String status = jsonObject.getString("status");
 
+                                    listOrderDto.add(new OrderDTO(orderId, orderCode, price, quantity, date, status));
+                                }
+                                showMessageIsEmpty();
+                                orderedAdapter.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
-                }
-            }
-        },
+                },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -104,6 +108,7 @@ public class MyOrderedActi extends AppCompatActivity {
         );
         requestQueue.add(jsonArrayRequest);
     }
+
     private void actionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -115,13 +120,28 @@ public class MyOrderedActi extends AppCompatActivity {
         });
     }
 
+    private void showMessageIsEmpty() {
+        if (listOrderDto.size() <= 0) {
+            orderedAdapter.notifyDataSetChanged();
+            orderedIsEmpty.setVisibility(View.VISIBLE);
+            listView.setVisibility(View.INVISIBLE);
+
+        } else {
+            orderedAdapter.notifyDataSetChanged();
+            orderedIsEmpty.setVisibility(View.INVISIBLE);
+            listView.setVisibility(View.VISIBLE);
+
+        }
+    }
+
     private void reflect() {
         toolbar = (Toolbar) findViewById(R.id.toolbarMyOrdered);
         listView = (ListView) findViewById(R.id.listviewOrdered);
-        orderedIsEmpty = (TextView)findViewById(R.id.txtOrderedIsEmpty);
+        orderedIsEmpty = (TextView) findViewById(R.id.txtOrderedIsEmpty);
         listOrderDto = new ArrayList<>();
         orderedAdapter = new MyOrderedAdapter(MyOrderedActi.this, listOrderDto);
         listView.setAdapter(orderedAdapter);
+
     }
 
 }

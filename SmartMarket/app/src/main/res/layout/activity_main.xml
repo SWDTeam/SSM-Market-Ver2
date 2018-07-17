@@ -1,113 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:fillViewport="true"-->
-    <!--tools:context=".activity.MainActivity"-->
-    <!--&gt;-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/testMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity"
-    >
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context=".activity.MainActivity">
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        android:layout_height="0dp"
+        android:layout_weight="8.9"
+        android:background="#f4e9e9e9"
+        >
+        <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbarMain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#3d96c1"
-                android:minHeight="?attr/actionBarSize"
-                app:titleTextColor="#ffffff">
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Home"
-                        android:textColor="#ffffff"
-                        android:textSize="20sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <ImageView
-                        android:id="@+id/imageViewCartMainActi"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="32dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/cart"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.931"
-                        app:layout_constraintStart_toEndOf="@+id/textView12"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
-                    <TextView
-                        android:id="@+id/txtCountMainActi"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="32dp"
-                        android:gravity="center"
-                        android:text="12"
-                        android:textColor="#ff4102"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                </android.support.constraint.ConstraintLayout>
-
-            </android.support.v7.widget.Toolbar>
-
-            <ViewFlipper
-                android:id="@+id/viewFlipperMain"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"></ViewFlipper>
-
+            android:fillViewport="true"
+            tools:context=".activity.MainActivity"
+            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#bcbdbe"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Hot products"
-                    android:textColor="#ff1121"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerMain"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbarMain"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                    android:layout_height="wrap_content"
+                    android:background="#04B2D9"
+                    android:minHeight="?attr/actionBarSize"
+                    app:titleTextColor="#ffffff"
+                    app:title="Home"
+                    >
+                </android.support.v7.widget.Toolbar>
+
+                <ViewFlipper
+                    android:id="@+id/viewFlipperMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"></ViewFlipper>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#ffffff"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgScanQrcode"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/qrcodeicon" />
+
+                    <TextView
+                        android:id="@+id/textSearch"
+                        android:layout_width="270dp"
+                        android:layout_height="match_parent"
+                        android:hint="Search"
+                        android:textSize="20sp"
+                        />
+                    <ImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_search"
+                        android:layout_marginRight="5dp"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#b9b9b9"
+                    android:layout_marginLeft="120dp"
+                    android:layout_marginRight="120dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="New products"
+                        android:textColor="#646464"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#b9b9b9"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginRight="120dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerHotProductMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Cheap products"
+                        android:textColor="#646464"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#b9b9b9"
+                        android:layout_marginLeft="120dp"
+                        android:layout_marginRight="120dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerCheapProductMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        ></android.support.v7.widget.RecyclerView>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
 
         <android.support.design.widget.NavigationView
             android:id="@+id/navigaView"
@@ -123,5 +158,47 @@
         </android.support.design.widget.NavigationView>
     </android.support.v4.widget.DrawerLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1">
+
+        <com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView
+            android:layout_marginTop="3dp"
+            android:id="@+id/menuMainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundMenuColor="#ffffff"
+            app:backgroundNotifications="#4c30bc"
+            app:icon_height="30dp"
+            app:icon_width="30dp"
+            app:item_backgroundColor="#ffffff"
+            app:item_colorSelected="#ff4511"
+            app:item_textColor="#000000"
+            app:item_textSize="5sp"
+            >
+        </com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView>
+
+        <TextView
+            android:id="@+id/txtCountMainActi"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="115dp"
+            android:background="@drawable/round_outline"
+            android:gravity="center"
+            android:text="123"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+    </RelativeLayout>
 </LinearLayout>
-<!--</ScrollView>-->
+
+
+
+
+
+
+
+

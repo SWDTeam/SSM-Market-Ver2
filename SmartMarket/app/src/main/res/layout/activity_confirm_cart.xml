@@ -18,7 +18,7 @@
             android:id="@+id/toolbarCartConfirm"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="#81835b"
+            android:background="#04B2D9"
             app:title="Confirm Cart"
             app:titleTextColor="#ffffff"></android.support.v7.widget.Toolbar>
 
@@ -127,6 +127,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:visibility="invisible"
                     android:id="@+id/txtCartIsEmptyConfirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

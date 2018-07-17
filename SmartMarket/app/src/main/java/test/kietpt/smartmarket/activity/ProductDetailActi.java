@@ -35,7 +35,7 @@ public class ProductDetailActi extends AppCompatActivity {
 
     Toolbar toolbarDetail;
     ImageView imgDetail,imgCartDetail;
-    TextView txtNameDetail, txtPriceDetail, txtManuDetail, txtManuTimeDetail, txtExpiredDetail, txtDesDetail,txtToolbarName,txtCount;
+    TextView txtNameDetail, txtPriceDetail, txtManuDetail, txtManuTimeDetail, txtExpiredDetail, txtDesDetail,txtCount;
 
     Spinner spinner;
     Button btnAddToCart;
@@ -65,16 +65,14 @@ public class ProductDetailActi extends AppCompatActivity {
             actionToolbar();
             catchSpinner();
             getProductCount();
-            getToolbarProductName();
+
         } else {
             CheckConnection.showConnection(getApplicationContext(), "Plesae check you wifi");
             finish();
         }
     }
 
-    private void getToolbarProductName() {
-        txtToolbarName.setText(productName);
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,19 +96,7 @@ public class ProductDetailActi extends AppCompatActivity {
                     startActivity(intentAccount);
                 }
                 break;
-            case R.id.menuCall:
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:01676243500"));
-                startActivity(intent);
-                break;
-            case R.id.menuMessage:
-                Intent intentasd = new Intent();
-                intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body", "");
-                intentasd.setData(Uri.parse("sms:01676243500"));
-                startActivity(intentasd);
-                break;
+
 
         }
         return super.onOptionsItemSelected(item);
@@ -136,7 +122,7 @@ public class ProductDetailActi extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        txtToolbarName = (TextView)findViewById(R.id.txtToolbarProductName);
+
 
         txtCount = (TextView)findViewById(R.id.txtCountProductDetail);
         database = new Database(this);

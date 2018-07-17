@@ -67,7 +67,7 @@ public class CategoryListActi extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+               finish();
             }
         });
     }
@@ -85,10 +85,6 @@ public class CategoryListActi extends AppCompatActivity {
                 Intent intentHome = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intentHome);
                 break;
-//            case R.id.menuCart:
-//                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
-//                startActivity(intentCart);
-//                break;
             case R.id.menuSearch:
                 Intent intentSearch = new Intent(getApplicationContext(), SearchViewActi.class);
                 startActivity(intentSearch);
@@ -101,19 +97,6 @@ public class CategoryListActi extends AppCompatActivity {
                     Intent intentAccount = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intentAccount);
                 }
-                break;
-            case R.id.menuCall:
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:01676243500"));
-                startActivity(intent);
-                break;
-            case R.id.menuMessage:
-                Intent intentasd = new Intent();
-                intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body", "");
-                intentasd.setData(Uri.parse("sms:01676243500"));
-                startActivity(intentasd);
                 break;
 
         }
@@ -131,20 +114,18 @@ public class CategoryListActi extends AppCompatActivity {
         });
     }
 
-    private void getDataCategory() {
+    public void getDataCategory() {
         Intent intent = getIntent();
         String txtSearch = intent.getStringExtra("txtSearchView");
-        Log.e("txtSearch = ",txtSearch);
-
-        /*
-        getListCateName("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory?" +
-        "btnAction=searchName&txtSearch="+txtSearch);
-        */
-
-        getListCateName("https://ssm-market.herokuapp.com/api/v1/search_category_name/" + txtSearch);
+        if(txtSearch.equals("1")){
+            getListCateBySearchName("https://ssm-market.herokuapp.com/api/v1/categories");
+        }else {
+            Log.e("txtSearch = ", txtSearch);
+            getListCateBySearchName("https://ssm-market.herokuapp.com/api/v1/search_category_name/" + txtSearch);
+        }
     }
 
-    private void getListCateName(String s) {
+    private void getListCateBySearchName(String s) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, s, null,
                 new Response.Listener<JSONObject>() {
@@ -165,8 +146,8 @@ public class CategoryListActi extends AppCompatActivity {
                         // dùng để get value từ chuỗi json trả về
 
                         try {
-                            JSONObject jsonObject = new JSONObject(response.toString());
-                            JSONArray jsonArray = jsonObject.getJSONArray("categories");
+                            //JSONObject jsonObject = new JSONObject(response.toString());
+                            JSONArray jsonArray = response.getJSONArray("categories");
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 try {
@@ -177,11 +158,12 @@ public class CategoryListActi extends AppCompatActivity {
                                     String urlTest = "https://ssm-market.herokuapp.com" + urlPic;
                                     Log.e("json object category ", id + " - " + cateName + " - " + urlPic);
                                     arrayList.add(new CategoryDTO(id, cateName, urlTest));
-                                    adapter.notifyDataSetChanged();
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
+                            adapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -192,7 +174,7 @@ public class CategoryListActi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("error category list reponse ",error.toString());
                         Toast.makeText(CategoryListActi.this, "Not found", Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(CategoryListActi.this, "Something wrong !!!!", Toast.LENGTH_SHORT).show();
+
                     }
                 }
         );

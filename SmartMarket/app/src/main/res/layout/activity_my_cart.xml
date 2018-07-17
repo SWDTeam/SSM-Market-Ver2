@@ -93,9 +93,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.9"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:background="#ff5811"
         android:padding="5dp"
         android:text="BUY"
@@ -104,17 +103,39 @@
         android:textColor="#ffffff"
         android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnContinue"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="#1154ff"
-        android:padding="5dp"
-        android:text="Continue to shop"
-        android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_weight="1.1">
+
+        <com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView
+            android:id="@+id/menuMyCartActi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundMenuColor="#ffffff"
+            app:backgroundNotifications="#4c30bc"
+            app:icon_height="30dp"
+            app:icon_width="30dp"
+            app:item_backgroundColor="#ffffff"
+            app:item_colorSelected="#ff4511"
+            app:item_textColor="#000000"
+            app:item_textSize="5sp"
+            >
+        </com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView>
+
+        <TextView
+            android:id="@+id/txtCountMyCartActi"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="115dp"
+            android:background="@drawable/round_outline"
+            android:gravity="center"
+            android:text="123"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+    </RelativeLayout>
 </LinearLayout>

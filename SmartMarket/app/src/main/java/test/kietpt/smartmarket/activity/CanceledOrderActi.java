@@ -9,6 +9,6 @@ public class CanceledOrderActi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(test.kietpt.smartmarket.R.layout.activity_canceled_order);
+        setContentView(test.kietpt.smartmarket.R.layout.order_detail_item);
     }
 }

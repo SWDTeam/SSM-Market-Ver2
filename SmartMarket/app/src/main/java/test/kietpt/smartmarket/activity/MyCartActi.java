@@ -2,6 +2,7 @@ package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,43 +34,32 @@ public class MyCartActi extends AppCompatActivity {
 
 
     ListView listProductInCart;
-    TextView txtCartIsEmpty;
+    public static TextView txtCartIsEmpty,txtCountMyCartActi;
     static TextView txtTotal;
-    Button btnBuy, btnContinue;
+    Button btnBuy;
     Toolbar toolbar;
     Database database;
     CartAdapter cartAdapter;
     ProgressBar progressBar;
-
+    HorizontalScrollMenuView menu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cart);
         reflect();
+        createMenu();
         if(CheckConnection.haveNetworkConnection(this)){
             actionToolBar();
             checkCart();
             getDataInCart();
             buyProduct();
-            continueToShop();
+            getProductCount();
         }else{
             CheckConnection.showConnection(this,"Please check you wifi!!!");
         }
 
 
     }
-
-    private void continueToShop() {
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-
     public static void getDataInCart() {
         float totalOfPrice = 0;
         for (int i = 0; i < MainActivity.listCart.size(); i++) {
@@ -103,9 +95,11 @@ public class MyCartActi extends AppCompatActivity {
     private void reflect() {
         listProductInCart = (ListView) findViewById(R.id.listViewCartItem);
         txtCartIsEmpty = (TextView) findViewById(R.id.txtCartIsEmpty);
+        menu = (HorizontalScrollMenuView)findViewById(R.id.menuMyCartActi);
+        txtCountMyCartActi = (TextView)findViewById(R.id.txtCountMyCartActi);
         txtTotal = (TextView) findViewById(R.id.txtTotalPrice);
         btnBuy = (Button) findViewById(R.id.btnBuy);
-        btnContinue = (Button) findViewById(R.id.btnContinue);
+
         toolbar = (Toolbar) findViewById(R.id.toolbarCart);
         setSupportActionBar(toolbar);
         progressBar = (ProgressBar) findViewById(R.id.progressBarMyCart);
@@ -116,48 +110,52 @@ public class MyCartActi extends AppCompatActivity {
         listProductInCart.setAdapter(cartAdapter);
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return true;
+    public void getProductCount() {
+        Log.e("count = ", database.getProductCount() + "");
+        if (database.getProductCount() <= 0) {
+            txtCountMyCartActi.setVisibility(View.INVISIBLE);
+        } else {
+            txtCountMyCartActi.setVisibility(View.VISIBLE);
+            txtCountMyCartActi.setText(String.valueOf(database.getProductCount()));
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.menuHome:
-                Intent intentHome = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intentHome);
-                break;
-            case R.id.menuSearch:
-                Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
-                startActivity(intentSearch);
-                break;
-            case R.id.menuAccount:
-                if(MainActivity.account != null){
-                    Intent intentAccount = new Intent(getApplicationContext(),AccountActivity.class);
-                    startActivity(intentAccount);
-                }else{
-                    Intent intentAccount = new Intent(getApplicationContext(),LoginActivity.class);
-                    startActivity(intentAccount);
-                }
-                break;
-            case R.id.menuCall:
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:01676243500"));
-                startActivity(intent);
-                break;
-            case R.id.menuMessage:
-                Intent intentasd = new Intent();
-                intentasd.setAction(Intent.ACTION_SENDTO);
-                intentasd.putExtra("sms_body","");
-                intentasd.setData(Uri.parse("sms:01676243500"));
-                startActivity(intentasd);
-                break;
+    private void createMenu(){
+        menu.addItem("Home",R.drawable.ic_home);
+        menu.addItem("Category",R.drawable.ic_category);
+        menu.addItem("Cart",R.drawable.ic_shoppingcart);
+        menu.addItem("Account",R.drawable.ic_account);
+        menu.setOnHSMenuClickListener(new HorizontalScrollMenuView.OnHSMenuClickListener() {
+            @Override
+            public void onHSMClick(com.darwindeveloper.horizontalscrollmenulibrary.extras.MenuItem menuItem, int position) {
 
-        }
-        return super.onOptionsItemSelected(item);
+                switch (position){
+                    case 0:
+                        Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intentMain);
+                        break;
+                    case 1:
+                        Intent intentCategory = new Intent(getApplicationContext(), CategoryListActi.class);
+                        intentCategory.putExtra("txtSearchView","1");
+                        startActivity(intentCategory);
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+                        if (MainActivity.account != null) {
+                            Intent intentAccount = new Intent(getApplicationContext(), AccountActivity.class);
+                            startActivity(intentAccount);
+                        } else {
+                            Intent intentAccount = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intentAccount);
+                        }
+                    break;
+
+                }
+
+            }
+        });
     }
 
     public void buyProduct() {

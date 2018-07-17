@@ -80,7 +80,7 @@ public class CartAdapter extends BaseAdapter {
         Cart cart = cartList.get(position);
         viewHolder.nameCartItem.setText(cart.getProductName());
         final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        viewHolder.priceCartItem.setText(decimalFormat.format(cart.getProductPrice()) + " $ ");
+        viewHolder.priceCartItem.setText(" $ "+decimalFormat.format(cart.getProductPrice()));
         Picasso.get().load(cart.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(viewHolder.imgCart);
         viewHolder.quantityCartitem.setText(String.valueOf(cart.getProductQuantity()));
 
@@ -104,7 +104,7 @@ public class CartAdapter extends BaseAdapter {
                 float newPrice = (presentPrice * newSl) / presentSl;
                 MainActivity.listCart.get(position).setProductPrice(newPrice);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                viewHolder.priceCartItem.setText(decimalFormat.format(newPrice) + " $ ");
+                viewHolder.priceCartItem.setText(" $ "+decimalFormat.format(newPrice) );
                 MyCartActi.getDataInCart();
                 if (newSl > 1) {
                     viewHolder.btnSub.setVisibility(View.VISIBLE);
@@ -126,7 +126,7 @@ public class CartAdapter extends BaseAdapter {
                 float newPrice = (presentPrice * newSl) / presentSl;
                 MainActivity.listCart.get(position).setProductPrice(newPrice);
                 DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-                viewHolder.priceCartItem.setText(decimalFormat.format(newPrice) + " $ ");
+                viewHolder.priceCartItem.setText(" $ "+decimalFormat.format(newPrice));
                 MyCartActi.getDataInCart();
                 if (newSl <= 1) {
                     viewHolder.btnSub.setVisibility(View.INVISIBLE);
@@ -153,6 +153,11 @@ public class CartAdapter extends BaseAdapter {
                         database.deleteProductInCart(MainActivity.listCart.get(position).getProductId());
                         MainActivity.listCart.remove(cart);
                         MyCartActi.getDataInCart();
+                        MyCartActi.txtCountMyCartActi.setText(String.valueOf(database.getProductCount()));
+                        if(database.getProductCount() == 0){
+                            MyCartActi.txtCountMyCartActi.setVisibility(View.INVISIBLE);
+                            MyCartActi.txtCartIsEmpty.setVisibility(View.VISIBLE);
+                        }
                         notifyDataSetChanged();
 
 

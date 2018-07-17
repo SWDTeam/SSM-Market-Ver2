@@ -13,57 +13,12 @@
         android:background="#3d96c1"
         android:minHeight="?attr/actionBarSize"
         app:titleTextColor="#ffffff"
+        app:title="Account"
         >
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="230dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/txtAccountToolbar"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="5dp"
-                android:text="Account"
-                android:textColor="#ffffff"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageViewCartAccount"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/cart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.931"
-                app:layout_constraintStart_toEndOf="@+id/txtAccountToolbar"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/txtCountAccount"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:text="12"
-                android:textColor="#ff4102"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
     <LinearLayout
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fafaf8"
@@ -106,6 +61,40 @@
     <ListView
         android:id="@+id/listViewAccountActi"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" ></ListView>
+        android:layout_height="399dp"></ListView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
+        <com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView
+            android:layout_marginTop="3dp"
+            android:id="@+id/menuAccountActivity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:backgroundMenuColor="#ffffff"
+            app:backgroundNotifications="#4c30bc"
+            app:icon_height="30dp"
+            app:icon_width="30dp"
+            app:item_backgroundColor="#ffffff"
+            app:item_colorSelected="#ff4511"
+            app:item_textColor="#000000"
+            app:item_textSize="5sp"
+            >
+        </com.darwindeveloper.horizontalscrollmenulibrary.custom_views.HorizontalScrollMenuView>
+
+        <TextView
+            android:id="@+id/txtCountAccountActi"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="115dp"
+            android:background="@drawable/round_outline"
+            android:gravity="center"
+            android:text="123"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+    </RelativeLayout>
 </LinearLayout>

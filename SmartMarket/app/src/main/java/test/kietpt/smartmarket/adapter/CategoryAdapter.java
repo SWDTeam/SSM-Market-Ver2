@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import test.kietpt.smartmarket.R;
@@ -18,10 +19,10 @@ import test.kietpt.smartmarket.model.CategoryDTO;
 
 public class CategoryAdapter extends BaseAdapter {
     Context context;
-    int layout;
-    List<CategoryDTO> categoryDTOList;
 
-    public CategoryAdapter(Context context, List<CategoryDTO> categoryDTOList) {
+    ArrayList<CategoryDTO> categoryDTOList;
+
+    public CategoryAdapter(Context context, ArrayList<CategoryDTO> categoryDTOList) {
         this.context = context;
         this.categoryDTOList = categoryDTOList;
     }
@@ -62,17 +63,12 @@ public class CategoryAdapter extends BaseAdapter {
         }
         CategoryDTO categoryDTO = categoryDTOList.get(position);
         viewHolder.categoryName.setText(categoryDTO.getCateName().toString());
-//        Log.e("kiet dap chai",categoryDTO.getCateId() + " - "+categoryDTO.getImgPic());
-//        if(categoryDTO.getImgPic().equals("https://ssm-market.herokuapp.com/uploads/image/url/1/coca.jpg")){
-//            categoryDTO.setImgPic("http://southeasternbeers.co.uk/291-thickbox_default/330ml-coke-icon.jpg");
-//            Log.e("test123123456 = ",categoryDTO.getImgPic());
-//
-//        }else if(categoryDTO.getImgPic().equals("https://ssm-market.herokuapp.com/uploads/image/url/2/7up.jpg")){
-//            categoryDTO.setImgPic("http://muaban247.top/image/cache/catalog/7up-500x539.jpg");
-//            Log.e("test123123456 = ",categoryDTO.getImgPic());
-//        }
-        Picasso.get().load(categoryDTO.getImgPic()).placeholder(R.drawable.error).
-                error(R.drawable.errors).into(viewHolder.urlPic);
+        if (categoryDTO.getCateName().equals("Home")) {
+            viewHolder.urlPic.setImageResource(R.drawable.ic_home);
+        } else {
+            Picasso.get().load(categoryDTO.getImgPic()).placeholder(R.drawable.error).
+                    error(R.drawable.errors).into(viewHolder.urlPic);
+        }
         return convertView;
     }
 }
