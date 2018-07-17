@@ -1,12 +1,15 @@
 class Api::V1::SessionsController < Devise::SessionsController
   prepend_before_action :require_no_authentication, only: :create
   protect_from_forgery with: :null_session, only: [:create]
+  skip_before_action :verify_authenticity_token, only: [:create]
   before_action :ensure_params_exist, only: :create
   
   respond_to :json
   #{"sesion": {"email" :}}
   def create
     user = Account.find_by_email(params[:session][:email])
+    puts 'user'
+    puts user.to_json
     unless user.nil?
 	    if user.valid_password? params[:session][:password] && user.role_id == 2
         render json: user.as_json.merge({email: user.email, name: user.name, success: true}).to_json, status: 200
