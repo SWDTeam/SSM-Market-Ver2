@@ -107,61 +107,62 @@
 
   <!--content-->
   <div class="row">
-    <div class="col-1"></div>
+    <div class="col-md-1"></div>
     <!--date of manufactor-->
-    <div class="col-2 text-center content-show-product">
-      <%= @product.manu_date %>
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-12 text-center content-show-product"><%= @product.manu_date %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center label-show-product">Date Of Manufactor</div>
+      </div>
     </div>
 
     <!--expiration date-->
-    <div class="col-2 text-center content-show-product">
-      <%= @product.expired_date %>
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-12 text-center content-show-product"><%= @product.expired_date %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center label-show-product">Expiration Date</div>
+      </div>
     </div>
 
     <!--manufactor-->
-    <div class="col-2 text-center content-show-product">
-      <%= @product.manufacturer %>
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-12 text-center content-show-product"><%= @product.manufacturer %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center label-show-product">Manufacturer</div>
+      </div>
     </div>
 
     <!--price-->
-    <div class="col-2 text-center content-show-product">
-      <%= @product.price %>
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-12 text-center content-show-product"><%= @product.price %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center label-show-product">Price</div>
+      </div>
     </div>
 
     <!--quantity-->
-    <div class="col-2 text-center content-show-product">
-      <%= @product.quantity %>
-    </div>
-    <div class="col-1"></div>
-  </div>
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-12 text-center content-show-product"><%= @product.quantity %></div>
+      </div>
 
-  <!--label-->
-  <div class="row">
-    <div class="col-1"></div>
-    <!--date of manufactor-->
-    <div class="col-2 text-center label-show-product">
-      Date Of Manufactor
+      <div class="row">
+        <div class="col-12 text-center label-show-product">Quantity</div>
+      </div>
     </div>
 
-    <!--expiration date-->
-    <div class="col-2 text-center label-show-product">
-      Expiration Date
-    </div>
-
-    <!--manufactor-->
-    <div class="col-2 text-center label-show-product">
-      Manufacturer
-    </div>
-
-    <!--price-->
-    <div class="col-2 text-center label-show-product">
-      Price
-    </div>
-
-    <!--quantity-->
-    <div class="col-2 text-center label-show-product">
-      Quantity
-    </div>
-    <div class="col-1"></div>
+    <div class="col-md-1"></div>
   </div>
 </div>

@@ -8,89 +8,93 @@
   <!--FILTER form-->
   <%= form_with(model: @account, local: true, method: 'get', class:"mb-4") do |form| %>
     <div class="row">
-      <div class="col-lg-1"></div>
-      <div class="col-lg-3">
+      <div class="col-lg-1 mt-2"></div>
+      <div class="col-lg-3 mt-2">
         <%= form.collection_select(:role_id, @roles, :id, :name, {prompt: 'Find by Role'}, id: 'account_role', class:"input-filter-index-category text-uppercase custom-select") %>
       </div>
-      <div class="col-lg-2"></div>
-      <div class="col-lg-3 justify-content-end text-right">
+      <div class="col-lg-2 mt-2"></div>
+      <div class="col-lg-3 mt-2 justify-content-end text-right">
        <%= form.text_field :search_name, placeholder: "Name...", class:"input-filter-index-category", id: 'txt_search_name' %>
       </div>
 
-      <div class="col-lg-2">
+      <div class="col-lg-2 mt-2 text-center">
         <%= form.button 'Find', type: 'button',class: "bnt-index-category", id: 'M-btn-user-search'%>
       </div>
     </div>
   <% end %>
 
-  <!--LABEL-->
-  <div class="row pb-2 wrap-label-index-category">
-    <!--NO-->
-    <div class="col-1 px-1 text-center label-index-category">No.</div>
-    <!--NAME-->
-    <div class="col-2 pl-0 label-index-category">Name</div>
-    <!--EMAIL-->
-    <div class="col-4 pl-0 label-index-category">Email</div>
-    <!--ROLE-->
-    <div class="col-1 px-1 label-index-category">Role</div>
-    <!--STATUS-->
-    <div class="col-1 pr-0 label-index-category text-center">
-      Status
-    </div>
-    <!--SHOW-->
-    <div class="col-1 pr-0 text-center label-index-category">Profile</div>
-    <!--ACTION-->
-    <div class="col-2 text-center label-index-category">Action</div>
-  </div>
+  <div class="wrap-table-category">
+    <div style="min-width: 650px;">
+      <!--LABEL-->
+      <div class="row pb-2 wrap-label-index-category">
+        <!--NO-->
+        <div class="col-1 px-1 text-center label-index-category">No.</div>
+        <!--NAME-->
+        <div class="col-2 pl-0 label-index-category">Name</div>
+        <!--EMAIL-->
+        <div class="col-4 pl-0 label-index-category">Email</div>
+        <!--ROLE-->
+        <div class="col-1 px-1 label-index-category">Role</div>
+        <!--STATUS-->
+        <div class="col-1 pr-0 label-index-category text-center">
+          Status
+        </div>
+        <!--SHOW-->
+        <div class="col-1 pr-0 text-center label-index-category">Profile</div>
+        <!--ACTION-->
+        <div class="col-2 text-center label-index-category">Action</div>
+      </div>
 
-  <% @accounts.each_with_index do |account, index| index += 1 %>
-    <div class="row py-3 wrap-content-index-product content-index-account M-test">
-      <!--NO-->
-      <div class="col-1 px-1 text-center"><%= index %></div>
-      <!--NAME-->
-      <div class="col-2 pl-0"><%= account.name %></div>
-      <!--EMAIL-->
-      <div class="col-4 pl-0"><%= account.email %></div>
-      <!--ROLE-->
-      <div class="col-1 px-1"><%= Role.find(account.role_id).name.upcase %></div>
-       <!--STATUS-->
-      <div class="col-1 pr-0 text-center"> <%= account.status.capitalize %> </div>
-      <!--SHOW-->
-      <div class="col-1 pr-0">
-      <%= link_to account_path(account) do %>
-        <center>
-          <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
-        </center>
+      <% @accounts.each_with_index do |account, index| index += 1 %>
+        <div class="row py-3 wrap-content-index-product content-index-account M-test">
+          <!--NO-->
+          <div class="col-1 px-1 text-center"><%= index %></div>
+          <!--NAME-->
+          <div class="col-2 pl-0"><%= account.name %></div>
+          <!--EMAIL-->
+          <div class="col-4 pl-0"><%= account.email %></div>
+          <!--ROLE-->
+          <div class="col-1 px-1"><%= Role.find(account.role_id).name.upcase %></div>
+          <!--STATUS-->
+          <div class="col-1 pr-0 text-center"> <%= account.status.capitalize %> </div>
+          <!--SHOW-->
+          <div class="col-1 pr-0">
+          <%= link_to account_path(account) do %>
+            <center>
+              <i class="fa fa-search-plus show-bnt-index-account align-items-center"></i>
+            </center>
+          <% end %>
+          </div>
+
+          <!--ACTION-->
+          <div class="col-2">
+            <% if account.role_id != 1 %>
+              <% if account.status == 'active' %>
+                <center>
+                  <%= link_to account_path(account, account: {status: 'hidden'}), method: :put do %>
+                    <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 65%;">
+                      <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
+                    </i>
+                  <% end %>
+                </center>
+              <% else %>
+                <center>
+                  <%= link_to account_path(account, account: {status: 'active'}), method: :put do %>
+                    <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 65%;">
+                      <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
+                    </i>
+                  <% end %>
+                </center>
+              <% end %> 
+            <% else %> 
+            <% end %>
+          </div>
+        </div>
       <% end %>
-      </div>
 
-      <!--ACTION-->
-      <div class="col-2">
-        <% if account.role_id != 1 %>
-          <% if account.status == 'active' %>
-            <center>
-              <%= link_to account_path(account, account: {status: 'hidden'}), method: :put do %>
-                <i class="fa fa-lock ban-bnt-index-account align-items-center" style="width: 65%;">
-                  <span class="px-1 align-items-center" style="font-size: 13px;">Ban</span>
-                </i>
-              <% end %>
-            </center>
-          <% else %>
-            <center>
-              <%= link_to account_path(account, account: {status: 'active'}), method: :put do %>
-                <i class="fa fa-unlock-alt active-bnt-index-account align-items-center" style="width: 65%;">
-                  <span class="px-1 align-items-center" style="font-size: 13px;">Active</span>
-                </i>
-              <% end %>
-            </center>
-          <% end %> 
-        <% else %> 
-        <% end %>
-      </div>
+      <div id="M-result"></div>
     </div>
-  <% end %>
-
-  <div id="M-result"></div>
+  </div>
 </div>
 
 <script>

@@ -1,38 +1,3 @@
-<!--<p id="notice"><%#= notice %></p>
-
-<p>
-  <strong>Code:</strong>
-  <%#= @order.code %>
-</p>
-
-<p>
-  <strong>Payment date:</strong>
-  <%#= @order.payment_date %>
-</p>
-
-<p>
-  <strong>Address ship:</strong>
-  <%#= @order.address_ship %>
-</p>
-
-<p>
-  <strong>Total price:</strong>
-  <%#= @order.total_price %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%#= @order.status %>
-</p>
-
-<p>
-  <strong>Total quantity:</strong>
-  <%#= @order.total_quantity %>
-</p>
-
-<%#= link_to 'Edit', edit_order_path(@order) %> |
-<%#= link_to 'Back', orders_path %>-->
-
 <!--use css of index categories-->
 <p id="notice"><%= notice %></p>
 <div class="wrap-index-category">
@@ -44,24 +9,24 @@
     <div class="col-12 text-center title-show-order">SSM Market</div>
   </div>
 
-  <div class="row" style="margin: 0 3%;">
+  <div class="row mt-2" style="margin: 0 3%;">
     <!--Customer's Name-->
-    <div class="col-6 text-left">
+    <div class="col-md-6 text-left">
       Customer's Name: <span><%= @account.name %></span>
     </div>
     <!--Order Date-->
-    <div class="col-6 text-right">
+    <div class="col-md-6 order-right">
       Order Created: <span><%= @order.created_at.strftime("%H:%M, %a %b %d %y") %></span>
     </div>
   </div>
 
   <div class="row" style="margin: 0 3%;">
     <!--Phone-->
-    <div class="col-6 text-left">
+    <div class="col-md-6 text-left">
       Phone: <span><%= @account.phone %></span>
     </div>
     <!--Status-->
-    <div class="col-6 text-right">
+    <div class="col-md-6 order-right">
       Status: 
       
       <% if @order.status == 'payment' %>
@@ -83,46 +48,48 @@
     </div>
   </div>
 
-  <div class="row mt-4 wrap-table-show-order" style="margin: 0 3%;">
-    <div class="col-12">
-      <div class="row wrap-label-show-order">
-        <!--PID-->
-        <div class="col-1 text-center">#</div>
-        <!--Code-->
-        <!-- <div class="col-2 text-center">Code</div> -->
-        <!--Name-->
-        <div class="col-3 text-center">Name</div>
-        <!--Quantity-->
-        <div class="col-2 text-center">Quantity</div>
-        <!--Unit Price-->
-        <div class="col-3 text-center">Unit Price</div>
-        <!--Subtotal-->
-        <div class="col-3 text-center">Subtotal</div>
-      </div>
-    <% @order_products.each_with_index do |detail, index| index += 1 %>
-      <div class="row content-show-order">
-        <!--PID-->
-        <div class="col-1 text-center detail-content-show-order"><%= index %></div>
-        <!--Code-->
-        <!-- <div class="col-2 text-center detail-content-show-order">9999999</div> -->
-        <!--Name-->
-        <div class="col-3 text-center detail-content-show-order"><%= Product.find_by_id(detail.product_id).name %></div>
-        <!--Quantity-->
-        <div class="col-2 text-center detail-content-show-order"><%= detail.quantity %></div>
-        <!--Unit Price-->
-        <div class="col-3 text-center detail-content-show-order"><%= detail.price %></div>
-        <!--Subtotal-->
-        <div class="col-3 text-center detail-content-show-order"><%= detail.quantity * detail.price %></div>
-      </div>
-    <% end %>
+  <div class="order-table">
+    <div class="row mt-4 wrap-table-show-order" style="margin: 0 3%; min-width: 640px;">
+      <div class="col-12">
+        <div class="row wrap-label-show-order">
+          <!--PID-->
+          <div class="col-1 text-center">#</div>
+          <!--Code-->
+          <!-- <div class="col-2 text-center">Code</div> -->
+          <!--Name-->
+          <div class="col-3 text-center">Name</div>
+          <!--Quantity-->
+          <div class="col-2 text-center">Quantity</div>
+          <!--Unit Price-->
+          <div class="col-3 text-center">Unit Price</div>
+          <!--Subtotal-->
+          <div class="col-3 text-center">Subtotal</div>
+        </div>
+      <% @order_products.each_with_index do |detail, index| index += 1 %>
+        <div class="row content-show-order">
+          <!--PID-->
+          <div class="col-1 text-center detail-content-show-order"><%= index %></div>
+          <!--Code-->
+          <!-- <div class="col-2 text-center detail-content-show-order">9999999</div> -->
+          <!--Name-->
+          <div class="col-3 text-center detail-content-show-order"><%= Product.find_by_id(detail.product_id).name %></div>
+          <!--Quantity-->
+          <div class="col-2 text-center detail-content-show-order"><%= detail.quantity %></div>
+          <!--Unit Price-->
+          <div class="col-3 text-center detail-content-show-order"><%= detail.price %></div>
+          <!--Subtotal-->
+          <div class="col-3 text-center detail-content-show-order"><%= detail.quantity * detail.price %></div>
+        </div>
+      <% end %>
 
-      <div class="row wrap-total-show-order">
-        <div class="col-1 text-center"></div>
-        <!-- <div class="col-2 text-center"></div> -->
-        <div class="col-3 text-center"></div>
-        <div class="col-2 text-center"></div>
-        <div class="col-3 text-center">Total</div>
-        <div class="col-3 text-center"><%= @order.total_price %></div>
+        <div class="row wrap-total-show-order">
+          <div class="col-1 text-center"></div>
+          <!-- <div class="col-2 text-center"></div> -->
+          <div class="col-3 text-center"></div>
+          <div class="col-2 text-center"></div>
+          <div class="col-3 text-center">Total</div>
+          <div class="col-3 text-center"><%= @order.total_price %></div>
+        </div>
       </div>
     </div>
   </div>

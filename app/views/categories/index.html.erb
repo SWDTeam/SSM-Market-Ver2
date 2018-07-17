@@ -14,63 +14,66 @@
       </div>
 
       <!--FILTER bnt-->
-      <div class="col-lg-2">
+      <div class="col-lg-2 mt-2 text-center">
         <%= form.button 'Find', type: 'button', class: 'bnt-index-category', id: 'M-btn-search-cates' %>
       </div>
     </div>
   <% end %>
   
-
-  <!--label for table-->
-  <div class="row pb-2 wrap-label-index-category">
-    <!--STT-->
-    <div class="col-2 text-center label-index-category">No</div>
-    <!--IMG-->
-    <div class="col-2 text-center label-index-category">Image</div>
-    <!--NAME-->
-    <div class="col-4 label-index-category">Name</div>
-    <!--Total Of Products-->
-    <div class="col-2 text-center label-index-category">Total Of Products</div>
-    <!--Edit-->
-    <div class="col-1 text-center label-index-category">Edit</div>
-  </div>
-
-  <!--content of table-->
-  <% @categories.each.with_index do |category, index| index += 1 %>
-    <div class="row py-3 wrap-content-index-category content-index-category M-test">
-      <!--STATUS-->
-      <div class="col-2 text-center" ><%= index %></div>
-      <!--IMG-->
-      <div class="col-2"><img src="<%= category.images.first.url %>" alt="" class="img-index-categories"></div>
-      <!--NAME-->
-      <div class="col-4"><%= category.name %></div>
-      <!--Total Of Products-->
-      <div class="col-2 text-center">
-        <%= Product.where(category_id: category.id).count(:name) %>
+  <div class="wrap-table-category"><!--.wrap-table in P-index-category file-->
+    <div style="min-width: 650px;">
+      <!--label for table-->
+      <div class="row pb-2 wrap-label-index-category">
+        <!--STT-->
+        <div class="col-2 text-center label-index-category">No</div>
+        <!--IMG-->
+        <div class="col-2 text-center label-index-category">Image</div>
+        <!--NAME-->
+        <div class="col-4 label-index-category">Name</div>
+        <!--Total Of Products-->
+        <div class="col-2 text-center label-index-category">Total Of Products</div>
+        <!--Edit-->
+        <div class="col-1 text-center label-index-category">Edit</div>
       </div>
-      
-      <!--Active-->
-      <% if category.status == 'active' %>
-        <div class="col-1">
-          <center>
-          <%= link_to edit_account_category_path(current_account, category) do %>
-            <button class="edit-bnt-index-category text-center"><i class="fa fa-edit"></i></button>
+
+      <!--content of table-->
+      <% @categories.each.with_index do |category, index| index += 1 %>
+        <div class="row py-3 wrap-content-index-category content-index-category M-test">
+          <!--STATUS-->
+          <div class="col-2 text-center" ><%= index %></div>
+          <!--IMG-->
+          <div class="col-2"><img src="<%= category.images.first.url %>" alt="" class="img-index-categories"></div>
+          <!--NAME-->
+          <div class="col-4"><%= category.name %></div>
+          <!--Total Of Products-->
+          <div class="col-2 text-center">
+            <%= Product.where(category_id: category.id).count(:name) %>
+          </div>
+          
+          <!--Active-->
+          <% if category.status == 'active' %>
+            <div class="col-1">
+              <center>
+              <%= link_to edit_account_category_path(current_account, category) do %>
+                <button class="edit-bnt-index-category text-center"><i class="fa fa-edit"></i></button>
+              <% end %>
+              </center>
+            </div>
+          <% else %>
+          <!--Lock-->
+          <div class="col-1">
+            <center>
+            <%= link_to edit_account_category_path(current_account, category) do %>
+              <button class="edit-bnt-index-category"><i class="fa fa-lock"></i></center></button>
+            <% end %>
+            </center>
+          </div>
           <% end %>
-          </center>
-        </div>
-      <% else %>
-      <!--Lock-->
-      <div class="col-1">
-        <center>
-        <%= link_to edit_account_category_path(current_account, category) do %>
-          <button class="edit-bnt-index-category"><i class="fa fa-lock"></i></center></button>
-        <% end %>
-        </center>
-      </div>
+        </div> 
       <% end %>
-    </div> 
-  <% end %>
-  <div id="M-result"></div>
+      <div id="M-result"></div>
+    </div>
+  </div>
 </div>
 
 <script>

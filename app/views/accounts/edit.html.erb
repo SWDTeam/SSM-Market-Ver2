@@ -7,115 +7,134 @@
     <div class="col-12">
       <!--EMAIL-->
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 label-account">Email</div>
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 label-account">Email</div>
+        <div class="col-lg-2"></div>
       </div>
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
           <%= form.text_field :email, class:"input-filter-index-category", id:"u--email", value: @user.email %>
           <p id="error--email--edit--profile" class="validate-new-product"></p>
         </div>
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
       </div>
 
       <!--NAME-->
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 label-account">Name</div>
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 label-account">Name</div>
+        <div class="col-lg-2"></div>
       </div>
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
           <%= form.text_field :name, class:"input-filter-index-category", id:"u--name", value: @user.name %>
           <p id="error--name--edit--profile" class="validate-new-product"></p>
         </div>
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
       </div>
 
       <!--PHONE + GENDER-->
       <div class="row">
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
         <!--PHONE-->
-        <div class="col-sm-4 label-account">Phone</div>
-        <!--GENDER-->
-        <div class="col-sm-4 label-account">Gender</div>
-        <div class="col-2"></div>
-      </div>
-      <div class="row">
-        <div class="col-2"></div>
-        <!--PHONE-->
-        <div class="col-4">
-          <%= form.text_field :phone, class:"input-filter-index-category", id:"u--phone", value: @user.phone %>
-          <p id="error--phone" class="validate-new-product"></p>
-        </div>
-        <!--GENDER-->
-        <div class="col-4">
-         <% if @user.gender == 'male' %>
-          <label class="pl-2 pr-3">Male
-            <%= form.radio_button :gender, 'male', checked: true, class:"radio-profile u--gender" %>
-          </label>
-          <label class="pl-2 pr-3">Female
-            <%= form.radio_button :gender, 'female', class:"radio-profile u--gender" %>
-          </label>
-        <% elsif @user.gender == 'female' %>
-          <label class="pl-2 pr-3">Male
-            <%= form.radio_button :gender, 'male', class:"radio-profile u--gender" %>
-          </label>
-          <label class="pl-2 pr-3">Female
-            <%= form.radio_button :gender, 'female', checked: true, class:"radio-profile u--gender" %>
-          </label>
-        <% else %>
-          <label class="pl-2 pr-3">Male
-            <%= form.radio_button :gender, 'male', class:"radio-profile u--gender" %>
-          </label>
-          <label class="pl-2 pr-3">Female
-            <%= form.radio_button :gender, 'female', class:"radio-profile u--gender" %>
-          </label>
-        <% end %>
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-12 label-account">Phone</div>
+          </div>
 
-          <p id="error--gender" class="validate-new-product"></p>
+          <div class="row">
+            <div class="col-lg-12">
+              <%= form.text_field :phone, class:"input-filter-index-category", id:"u--phone", value: @user.phone %>
+              <p id="error--phone" class="validate-new-product"></p>
+            </div>
+          </div>
         </div>
-        <div class="col-2"></div>
-      </div>
 
+        <!--GENDER-->
+        <div class="col-lg-4">       
+          <div class="row">
+            <div class="col-12 label-account">Gender</div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <% if @user.gender == 'male' %>
+                <label class="pl-2 pr-3">Male
+                  <%= form.radio_button :gender, 'male', checked: true, class:"radio-profile u--gender" %>
+                </label>
+                <label class="pl-2 pr-3">Female
+                  <%= form.radio_button :gender, 'female', class:"radio-profile u--gender" %>
+                </label>
+              <% elsif @user.gender == 'female' %>
+                <label class="pl-2 pr-3">Male
+                  <%= form.radio_button :gender, 'male', class:"radio-profile u--gender" %>
+                </label>
+                <label class="pl-2 pr-3">Female
+                  <%= form.radio_button :gender, 'female', checked: true, class:"radio-profile u--gender" %>
+                </label>
+              <% else %>
+                <label class="pl-2 pr-3">Male
+                  <%= form.radio_button :gender, 'male', class:"radio-profile u--gender" %>
+                </label>
+                <label class="pl-2 pr-3">Female
+                  <%= form.radio_button :gender, 'female', class:"radio-profile u--gender" %>
+                </label>
+              <% end %>
+
+              <p id="error--gender" class="validate-new-product"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+      
       <!--ROLE + STATUS-->
       <div class="row">
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
         <!--ROLE-->
-        <div class="col-4 label-account">Role</div>
-        <!--STATUS-->
-        <div class="col-4 label-account">Status</div>
-        <div class="col-2"></div>
-      </div>
-      <div class="row">
-        <div class="col-2"></div>
-        <!--ROLE-->
-        <div class="col-4">
-          <%= form.text_field :role_id, class: "input-filter-index-category", value: Role.find_by_id(@user.role_id).name.upcase, disabled:true %>
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-12 label-account">Role</div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <%= form.text_field :role_id, class: "input-filter-index-category", value: Role.find_by_id(@user.role_id).name.upcase, disabled:true %>
+            </div>
+          </div>
         </div>
+
         <!--STATUS-->
-        <div class="col-4">
-           <%= form.text_field :status, class: 'input-filter-index-category', value: @user.status.capitalize, disabled:true %>
+        <div class="col-lg-4">
+          <div class="row">
+            <div class="col-12 label-account">Status</div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <%= form.text_field :status, class: 'input-filter-index-category', value: @user.status.capitalize, disabled:true %>
+            </div>
+          </div>
         </div>
-        <div class="col-2"></div>
+
+        <div class="col-lg-2"></div>
       </div>
 
       <!--ADDRESS-->
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 label-account">Address</div>
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8 label-account">Address</div>
+        <div class="col-lg-2"></div>
       </div>
       <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
           <%= form.text_field :address, class: 'input-filter-index-category', id:"u--address", value: @user.address %>
           <p id="error--address--edit--profile" class="validate-new-product"></p>
         </div>
-        <div class="col-2"></div>
+        <div class="col-lg-2"></div>
       </div>
       <!--BUTTON-->
       <div class="row mb-2 mt-4">
