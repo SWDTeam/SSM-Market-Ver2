@@ -8,6 +8,7 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
     account = Account.new(account_params)
     puts "Params cua acccount " + account_params.to_s
     if account.save
+      account.skip_confirmation!
       puts "THANH CONG ROI BE OI"      
       render json: account.as_json.merge({email: account.email, name: account.name, success: true}).to_json, status: 200
       return 
