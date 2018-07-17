@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     };
                     thread.start();
-                    loginCustomer("https://ssm-market.herokuapp.com/api/v1/sign_in");
+                    callApiLogin("https://ssm-market.herokuapp.com/api/v1/sign_in");
 
                 }
             }
@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void loginCustomer(String url) {
+    private void callApiLogin(String url) {
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         JSONObject jsonObject = new JSONObject();
         JSONObject js = new JSONObject();
@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("REPONSE LOGIN : ", response.toString());
+                Log.e("reponse login =  ", response.toString());
                 if (response.toString() != null || !response.toString().equals("")) {
 
                     try {
@@ -175,6 +175,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                        startActivity(intent);
                         Log.e("error login ", error.toString());
                     }
                 }
@@ -182,4 +184,10 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+
+
+    public void forgotPassword(View view) {
+        Intent intent = new Intent(getApplicationContext(),ForgotPassword.class);
+        startActivity(intent);
+    }
 }

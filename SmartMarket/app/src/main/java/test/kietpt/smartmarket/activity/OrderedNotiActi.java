@@ -97,7 +97,7 @@ public class OrderedNotiActi extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(this, "Please click to Back to home to return ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Please click to Continue to shop to return ", Toast.LENGTH_SHORT).show();
 
     }
 

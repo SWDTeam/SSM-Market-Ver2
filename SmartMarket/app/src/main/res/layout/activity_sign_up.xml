@@ -7,13 +7,11 @@
     android:fillViewport="true"
     tools:context=".activity.SignUpActivity"
     >
-
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
         <android.support.design.widget.TextInputLayout
 
             android:id="@+id/textInputLayout6"
@@ -78,7 +76,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
-
             android:layout_width="21dp"
             android:layout_height="26dp"
             android:layout_marginEnd="8dp"
@@ -115,6 +112,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/progressBarSignUp"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="256dp"
+            android:progressDrawable="@drawable/circular_progress_view"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/btnChangePass"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
         <TextView
             android:layout_width="21dp"
             android:layout_height="26dp"
@@ -134,7 +147,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="604dp"
             android:background="@drawable/gender"
-            app:layout_constraintEnd_toStartOf="@+id/spGender"
+            app:layout_constraintEnd_toStartOf="@+id/spGenderSignUp"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

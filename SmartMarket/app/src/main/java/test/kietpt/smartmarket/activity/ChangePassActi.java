@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,7 +32,7 @@ public class ChangePassActi extends AppCompatActivity {
     TextInputEditText oldPass, newPass, confirmPass;
     Button btnChange;
     Database database = new Database(this);
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +40,13 @@ public class ChangePassActi extends AppCompatActivity {
 
         reflect();
 
-
     }
 
     private void reflect() {
         oldPass = (TextInputEditText) findViewById(R.id.txtOldPass);
         newPass = (TextInputEditText) findViewById(R.id.txtNewPass);
         confirmPass = (TextInputEditText) findViewById(R.id.txtConfirmPass);
+        progressBar = (ProgressBar)findViewById(R.id.progressBarChangePass);
     }
 
 
@@ -69,7 +70,7 @@ public class ChangePassActi extends AppCompatActivity {
         return checked;
     }
 
-    public void changePassword(String url) {
+    public void callApiChangePassword(String url) {
         JSONObject jsonObject = new JSONObject();
         JSONObject js = new JSONObject();
         try {
@@ -125,6 +126,26 @@ public class ChangePassActi extends AppCompatActivity {
 
     public void changePasword(View view) {
         if (!validatePass()) {
+            final Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        synchronized (this) {
+                            wait(3000);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                }
+            };
+            thread.start();
             confirmUpdatePass();
         } else {
             Toast.makeText(ChangePassActi.this, "Please to check your password!!!!!!", Toast.LENGTH_SHORT).show();
@@ -140,10 +161,7 @@ public class ChangePassActi extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-//                changePassword("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ChangePassCustomer?txtEmail=" + MainActivity.account.getEmail() + "&txtOldPassword="
-//                        + oldPass.getText().toString() + "&txtNewPassword=" + newPass.getText().toString());
-                changePassword("https://ssm-market.herokuapp.com/api/v1/change_password");
-                //changePassword("http://"+IpConfig.ipConfig+":3000/api/v1/change_password");
+                callApiChangePassword("https://ssm-market.herokuapp.com/api/v1/change_password");
             }
         });
         alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

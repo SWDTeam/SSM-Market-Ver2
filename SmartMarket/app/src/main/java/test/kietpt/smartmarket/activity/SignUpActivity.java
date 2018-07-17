@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
     TextView checkUsername;
     TextView checkAddress;
     TextView checkPhone;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +95,8 @@ public class SignUpActivity extends AppCompatActivity {
         phone = (TextInputEditText) findViewById(R.id.txtPhoneSignUp);
         spGender = (Spinner) findViewById(R.id.spGenderSignUp);
 
+        progressBar = (ProgressBar)findViewById(R.id.progressBarSignUp);
+
 
         //các textview dùng để checkvalidation
         checkEmail = (TextView) findViewById(R.id.checkEmail);
@@ -120,7 +124,9 @@ public class SignUpActivity extends AppCompatActivity {
         String txtPhone = phone.getText().toString();
 
         boolean checked = false;
-        if (!txtEmail.matches("[a-zA-Z0-9]{3,50}@[a-z]{3,10}.[a-z]{3,10}")) {
+        //if (!txtEmail.matches("[a-zA-Z0-9]{3,50}@[a-z]{3,10}.[a-z]{3,10}.[a-z]{3,10}")) {
+        if(!txtEmail.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
             checkEmail.setVisibility(View.VISIBLE);
             checkEmail.setText("Format abc123@gmail.com");
             checked = true;
@@ -163,13 +169,32 @@ public class SignUpActivity extends AppCompatActivity {
         if (checkValidate()) {
             Toast.makeText(SignUpActivity.this, "Something wrong!!! please sign up again ", Toast.LENGTH_SHORT).show();
         } else {
-            signUpCustomer("https://ssm-market.herokuapp.com/api/v1/sign_up");
-            //signUpCustomer("http://192.168.43.203:3000/api/v1/sign_up");
+            final Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        synchronized (this) {
+                            wait(3000);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                }
+            };
+            thread.start();
+            callApiSignUpCustomer("https://ssm-market.herokuapp.com/api/v1/sign_up");
         }
 
     }
 
-    public void signUpCustomer(String url) {
+    public void callApiSignUpCustomer(String url) {
 
         JSONObject jsonObject = new JSONObject();
         JSONObject js = new JSONObject();
@@ -193,17 +218,15 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.e("Reponse sign up ", response.toString());
-
                         try {
-                            JSONObject jsonReponse = new JSONObject(response.toString());
-                            JSONArray jsonArray = jsonReponse.getJSONArray("email");
+
+                            JSONArray jsonArray = response.getJSONArray("email");
                             if (jsonArray.length() == 1) {
                                 Toast.makeText(SignUpActivity.this, "Email has already, please input another email", Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         try {
                             int userId = response.getInt("id");
                             String email = response.getString("email");

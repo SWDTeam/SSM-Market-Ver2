@@ -52,7 +52,9 @@
         <activity android:name=".activity.OrderedDetailActi" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.MyInvoiceActi" />
-        <activity android:name=".activity.InvoiceDetailActi"></activity>
+        <activity android:name=".activity.InvoiceDetailActi" />
+        <activity android:name=".activity.ForgotPassword" />
+        <activity android:name=".activity.CodeForgotPassActi"></activity>
     </application>
 
 </manifest>

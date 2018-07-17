@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ public class ProfileActi extends AppCompatActivity {
     String selectdSpinner;
     Database database;
     TextView checkUsername, checkAddress, checkPhone;
-
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +53,6 @@ public class ProfileActi extends AppCompatActivity {
         } else {
             CheckConnection.showConnection(this, "Please check your wifi!!!");
         }
-
-
     }
 
     private void getDataCusInfo() {
@@ -92,6 +91,7 @@ public class ProfileActi extends AppCompatActivity {
         email.setEnabled(false);
         username = (TextInputEditText) findViewById(R.id.txtUsernameProfile);
         gender = (Spinner) findViewById(R.id.spGenderProfile);
+        progressBar = (ProgressBar)findViewById(R.id.progressBarProfile);
         address = (TextInputEditText) findViewById(R.id.txtAddressProfile);
         phone = (TextInputEditText) findViewById(R.id.txtPhoneProfile);
         checkUsername = (TextView) findViewById(R.id.checkUsernamePrifle);
@@ -128,6 +128,26 @@ public class ProfileActi extends AppCompatActivity {
 
     public void updateProfile(View view) {
         if (!checkValidate()) {
+            final Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        synchronized (this) {
+                            wait(3000);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                }
+            };
+            thread.start();
             confirmUpdateProfile();
         } else {
             Toast.makeText(ProfileActi.this, "Please to check your profile!!!!!!", Toast.LENGTH_SHORT).show();
@@ -135,7 +155,7 @@ public class ProfileActi extends AppCompatActivity {
 
     }
 
-    public void updateProfileCustomer(String url) {
+    public void callApiUpdateProfileCustomer(String url) {
         JSONObject jsonObject = new JSONObject();
         JSONObject js = new JSONObject();
         try {
@@ -207,7 +227,7 @@ public class ProfileActi extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 int cusId = database.getCustomerId(email.getText().toString());
                 Log.e("USERID = ", cusId + "");
-                updateProfileCustomer("https://ssm-market.herokuapp.com/api/v1/accounts/" + cusId);
+                callApiUpdateProfileCustomer("https://ssm-market.herokuapp.com/api/v1/accounts/" + cusId);
                 if (cusId == 0) {
                     Toast.makeText(ProfileActi.this, "Some thing wrong when update!!!!", Toast.LENGTH_SHORT).show();
                 }

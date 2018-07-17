@@ -44,7 +44,7 @@ public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.Ho
         holder.productName.setText(productDTO.getProductName());
         DecimalFormat format = new DecimalFormat("###,###,###");
         holder.productPrice.setText(" $ "+format.format(productDTO.getPrice()));
-        Picasso.get().load(productDTO.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(holder.imgProduct);
+        Picasso.get().load(productDTO.getUrlPic()).into(holder.imgProduct);
 
     }
 

@@ -161,7 +161,7 @@ public class OrderedDetailActi extends AppCompatActivity {
     public void deleteOrdered(View view) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Confirm your ordered !!! ");
-        builder.setMessage("Do you want to confirm your ordered ?");
+        builder.setMessage("Do you want to delete your ordered ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

@@ -174,7 +174,6 @@ public class CategoryListActi extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Log.e("error category list reponse ",error.toString());
                         Toast.makeText(CategoryListActi.this, "Not found", Toast.LENGTH_SHORT).show();
-
                     }
                 }
         );

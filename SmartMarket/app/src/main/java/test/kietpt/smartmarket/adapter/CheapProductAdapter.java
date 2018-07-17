@@ -35,7 +35,7 @@ public class CheapProductAdapter extends RecyclerView.Adapter<CheapProductAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.e(TAG,"onCreate : called ");
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cheap_product_item,null);
         ViewHolder cheapProductHolder = new ViewHolder(view);
         return cheapProductHolder;
@@ -43,7 +43,7 @@ public class CheapProductAdapter extends RecyclerView.Adapter<CheapProductAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.e(TAG,"onBindViewHolder : called ");
+
         ProductDTO productDTO = listProduct.get(position);
         holder.productName.setText(productDTO.getProductName());
         DecimalFormat format = new DecimalFormat("###,###,###");

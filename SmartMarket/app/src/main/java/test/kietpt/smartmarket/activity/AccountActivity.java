@@ -36,7 +36,7 @@ public class AccountActivity extends AppCompatActivity {
     ListView listView;
     ArrayList<AccountMenuItemDTO> list;
     TextView textViewUsername, txtCount;
-    ImageView imgPicAccount, imgCart;
+    ImageView imgPicAccount;
     AccountAdapter adapter;
     Database database;
     Toolbar toolbar;
