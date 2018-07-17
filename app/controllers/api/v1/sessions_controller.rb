@@ -13,10 +13,10 @@ class Api::V1::SessionsController < Devise::SessionsController
     unless user.nil?
       #&& user.role_id == 2
       if user.valid_password? params[:session][:password] 
-        puts user.role_id
-        puts user.valid_password? params[:session][:password] 
-        render json: user.as_json.merge({email: user.email, name: user.name, success: true}).to_json, status: 200
-      return
+        if user.role_id == 2
+          render json: user.as_json.merge({email: user.email, name: user.name, success: true}).to_json, status: 200
+          return
+        end
       end
     end
     invalid_login_attempt
