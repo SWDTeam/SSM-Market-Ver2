@@ -1,5 +1,6 @@
 class Api::V1::SessionsController < Devise::SessionsController
   prepend_before_action :require_no_authentication, only: :create
+  protect_from_forgery with: :null_session, only: [:create]
   before_action :ensure_params_exist, only: :create
   
   respond_to :json

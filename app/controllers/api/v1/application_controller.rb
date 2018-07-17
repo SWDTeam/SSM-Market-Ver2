@@ -2,7 +2,6 @@ class Api::V1::ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Basic::ControllerMethods
   include ActionController::ImplicitRender
   before_action :authenticate
-  protect_from_forgery with: :null_session
   # respond_to :json
   protected
  
