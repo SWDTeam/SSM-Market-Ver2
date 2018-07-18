@@ -40,4 +40,20 @@
   background: #F6AC43;
   border: #F6AC43 1.5px solid;
   color: white;
-} 
+}
+
+.order-right {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .order-right {
+    text-align: left;
+  }
+}
+
+@media (max-width: 750px) {
+  .order-table {
+    overflow-x: scroll;
+  }
+}

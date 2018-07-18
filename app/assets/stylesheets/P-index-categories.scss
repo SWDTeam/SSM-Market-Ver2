@@ -21,10 +21,6 @@
   width: 100%;
 }
 
-.wrap-table-category {
-  min-width: 650px;
-}
-
 .wrap-index-category {
   background: white;
   padding: 20px 15px 50px;
@@ -104,8 +100,8 @@
   }
 }
 
-/*@media (max-width: 700px) {
+@media (max-width: 700px) {
   .wrap-table-category {
-    width: 650px;
+    overflow-x: scroll;
   }
-}*/
+}

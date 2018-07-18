@@ -207,3 +207,9 @@ a:hover {
     overflow-x: none;
   }
 }
+
+@media (max-width: 400px) {
+  .wrap-content-page{
+    padding: 0 0;
+  }
+}
