@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     passwords: 'accounts/passwords',
     # registrations: 'accounts/registrations',
   }
-  resources :accounts do
+  resources :accounts, except: :destroy do
     resources :categories, only: [:new, :edit, :update, :destroy, :create]  do 
       resources :images, only: [:create, :edit, :update, :show, :destroy]
     end
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   end
   resources :products, only: [:index, :show]
   resources :categories, only: [:index]
-  resources :order_products
+  # resources :order_products
   resources :orders, only: [:index, :show]
   # resources :roles
 
