@@ -5,20 +5,10 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version: Ruby 2.4.4, Rails 5.1.6 
 
-* System dependencies
+* Database: SQLite, pgsql
 
-* Configuration
+* Demo: https://ssm-market.herokuapp.com/
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
