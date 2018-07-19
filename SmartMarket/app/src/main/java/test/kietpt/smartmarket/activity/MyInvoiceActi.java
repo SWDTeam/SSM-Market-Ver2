@@ -53,7 +53,6 @@ public class MyInvoiceActi extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), InvoiceDetailActi.class);
-                Toast.makeText(MyInvoiceActi.this, "orderId = " + listOrderDto.get(i).getOrderId(), Toast.LENGTH_SHORT).show();
                 intent.putExtra("orderId", listOrderDto.get(i).getOrderId());
                 startActivity(intent);
             }

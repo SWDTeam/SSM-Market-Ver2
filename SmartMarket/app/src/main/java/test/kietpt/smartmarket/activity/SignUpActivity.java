@@ -65,6 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    // check gender
     private void catchSpinner() {
         List<String> dataSrc = new ArrayList<>();
         dataSrc.add("male");
@@ -124,7 +125,6 @@ public class SignUpActivity extends AppCompatActivity {
         String txtPhone = phone.getText().toString();
 
         boolean checked = false;
-        //if (!txtEmail.matches("[a-zA-Z0-9]{3,50}@[a-z]{3,10}.[a-z]{3,10}.[a-z]{3,10}")) {
         if(!txtEmail.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")){
             checkEmail.setVisibility(View.VISIBLE);
@@ -154,7 +154,7 @@ public class SignUpActivity extends AppCompatActivity {
             checkAddress.setText("Please not empty");
             checked = true;
         }
-        if (!txtPhone.matches("[0-9]{10,11}")) {
+        if (!txtPhone.matches("0[0-9]{10,11}")) {
 
             checkPhone.setVisibility(View.VISIBLE);
             checkPhone.setText("Please input phone");
@@ -164,6 +164,7 @@ public class SignUpActivity extends AppCompatActivity {
         return checked;
     }
 
+    //nut sign up ben activity_sign_up
     public void onClickSignUp(View view) {
 
         if (checkValidate()) {

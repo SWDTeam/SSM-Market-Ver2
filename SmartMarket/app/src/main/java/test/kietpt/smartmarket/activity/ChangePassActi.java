@@ -117,13 +117,14 @@ public class ChangePassActi extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("error change pass + ", error.getMessage());
+                        Log.e("error change pass + ", error.toString());
                     }
                 }
         );
         requestQueue.add(jsonObjectRequest);
     }
 
+    // nut change password ben activity_change_pass
     public void changePasword(View view) {
         if (!validatePass()) {
             final Thread thread = new Thread() {
@@ -152,6 +153,7 @@ public class ChangePassActi extends AppCompatActivity {
         }
     }
 
+    // dung de confirm, hien thi dialog yes/no
     public void confirmUpdatePass() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("Confirm your password!");

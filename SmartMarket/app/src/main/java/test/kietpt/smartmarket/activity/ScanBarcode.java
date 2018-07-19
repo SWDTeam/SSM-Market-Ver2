@@ -42,8 +42,11 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
 
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
+
+        //dung cho api 24 tro len
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkPermission()) {
+                //ham checkPermission tra ve true neu cho phep dung camera
                 Toast.makeText(this, "Permission is granted! ", Toast.LENGTH_SHORT).show();
 
             } else {
@@ -52,11 +55,12 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
         }
 
     }
-
+    //dung de hien thi dialog(allow,deny)
     private boolean checkPermission() {
         return (ContextCompat.checkSelfPermission(ScanBarcode.this, CAMERA) == PackageManager.PERMISSION_GRANTED);
     }
 
+    // yeu cau duoc cap quyen su dung camera
     private void requestPermission() {
         ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
     }
@@ -66,6 +70,7 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
             case REQUEST_CAMERA:
                 if (grantResults.length > 0) {
                     boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    // bien cameraAccepted dung de kiem tra da duoc cho phep dung camera hay chua, neu cho phep return true, nguoc lai false
                     if (cameraAccepted) {
                         Toast.makeText(this, "Permission Granted ", Toast.LENGTH_SHORT).show();
                     } else {
@@ -90,6 +95,7 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
         }
     }
 
+    // dung de start camera
     @Override
     protected void onResume() {
         super.onResume();
@@ -107,6 +113,7 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
         }
     }
 
+    //stop camera
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -122,13 +129,13 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
                 .show();
     }
 
+    // dung de doc barcode hoac qrcode
     @Override
     public void handleResult(Result result) {
         String scanResult = result.getText();
-        Toast.makeText(this, scanResult, Toast.LENGTH_LONG).show();
-        getBarcode("https://ssm-market.herokuapp.com/api/v1/products_barcode/"+scanResult);
+        callApiGetBarcode("https://ssm-market.herokuapp.com/api/v1/products_barcode/"+scanResult);
     }
-    public void getBarcode(String url){
+    public void callApiGetBarcode(String url){
         Log.e("da vao day", " da vao day r ne");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -176,7 +183,7 @@ public class ScanBarcode extends AppCompatActivity implements ZXingScannerView.R
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                    Log.e("response json error barcode = ",error.toString());
                     }
                 }
         );
