@@ -79,7 +79,8 @@ class OrdersController < ApplicationController
   
   def search_orders_by_code
     if params[:code]
-      @orders = Order.where("code LIKE ?", "%#{params[:code]}%")
+      # pg like
+      @orders = Order.where("code ILIKE ?", "%#{params[:code]}%")
       result = Array.new
       @orders.each do |t|
         result.push({id: t.id, code: t.code, cus_name: Account.find_by_id(t.account_id).name,

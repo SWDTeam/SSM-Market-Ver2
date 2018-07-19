@@ -55,9 +55,8 @@ class AccountsController < ApplicationController
     })
     # puts @account.to_json
     respond_to do |format|
+      @account.skip_confirmation!
       if @account.save!
-        @account.skip_confirmation!
-
         # sign_in current_account
         format.html { redirect_to accounts_path, notice: 'New Admin was successfully created.' }
         format.json { render :index, status: :created, location: @account }
@@ -71,7 +70,6 @@ class AccountsController < ApplicationController
   def update
     @account = Account.find_by_id(params[:id])
     @user = Account.find_by_id(current_account.id)
-
     if @account.id != current_account.id
       respond_to do |format|
         if @account.update(account_params)
@@ -97,7 +95,8 @@ class AccountsController < ApplicationController
 
   def search_accounts_by_name
     if params[:name]
-      @accounts = Account.where("name LIKE ?", "%#{params[:name]}%")
+      # pg like
+      @accounts = Account.where("name ILIKE ?", "%#{params[:name]}%")
 
       result = Array.new
       @accounts.each do |t|

@@ -82,7 +82,8 @@ class CategoriesController < ApplicationController
 
   def search_categories_by_name
     if params[:name]
-      @categories = Category.where("name LIKE ?", "%#{params[:name]}%")
+      # pg like
+      @categories = Category.where("name ILIKE ?", "%#{params[:name]}%")
       result = Array.new
       @categories.each do |t|
         result.push({id: t.id, name: t.name, image: t.images.first.url.url, status: t.status,

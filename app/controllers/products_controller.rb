@@ -148,7 +148,8 @@ class ProductsController < ApplicationController
 
   def search_products_by_name
     if params[:name]
-      @products = Product.where("name LIKE ?", "%#{params[:name]}%")
+      # pg like
+      @products = Product.where("name ILIKE ?", "%#{params[:name]}%")
       result = Array.new
       @products.each do |t|
         result.push({id: t.id, name: t.name, quantity: t.quantity, 
