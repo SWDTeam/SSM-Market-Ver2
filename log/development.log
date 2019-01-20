@@ -1004,3 +1004,331 @@ Processing by Devise::SessionsController#new as HTML
 Completed 200 OK in 1330ms (Views: 1287.6ms | ActiveRecord: 1.7ms)
 
 
+Started GET "/" for 127.0.0.1 at 2019-01-19 20:35:22 +0700
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Accounts::SessionsController#new as HTML
+  Rendering accounts/sessions/new.html.erb
+  Rendered accounts/sessions/new.html.erb (9498.0ms)
+Completed 200 OK in 9659ms (Views: 9509.8ms | ActiveRecord: 5.0ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-01-20 07:36:22 +0700
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Accounts::SessionsController#new as HTML
+  Rendering accounts/sessions/new.html.erb
+  Rendered accounts/sessions/new.html.erb (4599.3ms)
+Completed 200 OK in 4703ms (Views: 4629.3ms | ActiveRecord: 1.5ms)
+
+
+Started GET "/accounts/password/new" for 127.0.0.1 at 2019-01-20 07:36:30 +0700
+Processing by Accounts::PasswordsController#new as HTML
+  Rendering accounts/passwords/new.html.erb
+  Rendered accounts/passwords/new.html.erb (351.7ms)
+Completed 200 OK in 368ms (Views: 357.9ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/accounts/password" for 127.0.0.1 at 2019-01-20 07:36:38 +0700
+Processing by Accounts::PasswordsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"GgJ3rx2ce1zYZiaNckHJh+84Hq6oL894CUPFFACzWJ7DmcpZ45kr2oNNXna/FRZUcHabcZxZeWifyj4KaqBV6Q==", "account"=>{"email"=>"flora280197@gmail.com"}, "commit"=>"Send"}
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."email" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["email", "flora280197@gmail.com"], ["LIMIT", 1]]
+  Rendering accounts/passwords/new.html.erb
+  Rendered accounts/passwords/new.html.erb (256.8ms)
+Completed 200 OK in 316ms (Views: 260.2ms | ActiveRecord: 0.4ms)
+
+
+Started POST "/accounts/password" for 127.0.0.1 at 2019-01-20 07:36:50 +0700
+Processing by Accounts::PasswordsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"6nE6zvuFB9h6AU7yEAsRjIAV9mOcBiekE6QDG0cMizmpYniJt8x3Uuq/aUmNG3gQSyIvrr2fNPOfBGwx5MNWyA==", "account"=>{"email"=>"minhtestcode@gmail.com"}, "commit"=>"Send"}
+  [1m[36mAccount Load (0.6ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."email" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["email", "minhtestcode@gmail.com"], ["LIMIT", 1]]
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."reset_password_token" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["reset_password_token", "50a3fc2dc304c33525d06f3f7eaf9ddef1a9fa2fc22b8da834840a4a27bc35e6"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.8ms)[0m  [1m[33mUPDATE "accounts" SET "reset_password_token" = ?, "reset_password_sent_at" = ?, "updated_at" = ? WHERE "accounts"."id" = ?[0m  [["reset_password_token", "50a3fc2dc304c33525d06f3f7eaf9ddef1a9fa2fc22b8da834840a4a27bc35e6"], ["reset_password_sent_at", "2019-01-20 00:36:50.559151"], ["updated_at", "2019-01-20 00:36:50.560271"], ["id", 1]]
+  [1m[35m (28.8ms)[0m  [1m[36mcommit transaction[0m
+  Rendering accounts/mailer/reset_password_instructions.html.erb
+  Rendered accounts/mailer/reset_password_instructions.html.erb (0.8ms)
+Devise::Mailer#reset_password_instructions: processed outbound mail in 378.6ms
+Sent mail to minhtestcode@gmail.com (6819.3ms)
+Date: Sun, 20 Jan 2019 07:36:52 +0700
+From: SSM Market
+Reply-To: ssm.market.222@gmail.com
+To: minhtestcode@gmail.com
+Message-ID: <5c43c2a41b064_533ffffcd144bc504f@DESKTOP-EH88R88.mail>
+Subject: Reset password instructions
+Mime-Version: 1.0
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+  <p>Hello minhtestcode@gmail.com!</p>
+
+  <p>Someone has requested a link to change your password. You can do this through the link below.</p>
+
+  <p><a href="http://localhost:3000/accounts/password/edit?reset_password_token=Mb_hkx7kydkTdUnfRYv_">Change my password</a></p>
+
+  <p>If you didn't request this, please ignore this email.</p>
+  <p>Your password won't change until you access the link above and create a new one.</p>
+
+Completed 500 Internal Server Error in 8530ms (ActiveRecord: 32.6ms)
+
+
+  
+Net::SMTPAuthenticationError (535-5.7.8 Username and Password not accepted. Learn more at
+):
+  
+/usr/lib/ruby/2.5.0/net/smtp.rb:981:in `check_auth_response'
+/usr/lib/ruby/2.5.0/net/smtp.rb:736:in `auth_plain'
+/usr/lib/ruby/2.5.0/net/smtp.rb:728:in `authenticate'
+/usr/lib/ruby/2.5.0/net/smtp.rb:565:in `do_start'
+/usr/lib/ruby/2.5.0/net/smtp.rb:518:in `start'
+mail (2.7.1) lib/mail/network/delivery_methods/smtp.rb:109:in `start_smtp_session'
+mail (2.7.1) lib/mail/network/delivery_methods/smtp.rb:100:in `deliver!'
+mail (2.7.1) lib/mail/message.rb:2159:in `do_delivery'
+mail (2.7.1) lib/mail/message.rb:260:in `block in deliver'
+actionmailer (5.1.6.1) lib/action_mailer/base.rb:558:in `block in deliver_mail'
+activesupport (5.1.6.1) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.6.1) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.6.1) lib/active_support/notifications.rb:166:in `instrument'
+actionmailer (5.1.6.1) lib/action_mailer/base.rb:556:in `deliver_mail'
+mail (2.7.1) lib/mail/message.rb:260:in `deliver'
+actionmailer (5.1.6.1) lib/action_mailer/message_delivery.rb:96:in `block in deliver_now'
+actionmailer (5.1.6.1) lib/action_mailer/rescuable.rb:15:in `handle_exceptions'
+actionmailer (5.1.6.1) lib/action_mailer/message_delivery.rb:95:in `deliver_now'
+devise (4.5.0) lib/devise/models/authenticatable.rb:200:in `send_devise_notification'
+devise (4.5.0) lib/devise/models/recoverable.rb:99:in `send_reset_password_instructions_notification'
+devise (4.5.0) lib/devise/models/recoverable.rb:52:in `send_reset_password_instructions'
+devise (4.5.0) lib/devise/models/recoverable.rb:136:in `send_reset_password_instructions'
+devise (4.5.0) app/controllers/devise/passwords_controller.rb:15:in `create'
+actionpack (5.1.6.1) lib/action_controller/metal/basic_implicit_render.rb:4:in `send_action'
+actionpack (5.1.6.1) lib/abstract_controller/base.rb:186:in `process_action'
+actionpack (5.1.6.1) lib/action_controller/metal/rendering.rb:30:in `process_action'
+actionpack (5.1.6.1) lib/abstract_controller/callbacks.rb:20:in `block in process_action'
+activesupport (5.1.6.1) lib/active_support/callbacks.rb:131:in `run_callbacks'
+actionpack (5.1.6.1) lib/abstract_controller/callbacks.rb:19:in `process_action'
+actionpack (5.1.6.1) lib/action_controller/metal/rescue.rb:20:in `process_action'
+actionpack (5.1.6.1) lib/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+activesupport (5.1.6.1) lib/active_support/notifications.rb:166:in `block in instrument'
+activesupport (5.1.6.1) lib/active_support/notifications/instrumenter.rb:21:in `instrument'
+activesupport (5.1.6.1) lib/active_support/notifications.rb:166:in `instrument'
+actionpack (5.1.6.1) lib/action_controller/metal/instrumentation.rb:30:in `process_action'
+actionpack (5.1.6.1) lib/action_controller/metal/params_wrapper.rb:252:in `process_action'
+activerecord (5.1.6.1) lib/active_record/railties/controller_runtime.rb:22:in `process_action'
+actionpack (5.1.6.1) lib/abstract_controller/base.rb:124:in `process'
+actionview (5.1.6.1) lib/action_view/rendering.rb:30:in `process'
+actionpack (5.1.6.1) lib/action_controller/metal.rb:189:in `dispatch'
+actionpack (5.1.6.1) lib/action_controller/metal.rb:253:in `dispatch'
+actionpack (5.1.6.1) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (5.1.6.1) lib/action_dispatch/routing/route_set.rb:31:in `serve'
+actionpack (5.1.6.1) lib/action_dispatch/routing/mapper.rb:16:in `block in <class:Constraints>'
+actionpack (5.1.6.1) lib/action_dispatch/routing/mapper.rb:46:in `serve'
+actionpack (5.1.6.1) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (5.1.6.1) lib/action_dispatch/journey/router.rb:33:in `each'
+actionpack (5.1.6.1) lib/action_dispatch/journey/router.rb:33:in `serve'
+actionpack (5.1.6.1) lib/action_dispatch/routing/route_set.rb:844:in `call'
+warden (1.2.8) lib/warden/manager.rb:36:in `block in call'
+warden (1.2.8) lib/warden/manager.rb:34:in `catch'
+warden (1.2.8) lib/warden/manager.rb:34:in `call'
+rack (2.0.6) lib/rack/etag.rb:25:in `call'
+rack (2.0.6) lib/rack/conditional_get.rb:38:in `call'
+rack (2.0.6) lib/rack/head.rb:12:in `call'
+rack (2.0.6) lib/rack/session/abstract/id.rb:232:in `context'
+rack (2.0.6) lib/rack/session/abstract/id.rb:226:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/cookies.rb:613:in `call'
+activerecord (5.1.6.1) lib/active_record/migration.rb:556:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/callbacks.rb:26:in `block in call'
+activesupport (5.1.6.1) lib/active_support/callbacks.rb:97:in `run_callbacks'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/callbacks.rb:24:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/debug_exceptions.rb:59:in `call'
+web-console (3.7.0) lib/web_console/middleware.rb:135:in `call_app'
+web-console (3.7.0) lib/web_console/middleware.rb:30:in `block in call'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `catch'
+web-console (3.7.0) lib/web_console/middleware.rb:20:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/show_exceptions.rb:31:in `call'
+railties (5.1.6.1) lib/rails/rack/logger.rb:36:in `call_app'
+railties (5.1.6.1) lib/rails/rack/logger.rb:24:in `block in call'
+activesupport (5.1.6.1) lib/active_support/tagged_logging.rb:69:in `block in tagged'
+activesupport (5.1.6.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+activesupport (5.1.6.1) lib/active_support/tagged_logging.rb:69:in `tagged'
+railties (5.1.6.1) lib/rails/rack/logger.rb:24:in `call'
+sprockets-rails (3.2.1) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/remote_ip.rb:79:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/request_id.rb:25:in `call'
+rack (2.0.6) lib/rack/method_override.rb:22:in `call'
+rack (2.0.6) lib/rack/runtime.rb:22:in `call'
+activesupport (5.1.6.1) lib/active_support/cache/strategy/local_cache_middleware.rb:27:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/executor.rb:12:in `call'
+actionpack (5.1.6.1) lib/action_dispatch/middleware/static.rb:125:in `call'
+rack (2.0.6) lib/rack/sendfile.rb:111:in `call'
+railties (5.1.6.1) lib/rails/engine.rb:522:in `call'
+puma (3.12.0) lib/puma/configuration.rb:225:in `call'
+puma (3.12.0) lib/puma/server.rb:658:in `handle_request'
+puma (3.12.0) lib/puma/server.rb:472:in `process_client'
+puma (3.12.0) lib/puma/server.rb:332:in `block in run'
+puma (3.12.0) lib/puma/thread_pool.rb:133:in `block in spawn_thread'
+Started GET "/accounts/password/edit?reset_password_token=[FILTERED]" for 127.0.0.1 at 2019-01-20 07:37:15 +0700
+Processing by Accounts::PasswordsController#edit as HTML
+  Parameters: {"reset_password_token"=>"[FILTERED]"}
+  Rendering accounts/passwords/edit.html.erb
+  Rendered accounts/passwords/edit.html.erb (404.2ms)
+Completed 200 OK in 436ms (Views: 414.5ms | ActiveRecord: 0.0ms)
+
+
+Started PUT "/accounts/password" for 127.0.0.1 at 2019-01-20 07:37:35 +0700
+Processing by Accounts::PasswordsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"LNydpud2swYPhJ1Okj8t/dKiLKp8YN5Y6AvKVOYIPCdvz9/hqz/DjJ86uvUPL0RhGZX1Z135zQ9kq6V+Rcfh1g==", "account"=>{"reset_password_token"=>"[FILTERED]", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"CHANGE"}
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."reset_password_token" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["reset_password_token", "50a3fc2dc304c33525d06f3f7eaf9ddef1a9fa2fc22b8da834840a4a27bc35e6"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (2.7ms)[0m  [1m[33mUPDATE "accounts" SET "reset_password_sent_at" = ?, "encrypted_password" = ?, "reset_password_token" = ?, "updated_at" = ? WHERE "accounts"."id" = ?[0m  [["reset_password_sent_at", nil], ["encrypted_password", "$2a$11$AcnPUJ3K6mK8JluOr0jAGOUeMlCBvgv2np/X89dtTVoSI8k2VL6X6"], ["reset_password_token", nil], ["updated_at", "2019-01-20 00:37:35.986293"], ["id", 1]]
+  [1m[35m (21.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/
+Completed 302 Found in 199ms (ActiveRecord: 24.6ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-01-20 07:37:36 +0700
+Processing by Accounts::SessionsController#new as HTML
+  Rendering accounts/sessions/new.html.erb
+  Rendered accounts/sessions/new.html.erb (197.7ms)
+Completed 200 OK in 202ms (Views: 201.3ms | ActiveRecord: 0.0ms)
+
+
+Started POST "/accounts/sign_in" for 127.0.0.1 at 2019-01-20 07:37:46 +0700
+Processing by Accounts::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Qzm4E8e5WAcbjj/xR2OuTlZS9UaeJ4uBfJHKxplHYXkAKvpUi/AojYswGErac8fSnWUsi7++mNbwMaXsOoi8iA==", "account"=>{"email"=>"minhtestcode@gmail.com", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"LOGIN"}
+  [1m[36mAccount Load (1.6ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."email" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["email", "minhtestcode@gmail.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "accounts" SET "current_sign_in_at" = ?, "last_sign_in_at" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "accounts"."id" = ?[0m  [["current_sign_in_at", "2019-01-20 00:37:47.130306"], ["last_sign_in_at", "2018-07-12 12:14:43.328313"], ["sign_in_count", 7], ["updated_at", "2019-01-20 00:37:47.131379"], ["id", 1]]
+  [1m[35m (21.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/home
+Completed 302 Found in 207ms (ActiveRecord: 24.1ms)
+
+
+Started GET "/home" for 127.0.0.1 at 2019-01-20 07:37:47 +0700
+Processing by ProductsController#home as HTML
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "products"[0m
+  [1m[36mOrder Load (0.3ms)[0m  [1m[34mSELECT "orders".* FROM "orders"[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "accounts"[0m
+  [1m[36mOrderProduct Load (0.3ms)[0m  [1m[34mSELECT  "order_products".* FROM "order_products" ORDER BY quantity DESC LIMIT ?[0m  [["LIMIT", 3]]
+  [1m[36mOrder Load (0.3ms)[0m  [1m[34mSELECT  "orders".* FROM "orders" ORDER BY total_price DESC LIMIT ?[0m  [["LIMIT", 3]]
+  Rendering products/home.html.erb within layouts/application
+  [1m[36mProduct Load (0.4ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 1[0m
+  [1m[36mCategory Load (0.5ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOrderProduct Load (0.3ms)[0m  [1m[34mSELECT "order_products".* FROM "order_products" WHERE "order_products"."product_id" = 1[0m
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT "accounts".* FROM "accounts" WHERE "accounts"."id" = 2[0m
+  [1m[36mOrder Load (0.3ms)[0m  [1m[34mSELECT "orders".* FROM "orders" WHERE "orders"."account_id" = ?[0m  [["account_id", 2]]
+  Rendered products/home.html.erb within layouts/application (46.5ms)
+Completed 200 OK in 303ms (Views: 244.5ms | ActiveRecord: 6.9ms)
+
+
+Started GET "/accounts" for 127.0.0.1 at 2019-01-20 07:37:50 +0700
+Processing by AccountsController#index as HTML
+  Rendering accounts/index.html.erb within layouts/application
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "accounts"[0m
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT "roles".* FROM "roles"[0m
+  [1m[36mAccount Load (0.5ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" LIMIT ? OFFSET ?[0m  [["LIMIT", 5], ["OFFSET", 0]]
+  [1m[36mRole Load (0.3ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE Role Load (0.0ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered accounts/index.html.erb within layouts/application (75.6ms)
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 324ms (Views: 316.0ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/products" for 127.0.0.1 at 2019-01-20 07:37:53 +0700
+Processing by ProductsController#index as HTML
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering products/index.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "products"[0m
+  [1m[36mCategory Load (1.3ms)[0m  [1m[34mSELECT "categories".* FROM "categories"[0m
+  [1m[36mProduct Load (0.5ms)[0m  [1m[34mSELECT  "products".* FROM "products" LIMIT ? OFFSET ?[0m  [["LIMIT", 5], ["OFFSET", 0]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered products/index.html.erb within layouts/application (31.3ms)
+Completed 200 OK in 279ms (Views: 271.3ms | ActiveRecord: 2.8ms)
+
+
+Started GET "/orders" for 127.0.0.1 at 2019-01-20 07:37:54 +0700
+Processing by OrdersController#index as HTML
+  Rendering orders/index.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "orders"[0m
+  [1m[36mOrder Load (0.4ms)[0m  [1m[34mSELECT  "orders".* FROM "orders" LIMIT ? OFFSET ?[0m  [["LIMIT", 5], ["OFFSET", 0]]
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mCACHE Account Load (0.0ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mAccount Load (0.3ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE Account Load (1.0ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered orders/index.html.erb within layouts/application (22.8ms)
+Completed 200 OK in 263ms (Views: 256.9ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/accounts/1/categories/new" for 127.0.0.1 at 2019-01-20 07:37:56 +0700
+Processing by CategoriesController#new as HTML
+  Parameters: {"account_id"=>"1"}
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering categories/new.html.erb within layouts/application
+  Rendered categories/new.html.erb within layouts/application (10.3ms)
+Completed 200 OK in 377ms (Views: 244.1ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/categories" for 127.0.0.1 at 2019-01-20 07:37:58 +0700
+Processing by CategoriesController#index as HTML
+  [1m[36mAccount Load (0.6ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering categories/index.html.erb within layouts/application
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "categories"[0m
+  [1m[36mCategory Load (0.5ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" LIMIT ? OFFSET ?[0m  [["LIMIT", 5], ["OFFSET", 0]]
+  [1m[36mImage Load (0.3ms)[0m  [1m[34mSELECT "images".* FROM "images" WHERE "images"."category_id" IN (1, 2)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT("products"."name") FROM "products" WHERE "products"."category_id" = ?[0m  [["category_id", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT("products"."name") FROM "products" WHERE "products"."category_id" = ?[0m  [["category_id", 2]]
+  Rendered categories/index.html.erb within layouts/application (74.1ms)
+Completed 200 OK in 325ms (Views: 312.1ms | ActiveRecord: 2.2ms)
+
+
+Started GET "/products" for 127.0.0.1 at 2019-01-20 07:37:59 +0700
+Processing by ProductsController#index as HTML
+  [1m[36mAccount Load (0.7ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering products/index.html.erb within layouts/application
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT COUNT(*) FROM "products"[0m
+  [1m[36mCategory Load (0.6ms)[0m  [1m[34mSELECT "categories".* FROM "categories"[0m
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT  "products".* FROM "products" LIMIT ? OFFSET ?[0m  [["LIMIT", 5], ["OFFSET", 0]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  Rendered products/index.html.erb within layouts/application (17.5ms)
+Completed 200 OK in 235ms (Views: 223.3ms | ActiveRecord: 2.3ms)
+
+
+Started GET "/" for 127.0.0.1 at 2019-01-20 07:38:01 +0700
+Processing by Accounts::SessionsController#new as HTML
+  [1m[36mAccount Load (0.8ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Redirected to http://localhost:3000/home
+Filter chain halted as :require_no_authentication rendered or redirected
+Completed 302 Found in 7ms (ActiveRecord: 0.8ms)
+
+
+Started GET "/home" for 127.0.0.1 at 2019-01-20 07:38:01 +0700
+Processing by ProductsController#home as HTML
+  [1m[36mAccount Load (0.4ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "products"[0m
+  [1m[36mOrder Load (0.4ms)[0m  [1m[34mSELECT "orders".* FROM "orders"[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "accounts"[0m
+  [1m[36mOrderProduct Load (0.5ms)[0m  [1m[34mSELECT  "order_products".* FROM "order_products" ORDER BY quantity DESC LIMIT ?[0m  [["LIMIT", 3]]
+  [1m[36mOrder Load (1.1ms)[0m  [1m[34mSELECT  "orders".* FROM "orders" ORDER BY total_price DESC LIMIT ?[0m  [["LIMIT", 3]]
+  Rendering products/home.html.erb within layouts/application
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 1[0m
+  [1m[36mCategory Load (0.2ms)[0m  [1m[34mSELECT  "categories".* FROM "categories" WHERE "categories"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mOrderProduct Load (0.3ms)[0m  [1m[34mSELECT "order_products".* FROM "order_products" WHERE "order_products"."product_id" = 1[0m
+  [1m[36mAccount Load (1.3ms)[0m  [1m[34mSELECT "accounts".* FROM "accounts" WHERE "accounts"."id" = 2[0m
+  [1m[36mOrder Load (0.5ms)[0m  [1m[34mSELECT "orders".* FROM "orders" WHERE "orders"."account_id" = ?[0m  [["account_id", 2]]
+  Rendered products/home.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 251ms (Views: 230.8ms | ActiveRecord: 5.5ms)
+
+
+Started GET "/accounts/1/edit" for 127.0.0.1 at 2019-01-20 07:38:03 +0700
+Processing by AccountsController#edit as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mAccount Load (1.1ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? ORDER BY "accounts"."id" ASC LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mAccount Load (0.2ms)[0m  [1m[34mSELECT  "accounts".* FROM "accounts" WHERE "accounts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering accounts/edit.html.erb within layouts/application
+  [1m[36mRole Load (0.2ms)[0m  [1m[34mSELECT  "roles".* FROM "roles" WHERE "roles"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered accounts/edit.html.erb within layouts/application (17.9ms)
+Completed 200 OK in 258ms (Views: 249.3ms | ActiveRecord: 1.5ms)
+
+
