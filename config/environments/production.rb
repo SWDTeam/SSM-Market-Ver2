@@ -5,8 +5,8 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-    user_name:      'thupnm222@gmail.com',
-    password:       'Thupnm@222',
+    user_name:      'ssmmarket22@gmail.com',
+    password:       'Ssmarket@22',
     domain:         'ssm-market.herokuapp.com',
     address:        'smtp.gmail.com',
     port:           '587',
