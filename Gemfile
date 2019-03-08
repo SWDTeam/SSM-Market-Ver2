@@ -8,7 +8,7 @@ end
 #----------My import
 gem 'devise'
 gem "simple_token_authentication"
-
+gem "figaro"
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.1.0'
 gem 'autoprefixer-rails'
